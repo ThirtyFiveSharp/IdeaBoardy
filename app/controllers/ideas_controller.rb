@@ -12,27 +12,7 @@ class IdeasController < ApplicationController
   # GET /ideas/1.json
   def show
     @idea = Idea.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @idea }
-    end
-  end
-
-  # GET /ideas/new
-  # GET /ideas/new.json
-  def new
-    @idea = Idea.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @idea }
-    end
-  end
-
-  # GET /ideas/1/edit
-  def edit
-    @idea = Idea.find(params[:id])
+    render json: @idea
   end
 
   # POST /ideas
@@ -54,14 +34,10 @@ class IdeasController < ApplicationController
   def update
     @idea = Idea.find(params[:id])
 
-    respond_to do |format|
-      if @idea.update_attributes(params[:idea])
-        format.html { redirect_to @idea, notice: 'Idea was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @idea.errors, status: :unprocessable_entity }
-      end
+    if @idea.update_attributes(params[:idea])
+      head :no_content
+    else
+      render json: @idea.errors, status: :unprocessable_entity
     end
   end
 
@@ -71,9 +47,6 @@ class IdeasController < ApplicationController
     @idea = Idea.find(params[:id])
     @idea.destroy
 
-    respond_to do |format|
-      format.html { redirect_to ideas_url }
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 end

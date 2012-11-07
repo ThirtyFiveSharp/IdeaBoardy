@@ -11,7 +11,6 @@ class BoardsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     actual_boards = ActiveSupport::JSON.decode @response.body
-    p actual_boards
     assert_equal expected_boards.count, actual_boards.count
     expected_boards.each_with_index do |expected_board, index|
       assert_equal expected_board.id, actual_boards[index]['id']

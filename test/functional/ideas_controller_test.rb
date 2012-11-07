@@ -6,16 +6,22 @@ class IdeasControllerTest < ActionController::TestCase
     @section = sections(:one)
     @idea1 = ideas(:one)
     @idea2 = ideas(:two)
-    @ideas = [@idea1, @idea2]
   end
 
   test "should get index" do
     get :index, board_id: 1, section_id: 1
     assert_response :success
-    ideas = assigns(:ideas)
-    assert_equal 2, ideas.count, "should return all two ideas"
-    ideas.each_with_index do |idea, index|
-      assert_equal @ideas[index], idea
+    expected_ideas = [@idea1, @idea2]
+    actual_ideas = ActiveSupport::JSON.decode @response.body
+    assert_equal 2, actual_ideas.count, "should return all two ideas"
+    expected_ideas.each_with_index do |expected_idea, index|
+      assert_equal expected_idea.id, actual_ideas[index]['id']
+      assert_equal expected_idea.content, actual_ideas[index]['content']
+      assert_equal expected_idea.vote, actual_ideas[index]['vote']
+      links = actual_ideas[index]['links']
+      assert_equal 1, links.count
+      idea_link = links.select {|l| l['rel'] == 'idea'}.first
+      assert_equal board_section_idea_url(expected_idea.section.board.id, expected_idea.section.id, expected_idea.id), idea_link['href']
     end
   end
 
@@ -35,8 +41,14 @@ class IdeasControllerTest < ActionController::TestCase
   test "should show idea" do
     get :show, board_id:1, section_id:1, id: @idea1.id
     assert_response :success
-    actual_idea = assigns(:idea)
-    assert_equal @idea1, actual_idea
+    actual_idea = ActiveSupport::JSON.decode @response.body
+    assert_equal @idea1.id, actual_idea['id']
+    assert_equal @idea1.content, actual_idea['content']
+    assert_equal @idea1.vote, actual_idea['vote']
+    links = actual_idea['links']
+    assert_equal 1, links.count
+    self_link = links.select {|l| l['rel'] == 'self'}.first
+    assert_equal board_section_idea_url(@idea1.section.board.id, @idea1.section.id, @idea1.id), self_link['href']
   end
 
   test "should update idea" do

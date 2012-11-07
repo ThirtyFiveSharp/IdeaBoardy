@@ -5,14 +5,28 @@ class IdeasController < ApplicationController
 
   def index
     @ideas = Idea.all
-    render json: @ideas
+    render json: @ideas.collect {|idea| {
+        id: idea.id,
+        content: idea.content,
+        vote: idea.vote,
+        links:[
+            {rel: 'idea', href: board_section_idea_url(idea.section.board.id, idea.section.id, idea.id)}
+        ]
+    }}
   end
 
   # GET /ideas/1
   # GET /ideas/1.json
   def show
     @idea = Idea.find(params[:id])
-    render json: @idea
+    render json: {
+        id: @idea.id,
+        content: @idea.content,
+        vote: @idea.vote,
+        links: [
+            {rel: 'self', href: board_section_idea_url(@idea.section.board.id, @idea.section.id, @idea.id)}
+        ]
+    }
   end
 
   # POST /ideas

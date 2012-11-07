@@ -2,10 +2,10 @@
 
 one:
   id: 1
-  name: MyString
+  name: Section 1
   board_id: 1
 
 two:
   id: 2
-  name: MyString
+  name: Section 2
   board_id: 1

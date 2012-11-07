@@ -2,10 +2,10 @@
 
 one:
   id: 1
-  name: MyString
-  description: MyString
+  name: Board 1
+  description: Board 1 Description
 
 two:
   id: 2
-  name: MyString
-  description: MyString
+  name: Board 2
+  description: Board 2 Description

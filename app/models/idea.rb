@@ -3,6 +3,8 @@ class Idea < ActiveRecord::Base
   belongs_to :section
   after_initialize :default_value!
 
+  scope :of_section, lambda {|section_id| where("section_id = ?", section_id)}
+
   def vote!
     self.vote += 1
   end

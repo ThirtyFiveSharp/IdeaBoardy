@@ -56,10 +56,13 @@ class BoardsController < ApplicationController
   # DELETE /boards/1
   # DELETE /boards/1.json
   def destroy
-    @board = Board.find(params[:id])
-    @board.destroy
-
+    begin
+      @board = Board.find(params[:id])
+      @board.destroy
     head :no_content
+    rescue ActiveRecord::RecordNotFound
+      head :no_content
+    end
   end
 
 end

@@ -1,44 +1,36 @@
 class SectionsController < ApplicationController
-  # GET /sections
-  # GET /sections.json
   def index
-    @sections = Section.all
+    board_id = params[:board_id]
+    @sections = Section.find_all_by_board_id(board_id)
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @sections }
-    end
+    render json: @sections.collect { |section| {
+        id: section.id,
+        name: section.name,
+        links: [
+            {rel: 'section', href: board_section_url(board_id, section.id)}
+        ]
+    } }
   end
 
-  # GET /sections/1
-  # GET /sections/1.json
   def show
-    @section = Section.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @section }
+    board_id = params[:board_id]
+    section_id = params[:id]
+    begin
+      @section = Section.of_board(board_id).find(section_id)
+      render json: {
+          id: @section.id,
+          name: @section.name,
+          links: [
+              {rel: 'self', href: board_section_url(board_id, section_id)},
+              {rel: 'ideas', href: board_section_ideas_url(board_id, section_id)}
+          ]
+      }
+    rescue ActiveRecord::RecordNotFound
+      head :not_found
     end
+
   end
 
-  # GET /sections/new
-  # GET /sections/new.json
-  def new
-    @section = Section.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @section }
-    end
-  end
-
-  # GET /sections/1/edit
-  def edit
-    @section = Section.find(params[:id])
-  end
-
-  # POST /sections
-  # POST /sections.json
   def create
     @section = Section.new(params[:section])
 
@@ -53,31 +45,29 @@ class SectionsController < ApplicationController
     end
   end
 
-  # PUT /sections/1
-  # PUT /sections/1.json
   def update
-    @section = Section.find(params[:id])
-
-    respond_to do |format|
+    board_id = params[:board_id]
+    section_id = params[:id]
+    begin
+      @section = Section.of_board(board_id).find(section_id)
       if @section.update_attributes(params[:section])
-        format.html { redirect_to @section, notice: 'Section was successfully updated.' }
-        format.json { head :no_content }
+        head :no_content
       else
-        format.html { render action: "edit" }
-        format.json { render json: @section.errors, status: :unprocessable_entity }
+        render json: @section.errors, status: :unprocessable_entity
       end
+    rescue ActiveRecord::RecordNotFound
+      head :not_found
     end
   end
 
-  # DELETE /sections/1
-  # DELETE /sections/1.json
   def destroy
-    @section = Section.find(params[:id])
-    @section.destroy
-
-    respond_to do |format|
-      format.html { redirect_to sections_url }
-      format.json { head :no_content }
+    section_id = params[:id]
+    begin
+      @section = Section.find(section_id)
+      @section.destroy
+      head :no_content
+    rescue ActiveRecord::RecordNotFound
+      head :no_content
     end
   end
 end

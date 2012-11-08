@@ -72,4 +72,9 @@ class BoardsControllerTest < ActionController::TestCase
     section_ids.each {|id| assert_equal false, Section.exists?(id), "Associated sections should be deleted."}
     idea_ids.each {|id| assert_equal false, Idea.exists?(id), "Associated ideas should be deleted."}
   end
+
+  test "should return 204 No Content when board is not existed" do
+    delete :destroy, id: 99999
+    assert_response :no_content
+  end
 end

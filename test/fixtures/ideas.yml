@@ -11,3 +11,9 @@ two:
   content: Two
   vote: 2
   section_id: 1
+
+three:
+  id: 3
+  content: Three
+  vote: 2
+  section_id: 2

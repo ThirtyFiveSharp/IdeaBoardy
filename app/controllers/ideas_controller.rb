@@ -1,53 +1,66 @@
 class IdeasController < ApplicationController
-  # GET /ideas
-  # GET /ideas.json
   respond_to :json
 
   def index
-    @ideas = Idea.all
+    board_id = params[:board_id]
+    section_id = params[:section_id]
+
+    return head(:not_found) unless Section.of_board(board_id).exists?(section_id)
+
+    @ideas = Idea.find_all_by_section_id(section_id)
     render json: @ideas.collect {|idea| {
         id: idea.id,
         content: idea.content,
         vote: idea.vote,
         links:[
-            {rel: 'idea', href: board_section_idea_url(idea.section.board.id, idea.section.id, idea.id)}
+            {rel: 'idea', href: board_section_idea_url(board_id, section_id, idea.id)}
         ]
     }}
   end
 
-  # GET /ideas/1
-  # GET /ideas/1.json
   def show
-    @idea = Idea.find(params[:id])
+    board_id = params[:board_id]
+    section_id = params[:section_id]
+    idea_id = params[:id]
+
+    return head(:not_found) unless Section.of_board(board_id).exists?(section_id)
+    return head(:not_found) unless Idea.of_section(section_id).exists?(idea_id)
+
+    @idea = Idea.find(idea_id)
     render json: {
         id: @idea.id,
         content: @idea.content,
         vote: @idea.vote,
         links: [
-            {rel: 'self', href: board_section_idea_url(@idea.section.board.id, @idea.section.id, @idea.id)}
+            {rel: 'self', href: board_section_idea_url(board_id, section_id, idea_id)}
         ]
     }
   end
 
-  # POST /ideas
-  # POST /ideas.json
   def create
+    board_id = params[:board_id]
+    section_id = params[:section_id]
+
+    return head(:not_found) unless Section.of_board(board_id).exists?(section_id)
+
     @idea = Idea.new(params[:idea])
-    section = Section.find params[:section_id]
+    section = Section.find section_id
     @idea.section = section
 
     if @idea.save
-      render json: @idea, status: :created, location: board_section_idea_url(section.board.id, section.id, @idea.id)
+      render json: @idea, status: :created, location: board_section_idea_url(board_id, section_id, @idea.id)
     else
       render json: @idea.errors, status: :unprocessable_entity
     end
   end
 
-  # PUT /ideas/1
-  # PUT /ideas/1.json
   def update
-    @idea = Idea.find(params[:id])
-
+    board_id = params[:board_id]
+    section_id = params[:section_id]
+    idea_id = params[:id]
+    return head(:not_found) unless Section.of_board(board_id).exists?(section_id)
+    return head(:not_found) unless Idea.of_section(section_id).exists?(idea_id)
+    @idea = Idea.find(idea_id)
     if @idea.update_attributes(params[:idea])
       head :no_content
     else
@@ -55,12 +68,13 @@ class IdeasController < ApplicationController
     end
   end
 
-  # DELETE /ideas/1
-  # DELETE /ideas/1.json
   def destroy
-    @idea = Idea.find(params[:id])
-    @idea.destroy
-
-    head :no_content
+    begin
+      @idea = Idea.find(params[:id])
+      @idea.destroy
+      head :no_content
+    rescue ActiveRecord::RecordNotFound
+      head :no_content
+    end
   end
 end

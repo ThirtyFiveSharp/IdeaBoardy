@@ -27,13 +27,14 @@ class SectionsControllerTest < ActionController::TestCase
   test "should return 404 Not Found when section is not under given board (GET)" do
     get :show, board_id:@board2.id, id: @section1.id
     assert_response :not_found
+    assert_blank @response.body
   end
 
   test "should update section" do
     new_section_name = "new section name"
     put :update, board_id: @board.id, id: @section1, section: { name: new_section_name}
-
     assert_response :no_content
+    assert_blank @response.body
     actual_section = Section.find(@section1.id)
     assert_equal new_section_name, actual_section.name
   end
@@ -41,6 +42,7 @@ class SectionsControllerTest < ActionController::TestCase
   test "should return 404 Not Found when section is not under given board (UPDATE)" do
     get :update, board_id:@board2.id, id: @section1.id
     assert_response :not_found
+    assert_blank @response.body
   end
 
   test "should delete existed section and associated ideas" do
@@ -49,6 +51,7 @@ class SectionsControllerTest < ActionController::TestCase
       delete :destroy, board_id: @board.id, id: @section1
     end
     assert_response :no_content
+    assert_blank @response.body
     assert_equal false, Section.exists?(@section1.id), "section should be deleted"
     idea_ids.each {|id| assert_equal false, Idea.exists?(id), "Associated ideas should be deleted."}
   end
@@ -56,11 +59,13 @@ class SectionsControllerTest < ActionController::TestCase
   test "should return 204 No Content when section is not under given board (DELETE)" do
     delete :destroy, board_id: @board2, id: @section1
     assert_response :no_content
+    assert_blank @response.body
   end
 
   test "should return 204 No Content when section is not existed" do
     delete :destroy, board_id: @board, id: 99999
     assert_response :no_content
+    assert_blank @response.body
   end
 
 end

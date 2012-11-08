@@ -35,7 +35,7 @@ class BoardsController < ApplicationController
     @board = Board.new(params[:board])
 
     if @board.save
-      render json: @board, status: :created, location: board_url(@board.id)
+      head status: :created, location: board_url(@board.id)
     else
       render json: @board.errors, status: :unprocessable_entity
     end

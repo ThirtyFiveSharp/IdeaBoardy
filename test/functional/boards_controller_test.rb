@@ -31,6 +31,7 @@ class BoardsControllerTest < ActionController::TestCase
     created_board = assigns :board
     assert_response :created
     assert_equal board_url(created_board.id), @response.headers['Location']
+    assert_blank @response.body
     actual_board = Board.find created_board.id
     assert_equal expected_name, actual_board.name
     assert_equal expected_description, actual_board.description
@@ -56,6 +57,7 @@ class BoardsControllerTest < ActionController::TestCase
     expected_description = "New board description"
     put :update, id: @board1.id, board: { description: expected_description, name: expected_name }
     assert_response :no_content
+    assert_blank @response.body
     actual_board = Board.find @board1.id
     assert_equal expected_name, actual_board.name
     assert_equal expected_description, actual_board.description
@@ -68,6 +70,7 @@ class BoardsControllerTest < ActionController::TestCase
       delete :destroy, id: @board1.id
     end
     assert_response :no_content
+    assert_blank @response.body
     assert_equal false, Board.exists?(@board1.id), "Board should be deleted."
     section_ids.each {|id| assert_equal false, Section.exists?(id), "Associated sections should be deleted."}
     idea_ids.each {|id| assert_equal false, Idea.exists?(id), "Associated ideas should be deleted."}
@@ -76,5 +79,6 @@ class BoardsControllerTest < ActionController::TestCase
   test "should return 204 No Content when board is not existed" do
     delete :destroy, id: 99999
     assert_response :no_content
+    assert_blank @response.body
   end
 end

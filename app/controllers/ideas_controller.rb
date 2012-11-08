@@ -48,7 +48,7 @@ class IdeasController < ApplicationController
     @idea.section = section
 
     if @idea.save
-      render json: @idea, status: :created, location: board_section_idea_url(board_id, section_id, @idea.id)
+      head status: :created, location: board_section_idea_url(board_id, section_id, @idea.id)
     else
       render json: @idea.errors, status: :unprocessable_entity
     end

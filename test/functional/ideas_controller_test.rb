@@ -9,7 +9,7 @@ class IdeasControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
-    get :index, board_id: 1, section_id: 1
+    get :index, board_id: @board.id, section_id: @section.id
     assert_response :success
     expected_ideas = [@idea1, @idea2]
     actual_ideas = ActiveSupport::JSON.decode @response.body
@@ -28,7 +28,7 @@ class IdeasControllerTest < ActionController::TestCase
   test "should create idea" do
     expected_content = "New idea content"
     assert_difference('Idea.count') do
-      post :create, board_id: 1, section_id: 1, idea: { content: expected_content }
+      post :create, board_id: @board.id, section_id: @section.id, idea: { content: expected_content }
     end
     created_idea = assigns(:idea)
     assert_response :created
@@ -39,7 +39,7 @@ class IdeasControllerTest < ActionController::TestCase
   end
 
   test "should show idea" do
-    get :show, board_id:1, section_id:1, id: @idea1.id
+    get :show, board_id:@idea1.section.board.id, section_id:@idea1.section.id, id: @idea1.id
     assert_response :success
     actual_idea = ActiveSupport::JSON.decode @response.body
     assert_equal @idea1.id, actual_idea['id']
@@ -53,7 +53,7 @@ class IdeasControllerTest < ActionController::TestCase
 
   test "should update idea" do
     expected_content = "New Content"
-    put :update, board_id: 1, section_id: 1, id: @idea1.id, idea: { content: expected_content }
+    put :update, board_id: @idea1.section.board.id, section_id: @idea1.section.id, id: @idea1.id, idea: { content: expected_content }
     assert_response :no_content
     actual_idea = Idea.find @idea1.id
     assert_equal expected_content, actual_idea.content, "should update content of the idea"
@@ -61,7 +61,7 @@ class IdeasControllerTest < ActionController::TestCase
 
   test "should destroy idea" do
     assert_difference('Idea.count', -1) do
-      delete :destroy, board_id: 1, section_id: 1, id: @idea1.id
+      delete :destroy, board_id: @idea1.section.board.id, section_id: @idea1.section.id, id: @idea1.id
     end
     assert_response :no_content
     assert_equal false, Idea.exists?(@idea1.id), "idea should be deleted"

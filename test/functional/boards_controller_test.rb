@@ -52,6 +52,12 @@ class BoardsControllerTest < ActionController::TestCase
     assert_equal board_sections_url(@board1.id), sections_link['href']
   end
 
+  test "should return 404 Not Found when board is not existed (GET)" do
+    get :show, id: 99999
+    assert_response :not_found
+    assert_blank @response.body
+  end
+
   test "should update board" do
     expected_name = "New board name"
     expected_description = "New board description"
@@ -61,6 +67,12 @@ class BoardsControllerTest < ActionController::TestCase
     actual_board = Board.find @board1.id
     assert_equal expected_name, actual_board.name
     assert_equal expected_description, actual_board.description
+  end
+
+  test "should return 404 Not Found when board is not existed (UPDATE)" do
+    put :update, id: 99999, board: { description: "new board description", name: "new board name" }
+    assert_response :not_found
+    assert_blank @response.body
   end
 
   test "should destroy board, associated sections and ideas" do

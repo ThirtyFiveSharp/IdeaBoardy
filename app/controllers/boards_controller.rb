@@ -4,29 +4,32 @@ class BoardsController < ApplicationController
   def index
     @boards = Board.all
 
-    render json: @boards.collect {|board| {
+    render json: @boards.collect { |board| {
         id: board.id,
         name: board.name,
         links: [
             {rel: 'board', href: board_url(board.id)}
         ]
-    }}
+    } }
   end
 
   # GET /boards/1
   # GET /boards/1.json
   def show
-    @board = Board.find(params[:id])
-
-    render json: {
-        id: @board.id,
-        name: @board.name,
-        description: @board.description,
-        links: [
-            {rel: 'self', href: board_url(@board.id)},
-            {rel: 'sections', href: board_sections_url(@board.id)}
-        ]
-    }
+    begin
+      @board = Board.find(params[:id])
+      render json: {
+          id: @board.id,
+          name: @board.name,
+          description: @board.description,
+          links: [
+              {rel: 'self', href: board_url(@board.id)},
+              {rel: 'sections', href: board_sections_url(@board.id)}
+          ]
+      }
+    rescue ActiveRecord::RecordNotFound
+      head :not_found
+    end
   end
 
   # POST /boards
@@ -44,12 +47,15 @@ class BoardsController < ApplicationController
   # PUT /boards/1
   # PUT /boards/1.json
   def update
-    @board = Board.find(params[:id])
-
-    if @board.update_attributes(params[:board])
-      head :no_content
-    else
-      render json: @board.errors, status: :unprocessable_entity
+    begin
+      @board = Board.find(params[:id])
+      if @board.update_attributes(params[:board])
+        head :no_content
+      else
+        render json: @board.errors, status: :unprocessable_entity
+      end
+    rescue ActiveRecord::RecordNotFound
+      head :not_found
     end
   end
 
@@ -59,7 +65,7 @@ class BoardsController < ApplicationController
     begin
       @board = Board.find(params[:id])
       @board.destroy
-    head :no_content
+      head :no_content
     rescue ActiveRecord::RecordNotFound
       head :no_content
     end

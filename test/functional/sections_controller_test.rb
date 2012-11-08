@@ -24,15 +24,61 @@ class SectionsControllerTest < ActionController::TestCase
     end
   end
 
+  test "should return 404 Not Found when given board is not existed (INDEX)" do
+    get :index, board_id: 99999
+    assert_response :not_found
+    assert_blank @response.body
+  end
+
+  test "should create section for given board" do
+    expected_name = "New section name"
+    assert_difference('Section.count') do
+      post :create, board_id: @board.id, section: { name: expected_name }
+    end
+    created_section = assigns :section
+    assert_response :created
+    assert_equal board_section_url(@board.id, created_section.id), @response.headers['Location']
+    assert_blank @response.body
+    actual_section = Section.find created_section.id
+    assert_equal expected_name, actual_section.name
+    assert_equal @board.id, actual_section.board.id
+  end
+
+  test "should return 404 Not Found when given board is not existed (POST)" do
+    post :create, board_id: 99999, section: { name: "New section name" }
+    assert_response :not_found
+    assert_blank @response.body
+  end
+
+  test "should show section" do
+    get :show, board_id: @board.id, id: @section1.id
+    assert_response :success
+    actual_section = ActiveSupport::JSON.decode @response.body
+    assert_equal @section1.id, actual_section['id']
+    assert_equal @section1.name, actual_section['name']
+    links = actual_section['links']
+    assert_equal 2, links.count
+    self_link = links.select {|l| l['rel']=='self'}.first
+    assert_equal board_section_url(@board.id, @section1.id), self_link['href']
+    ideas_link = links.select {|l| l['rel']=='ideas'}.first
+    assert_equal board_section_ideas_url(@board.id, @section1.id), ideas_link['href']
+  end
+
   test "should return 404 Not Found when section is not under given board (GET)" do
     get :show, board_id:@board2.id, id: @section1.id
     assert_response :not_found
     assert_blank @response.body
   end
 
+  test "should return 404 Not Found when section is not existed (GET)" do
+    get :show, board_id:@board.id, id: 99999
+    assert_response :not_found
+    assert_blank @response.body
+  end
+
   test "should update section" do
     new_section_name = "new section name"
-    put :update, board_id: @board.id, id: @section1, section: { name: new_section_name}
+    put :update, board_id: @board.id, id: @section1, section: { name: new_section_name }
     assert_response :no_content
     assert_blank @response.body
     actual_section = Section.find(@section1.id)
@@ -40,7 +86,13 @@ class SectionsControllerTest < ActionController::TestCase
   end
 
   test "should return 404 Not Found when section is not under given board (UPDATE)" do
-    get :update, board_id:@board2.id, id: @section1.id
+    put :update, board_id: @board2.id, id: @section1.id
+    assert_response :not_found
+    assert_blank @response.body
+  end
+
+  test "should return 404 Not Found when section is not existed (UPDATE)" do
+    put :show, board_id: @board.id, id: 99999
     assert_response :not_found
     assert_blank @response.body
   end
@@ -62,7 +114,7 @@ class SectionsControllerTest < ActionController::TestCase
     assert_blank @response.body
   end
 
-  test "should return 204 No Content when section is not existed" do
+  test "should return 204 No Content when section is not existed (DELETE)" do
     delete :destroy, board_id: @board, id: 99999
     assert_response :no_content
     assert_blank @response.body

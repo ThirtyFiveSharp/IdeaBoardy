@@ -34,10 +34,16 @@ class IdeasControllerTest < ActionController::TestCase
     assert_blank @response.body
   end
 
-  test "should create idea" do
+  test "should return 404 Not Found when given section is not existed (INDEX)" do
+    get :index, board_id: @board.id, section_id: 99999
+    assert_response :not_found
+    assert_blank @response.body
+  end
+
+  test "should create idea for given section" do
     expected_content = "New idea content"
     assert_difference('Idea.count') do
-      post :create, board_id: @board.id, section_id: @section1.id, idea: {content: expected_content}
+      post :create, board_id: @board.id, section_id: @section1.id, idea: { content: expected_content }
     end
     created_idea = assigns(:idea)
     assert_response :created
@@ -47,10 +53,17 @@ class IdeasControllerTest < ActionController::TestCase
     actual_idea = Idea.find created_idea.id
     assert_equal expected_content, actual_idea.content
     assert_equal 0, actual_idea.vote
+    assert_equal @section1.id, actual_idea.section.id
   end
 
   test "should return 404 Not Found when section is not under given board (CREATE)" do
-    get :create, board_id: @board2.id, section_id: @section1.id
+    post :create, board_id: @board2.id, section_id: @section1.id, idea: { content: "New content" }
+    assert_response :not_found
+    assert_blank @response.body
+  end
+
+  test "should return 404 Not Found when given section is not existed (CREATE)" do
+    get :create, board_id: @board.id, section_id: 99999
     assert_response :not_found
     assert_blank @response.body
   end
@@ -80,6 +93,12 @@ class IdeasControllerTest < ActionController::TestCase
     assert_blank @response.body
   end
 
+  test "should return 404 Not Found when idea is not existed (GET)" do
+    get :show, board_id: @board.id, section_id: @section2.id, id: 99999
+    assert_response :not_found
+    assert_blank @response.body
+  end
+
   test "should update idea" do
     expected_content = "New Content"
     put :update, board_id: @idea1.section.board.id, section_id: @idea1.section.id, id: @idea1.id, idea: {content: expected_content}
@@ -90,13 +109,19 @@ class IdeasControllerTest < ActionController::TestCase
   end
 
   test "should return 404 Not Found when section is not under given board (UPDATE)" do
-    get :update, board_id: @board2.id, section_id: @section1.id, id: @idea1.id
+    put :update, board_id: @board2.id, section_id: @section1.id, id: @idea1.id
     assert_response :not_found
     assert_blank @response.body
   end
 
   test "should return 404 Not Found when idea is not under given section (UPDATE)" do
-    get :update, board_id: @board.id, section_id: @section2.id, id: @idea1.id
+    put :update, board_id: @board.id, section_id: @section2.id, id: @idea1.id
+    assert_response :not_found
+    assert_blank @response.body
+  end
+
+  test "should return 404 Not Found when idea is not existed (UPDATE)" do
+    put :update, board_id: @board.id, section_id: @section1.id, id: 99999
     assert_response :not_found
     assert_blank @response.body
   end
@@ -123,7 +148,7 @@ class IdeasControllerTest < ActionController::TestCase
   end
 
   test "should return 204 No Content when idea is not existed" do
-    delete :destroy, board_id: @board, section_id: @section2, id: 99999
+    delete :destroy, board_id: @board, section_id: @section1, id: 99999
     assert_response :no_content
     assert_blank @response.body
   end

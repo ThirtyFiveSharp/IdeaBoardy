@@ -1,8 +1,9 @@
 class SectionsController < ApplicationController
   def index
     board_id = params[:board_id]
-    @sections = Section.find_all_by_board_id(board_id)
+    return head :not_found unless Board.exists?(board_id)
 
+    @sections = Section.find_all_by_board_id(board_id)
     render json: @sections.collect { |section| {
         id: section.id,
         name: section.name,
@@ -32,16 +33,19 @@ class SectionsController < ApplicationController
   end
 
   def create
-    @section = Section.new(params[:section])
+    begin
+      board_id = params[:board_id]
+      board = Board.find board_id
 
-    respond_to do |format|
+      @section = Section.new(params[:section])
+      @section.board = board
       if @section.save
-        format.html { redirect_to @section, notice: 'Section was successfully created.' }
-        format.json { render json: @section, status: :created, location: @section }
+        head status: :created, location: board_section_url(board_id, @section.id)
       else
-        format.html { render action: "new" }
-        format.json { render json: @section.errors, status: :unprocessable_entity }
+        render json: @section.errors, status: :unprocessable_entity
       end
+    rescue ActiveRecord::RecordNotFound
+      head :not_found
     end
   end
 

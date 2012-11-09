@@ -68,8 +68,14 @@ angular.module('idea-boardy', ['ngResource'])
                    $http.post(sectionsLink.href, $scope.section).success(function() {
                        $route.reload();
                    });
-                }
+                };
             });
+            $scope.deleteSection = function(section) {
+                var sectionLink = _.find(section.links, function(l) {return l.rel == 'section'});
+                $http.delete(sectionLink.href).success(function() {
+                    $route.reload();
+                });
+            };
         }
     ])
 

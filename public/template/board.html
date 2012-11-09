@@ -1,1 +1,7 @@
-{{board}}
+
+        <div ng:repeat="section in board.sections" ng:controller="SectionController">
+               ==== {{section.name}}  =======
+            <div  ng:repeat="idea in section.ideas" ng:controller="IdeaController">
+                ************{{idea.name}}***************
+            </div>
+        </div>

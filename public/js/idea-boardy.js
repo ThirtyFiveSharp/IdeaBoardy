@@ -10,9 +10,42 @@ angular.module('idea-boardy', [])
         }
     ])
 
-    .controller('BoardController', ['$scope', '$routeParams',
-        function($scope, $routeParams) {
-            $scope.board = "I'm board " + $routeParams.boardId;
+
+    .controller('SectionController', ['$scope', '$routeParams', '$http',
+        function($scope, $http) {
+
+        }])
+    .controller('IdeaController', ['$scope', '$routeParams', '$http',
+        function($scope, $routeParams, $http) {
+
+        }])
+    .controller('BoardController', ['$scope', '$routeParams', '$http',
+        function($scope, $routeParams, $http) {
+            var sectionsLink,
+                board = $scope.board = {};
+
+            $http({method:'GET', url:'http://localhost:3000/boards/' + $routeParams.boardId})
+                .success(function (board) {
+                    sectionsLink = getlink(board, 'sections');
+                });
+
+            $scope.$watch(function () {
+                return sectionsLink;
+            }, function () {
+                if (sectionsLink) {
+                    $http({method:'GET', url: sectionsLink})
+                        .success(function (sections) {
+                            board.sections = sections
+                        });
+                }
+            });
+
+            function getlink(boardEntity, rel) {
+                return _.find(boardEntity.links,
+                    function (link) {
+                        return link.rel === rel;
+                    }).href;
+            }
         }
     ])
 

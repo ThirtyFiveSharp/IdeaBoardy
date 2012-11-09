@@ -26,4 +26,9 @@ class BoardTest < ActiveSupport::TestCase
     end
   end
 
+  test "board should have name" do
+    assert_raise "Board should have name.", ActiveRecord::RecordInvalid do
+      Board.create!
+    end
+  end
 end

@@ -37,6 +37,13 @@ class BoardsControllerTest < ActionController::TestCase
     assert_equal expected_description, actual_board.description
   end
 
+  test "should return unprocessable_entity status when create a board without name" do
+    post :create, board: {}
+    assert_response :unprocessable_entity
+    errors = ActiveSupport::JSON.decode @response.body
+    assert_includes errors["name"], "can't be blank"
+  end
+
   test "should show board" do
     get :show, id: @board1.id
     assert_response :success
@@ -67,6 +74,13 @@ class BoardsControllerTest < ActionController::TestCase
     actual_board = Board.find @board1.id
     assert_equal expected_name, actual_board.name
     assert_equal expected_description, actual_board.description
+  end
+
+  test "should return unprocessable_entity status when clear name of a board" do
+    put :update, id: @board1.id, board: {name: ""}
+    assert_response :unprocessable_entity
+    errors = ActiveSupport::JSON.decode @response.body
+    assert_includes errors["name"], "can't be blank"
   end
 
   test "should return 404 Not Found when board is not existed (UPDATE)" do

@@ -38,12 +38,14 @@ angular.module('idea-boardy', ['ngResource'])
 
     .controller('SectionController', ['$scope', '$routeParams', '$http',
         function($scope, $http) {
-
+            $http({method:'GET', url: getLink($scope.section.links, 'ideas')})
+                .success(function (ideas) {
+                    $scope.ideas = ideas;
+                });
         }])
 
     .controller('IdeaController', ['$scope', '$routeParams', '$http',
-        function($scope, $routeParams, $http) {
-
+        function($scope, $http) {
         }])
 
     .controller('BoardController', ['$scope', '$routeParams', '$http',
@@ -53,7 +55,8 @@ angular.module('idea-boardy', ['ngResource'])
 
             $http({method:'GET', url:'http://localhost:3000/boards/' + $routeParams.boardId})
                 .success(function (board) {
-                    sectionsLink = getlink(board, 'sections');
+                    sectionsLink = getLink(board.links, 'sections');
+                    console.log("sectionsLink", sectionsLink, board);
                 });
 
             $scope.$watch(function () {
@@ -66,14 +69,14 @@ angular.module('idea-boardy', ['ngResource'])
                         });
                 }
             });
-
-            function getlink(boardEntity, rel) {
-                return _.find(boardEntity.links,
-                    function (link) {
-                        return link.rel === rel;
-                    }).href;
-            }
         }
-    ])
+    ]);
 
-;
+
+function getLink(links, rel) {
+    var link = _.find(links,
+        function (link) {
+            return link.rel === rel;
+        }).href;
+    return link.href;
+}

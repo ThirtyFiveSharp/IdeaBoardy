@@ -1,1 +1,28 @@
-{{board}}
+<form name="create-board" ng-controller="CreateBoardController">
+    <dl>
+        <dt>Name:</dt>
+        <dd><input type="text" ng-model="board.name"/></dd>
+    </dl>
+    <dl>
+        <dt>Description:</dt>
+        <dd><input type="text" ng-model="board.description"/></dd>
+    </dl>
+    <dl>
+        <dt>Sections:</dt>
+        <dd>
+            <ul>
+                <li ng-repeat="section in sections">
+                    <input type="text" ng-model="section.name"/>
+                </li>
+            </ul>
+            <input type="button" value="+" ng-click="addSection()"/>
+        </dd>
+    </dl>
+    <input type="button" value="Create" ng-click="create()"/>
+</form>
+
+<ul>
+    <li ng-repeat="board in boards">
+        <a href="#/boards/{{board.id}}">{{board.name}}</a>
+    </li>
+</ul>

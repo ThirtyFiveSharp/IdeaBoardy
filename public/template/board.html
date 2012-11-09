@@ -6,8 +6,16 @@
 <dt>
     <dl>Sections</dl>
     <dd>
+        <form name="create-section">
+            <input type="text" ng-model="section.name"/>
+            <input type="button" value="Create Section" ng-click="createSection()"/>
+        </form>
+    </dd>
+    <dd>
         <ul>
-            <li ng-repeat="section in sections">{{section.name}}</li>
+            <li ng-repeat="section in sections">
+                <h2>{{section.name}}</h2>
+            </li>
         </ul>
     </dd>
 </dt>

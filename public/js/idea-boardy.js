@@ -52,20 +52,28 @@ angular.module('idea-boardy', ['ngResource'])
         }
     ])
 
-    .controller('BoardController', ['$scope', '$routeParams', '$resource', '$http',
-        function ($scope, $routeParams, $resource, $http) {
+    .controller('BoardController', ['$scope', '$routeParams', '$resource', '$http', '$route',
+        function ($scope, $routeParams, $resource, $http, $route) {
             var BoardResource = $resource('/boards/:boardId'),
                 board, sections;
+            $scope.section = {};
             board = $scope.board = BoardResource.get({boardId:$routeParams.boardId}, function () {
                 var sectionsLink = _.find(board.links, function (l) {
                     return l.rel == 'sections'
                 });
                 $http.get(sectionsLink.href).success(function (sections) {
-                    sections = $scope.sections = sections;
+                    $scope.sections = sections;
                 });
+                $scope.createSection = function() {
+                   $http.post(sectionsLink.href, $scope.section).success(function() {
+                       $route.reload();
+                   });
+                }
             });
         }
-    ]);
+    ])
+
+;
 
 
 function getLink(links, rel) {

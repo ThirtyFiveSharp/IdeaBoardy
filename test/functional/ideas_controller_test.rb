@@ -56,6 +56,13 @@ class IdeasControllerTest < ActionController::TestCase
     assert_equal @section1.id, actual_idea.section.id
   end
 
+  test "should return unprocessable_entity status when create an idea without content" do
+    post :create, board_id: @board, section_id: @section1, idea: {}
+    assert_response :unprocessable_entity
+    errors = ActiveSupport::JSON.decode @response.body
+    assert_includes errors["content"], "can't be blank"
+  end
+
   test "should return 404 Not Found when section is not under given board (CREATE)" do
     post :create, board_id: @board2.id, section_id: @section1.id, idea: { content: "New content" }
     assert_response :not_found
@@ -106,6 +113,13 @@ class IdeasControllerTest < ActionController::TestCase
     assert_blank @response.body
     actual_idea = Idea.find @idea1.id
     assert_equal expected_content, actual_idea.content, "should update content of the idea"
+  end
+
+  test "should return unprocessable_entity status when clear content of a section" do
+    put :update, board_id: @idea1.section.board, section_id: @idea1.section, id: @idea1.id, idea: { content: "" }
+    assert_response :unprocessable_entity
+    errors = ActiveSupport::JSON.decode @response.body
+    assert_includes errors["content"], "can't be blank"
   end
 
   test "should return 404 Not Found when section is not under given board (UPDATE)" do

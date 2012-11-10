@@ -1,0 +1,3 @@
+var ScopeEvent = {
+    createNewBoard: 'CreateNewBoard'
+};

@@ -7,18 +7,43 @@
 
     <link type="text/css" rel="stylesheet" href="css/jquery-ui-1.9.1.custom.min.css" />
     <link type="text/css" rel="stylesheet" href="css/app.css" />
+
     <script type="text/javascript" src="lib/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" src="lib/jquery-ui-1.9.1.custom.min.js"></script>
     <script type="text/javascript" src="lib/underscore-1.4.2.min.js"></script>
     <script type="text/javascript" src="lib/angular-1.0.2.js"></script>
     <!--<script type="text/javascript" src="lib/angular-1.0.2.min.js"></script>-->
-    <script type="text/javascript" src="js/idea-boardy.js"></script>
-    <script type="text/javascript" src="js/idea-controller.js"></script>
+
+    <script type="text/javascript" src="js/version.js"></script>
+    <script type="text/javascript" src="js/constant.js"></script>
+    <script type="text/javascript" src="js/util.js"></script>
+    <script type="text/javascript" src="js/module.js"></script>
+
+    <script type="text/javascript" src="js/service/params.js"></script>
+
+    <script type="text/javascript" src="js/directive/autofocus.js"></script>
+    <script type="text/javascript" src="js/directive/error-message.js"></script>
+    <script type="text/javascript" src="js/directive/jquery-ui.js"></script>
+
+    <script type="text/javascript" src="js/controller/board-list-controller.js"></script>
+    <script type="text/javascript" src="js/controller/create-board-controller.js"></script>
+    <script type="text/javascript" src="js/controller/board-controller.js"></script>
+    <script type="text/javascript" src="js/controller/edit-board-controller.js"></script>
+    <script type="text/javascript" src="js/controller/create-section-controller.js"></script>
+    <script type="text/javascript" src="js/controller/section-controller.js"></script>
+    <script type="text/javascript" src="js/controller/edit-section-controller.js"></script>
+    <script type="text/javascript" src="js/controller/idea-controller.js"></script>
 </head>
 <body>
     <header>IdeaBoardy - Put your ideas on board, now!</header>
     <div id="main">
         <ng-view></ng-view>
     </div>
+    <footer>
+        IdeaBoardy v<span id="version-info"></span>
+    </footer>
+    <script type="text/javascript">
+        $('#version-info').text(version);
+    </script>
 </body>
 </html>

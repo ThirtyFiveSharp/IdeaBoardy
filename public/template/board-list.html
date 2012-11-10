@@ -6,12 +6,13 @@
     </li>
 
     <li class="blank">
-        <a class="board-name" ng-click="showCreateBoardDialog()">+ 1</a>
+        <a class="board-name" ng-click="createNewBoard()">+ 1</a>
     </li>
 </ul>
 
-<div id="create-board-form" jq-ui-dialog='{"width": 400}' title="Create A New Board" ng-show="isCreateBoardDialogVisible" ng-cloak>
-    <form name="createBoardForm" ng-controller="CreateBoardController" ng-submit="create()" >
+<div id="create-board-form" title="Create A New Board" ng-controller="CreateBoardController"
+     jq-ui-dialog='{"width": 400}' ng-show="isCreateBoardDialogVisible" on-close="resetCreateBoardForm" ng-cloak>
+    <form name="createBoardForm" ng-submit="create()" >
         <dl>
             <dt><label for="create-board-name">Name:</label></dt>
             <dd>
@@ -41,3 +42,5 @@
         </dl>
     </form>
 </div>
+
+<div class="clear-fix"></div>

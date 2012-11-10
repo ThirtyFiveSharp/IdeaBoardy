@@ -1,11 +1,11 @@
 (function() {
-    angular.module('idea-boardy', [])
+    var ideaBoardModule = window.ideaBoardModule = angular.module('idea-boardy', [])
         .config(['$routeProvider', function($routeProvider){
             $routeProvider.when('/boards/:boardId', {templateUrl: 'template/board.html', controller: 'BoardController'})
             $routeProvider.otherwise({templateUrl: 'template/board-list.html', controller: 'BoardListController'})
-        }])
+        }]);
 
-        .factory('params', ['$routeParams',
+    ideaBoardModule.factory('params', ['$routeParams',
             function($routeParams) {
                 var params = {},
                     fresh = true;
@@ -164,12 +164,6 @@
                 };
             }
         ])
-
-        .controller('IdeaController', ['$scope', '$http',
-            function ($scope, $http) {
-            }
-        ])
-
         .directive('autofocus', function() {
             return function(scope, element, attrs) {
                 element.focus();

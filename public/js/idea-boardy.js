@@ -34,8 +34,9 @@
                 $http.get('/boards').success(function(boards) { $scope.boards = boards; });
 
                 $scope.goToBoard = function(board) {
-                    params('boardUri', getLink(board.links, 'board').href);
-                    $location.path('/boards/'+board.id);
+                    var boardLink = getLink(board.links, 'board');
+                    params('boardUri', boardLink.href);
+                    $location.path('/boards/'+board.id).search('boardUri', boardLink.href);
                 };
             }
         ])

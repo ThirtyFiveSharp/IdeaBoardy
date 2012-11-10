@@ -9,6 +9,13 @@ footer { margin: 5em 0 3em; font-size: 0.9em; text-align: center; }
 .error-message { color: #dc143c; }
 .clear-fix { clear: both; }
 
+input.ui-button { padding: 0.1em 0; }
+input.btn-1 { width: 2em; }
+input.btn-2 { width: 4em; }
+input.btn-3 { width: 6em; }
+input.btn-ok.ui-state-default {width: 6em; background: #32cd32;}
+input.btn-ok.ui-state-hover {width: 6em; background: #90ee90;}
+
 #board-list { display:block; overflow:hidden; float:left; list-style-type: none; }
 #board-list li { display: table; position: relative; overflow: hidden; margin: 4px; float: left; width: 230px; height: 150px; background-color: #ffffe0; border:1px #a9a9a9 solid; -moz-border-radius: 10px; border-radius: 10px; text-align: center; }
 #board-list li.blank { font-size: 1.2em; background-color: white; border-style: dashed; }
@@ -17,5 +24,5 @@ footer { margin: 5em 0 3em; font-size: 0.9em; text-align: center; }
 
 #create-board-form dl { margin: 0.5em; }
 #create-board-form dt { margin-bottom: 0.5em; }
-#create-board-form input.ui-button { padding: 0.1em 0.6em; }
 #create-board-form .section { margin-bottom: 0.5em; }
+#create-board { margin-top: 2em; }

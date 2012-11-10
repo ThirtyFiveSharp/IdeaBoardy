@@ -31,14 +31,14 @@
                     <li class="section" ng-repeat="section in sections">
                         <input id="create-board-section-name-{{$index}}" type="text" name="sectionName{{$index}}" ng-model="section.name" required autofocus />
                         <span error-message></span>
-                        <input type="button" value="-" ng-click="removeSection($index)" jq-ui="button" />
+                        <input class="btn-1" type="button" value="-" ng-click="removeSection($index)" jq-ui="button" />
                     </li>
                 </ul>
-                <input type="button" value="+" ng-click="addSection()" jq-ui="button" />
+                <input class="btn-3" type="button" value="+1 section" ng-click="addSection()" jq-ui="button" />
             </dd>
         </dl>
         <dl>
-            <input type="submit" value="Create" jq-ui="button" />
+            <input id="create-board" class="btn-ok" type="submit" value="OK" jq-ui="button" />
         </dl>
     </form>
 </div>

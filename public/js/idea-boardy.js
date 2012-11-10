@@ -55,26 +55,40 @@ angular.module('idea-boardy', ['ngResource'])
     .controller('BoardController', ['$scope', '$routeParams', '$resource', '$http', '$route',
         function ($scope, $routeParams, $resource, $http, $route) {
             var BoardResource = $resource('/boards/:boardId'),
-                board, sections;
+                board, sections,
+                reload = function() {$route.reload();};
+            $scope.mode = "view";
             $scope.section = {};
             board = $scope.board = BoardResource.get({boardId:$routeParams.boardId}, function () {
-                var sectionsLink = _.find(board.links, function (l) {
-                    return l.rel == 'sections'
+                $scope.title = board.name;
+                angular.extend(board, {
+                    selfLink: _.find(board.links, function (l) {
+                        return l.rel == 'self';
+                    }),
+                    sectionsLink: _.find(board.links, function (l) {
+                        return l.rel == 'sections';
+                    })
                 });
-                $http.get(sectionsLink.href).success(function (sections) {
+                $http.get(board.sectionsLink.href).success(function (sections) {
                     $scope.sections = sections;
                 });
-                $scope.createSection = function() {
-                   $http.post(sectionsLink.href, $scope.section).success(function() {
-                       $route.reload();
-                   });
-                };
+
             });
+            $scope.edit = function() {
+                $scope.mode = "edit";
+            };
+            $scope.cancel = function() {
+                $scope.mode = "view";
+            };
+            $scope.save = function() {
+                $http.put(board.selfLink.href, $scope.board).success(reload);
+            };
+            $scope.createSection = function() {
+                $http.post(board.sectionsLink.href, $scope.section).success(reload);
+            };
             $scope.deleteSection = function(section) {
                 var sectionLink = _.find(section.links, function(l) {return l.rel == 'section'});
-                $http.delete(sectionLink.href).success(function() {
-                    $route.reload();
-                });
+                $http.delete(sectionLink.href).success(reload);
             };
         }
     ])

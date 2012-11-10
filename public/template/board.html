@@ -1,8 +1,25 @@
-<h1>{{board.name}}</h1>
-<dl>
-    <dt>Description</dt>
-    <dd>{{board.description}}</dd>
-</dl>
+<h1>{{title}}</h1>
+<div ng-switch on="mode">
+    <div ng-switch-when="view">
+        <dl>
+            <dt>Description</dt>
+            <dd>{{board.description}}</dd>
+        </dl>
+        <input type="button" value="Edit" ng-click="edit()"/>
+    </div>
+    <div ng-switch-when="edit">
+        <dl>
+            <dt>Name</dt>
+            <dd><input type="text" ng-model="board.name"/></dd>
+        </dl>
+        <dl>
+            <dt>Description</dt>
+            <dd><input type="text" ng-model="board.description"/></dd>
+        </dl>
+        <input type="button" value="Cancel" ng-click="cancel()"/>
+        <input type="button" value="Save" ng-click="save()"/>
+    </div>
+</div>
 <dl>
     <dt>Sections</dt>
     <dd>

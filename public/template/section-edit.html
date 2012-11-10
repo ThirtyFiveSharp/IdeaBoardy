@@ -1,6 +1,7 @@
-<div ng-controller="EditSectionController">
-    <input type="text" ng-model="editingSection.name"/>
-    <input type="button" value="Rename" ng-click="rename()"/>
+<form name="editSectionForm" ng-controller="EditSectionController">
+    <input type="text" ng-model="editingSection.name" required autofocus />
+    <span error-message></span>
+    <input type="button" value="Rename" ng-click="rename()" ng-disabled="!editSectionForm.$valid" />
     <input type="button" value="Delete" ng-click="delete()"/>
     <input type="button" value="Cancel" ng-click="cancel()"/>
-</div>
+</form>

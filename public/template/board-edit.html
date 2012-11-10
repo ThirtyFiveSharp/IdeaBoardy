@@ -1,12 +1,15 @@
-<div ng-controller="EditBoardController">
+<form name="editBoardForm" ng-controller="EditBoardController">
     <dl>
         <dt>Name</dt>
-        <dd><input type="text" ng-model="editingBoard.name"/></dd>
+        <dd>
+            <input type="text" ng-model="editingBoard.name" required autofocus />
+            <span error-message></span>
+        </dd>
     </dl>
     <dl>
         <dt>Description</dt>
         <dd><input type="text" ng-model="editingBoard.description"/></dd>
     </dl>
     <input type="button" value="Cancel" ng-click="cancel()"/>
-    <input type="button" value="Save" ng-click="save()"/>
-</div>
+    <input type="button" value="Save" ng-click="save()" ng-disabled="!editBoardForm.$valid" />
+</form>

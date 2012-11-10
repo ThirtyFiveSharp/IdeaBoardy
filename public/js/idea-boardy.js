@@ -1,31 +1,28 @@
 angular.module('idea-boardy', ['ngResource'])
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/boards/:boardId', {templateUrl:'template/board.html', controller:'BoardController'})
-        $routeProvider.otherwise({templateUrl:'template/board-list.html', controller:'BoardListController'})
+    .config(['$routeProvider', function($routeProvider){
+        $routeProvider.when('/boards/:boardId', {templateUrl: 'template/board.html', controller: 'BoardController'})
+        $routeProvider.otherwise({templateUrl: 'template/board-list.html', controller: 'BoardListController'})
     }])
 
-    .controller('BoardListController', ['$scope', '$resource',
-        function ($scope, $resource) {
-            var BoardResource = $resource('/boards/:boardId', {boardId:'@id'});
-            $scope.boards = BoardResource.query();
+    .controller('BoardListController', ['$scope', '$http',
+        function($scope, $http) {
+            $http.get('/boards').success(function(boards) { $scope.boards = boards; });
         }
     ])
 
-    .controller('CreateBoardController', ['$scope', '$resource', '$route', '$http',
-        function ($scope, $resource, $route, $http) {
-            var BoardResource = $resource('/boards/:boardId'),
-                board = $scope.board = new BoardResource(),
+    .controller('CreateBoardController', ['$scope', '$route', '$http', '$timeout',
+        function($scope, $route, $http, $timeout) {
+            var board = $scope.board = {},
                 sections = $scope.sections = [];
 
-            $scope.create = function () {
-                board.$save(function (createdBoard, responseHeaders) {
-                    var createdBoardUri = responseHeaders('location');
-                    $http.get(createdBoardUri).success(function (createdBoard) {
-                        var sectionsLink = _.find(createdBoard.links, function (l) {
-                            return l.rel == 'sections'
-                        });
-                        _.each(sections, function (section) {
-                            $http.post(sectionsLink.href, section);
+            $scope.create = function() {
+                if(!$scope.createBoardForm.$valid) return;
+                $http.post('/boards', board).success(function(createdBoard, status, headers) {
+                    var createdBoardUri = headers('location');
+                    $http.get(createdBoardUri).success(function(createdBoard) {
+                        var sectionsLink = getLink(createdBoard.links, 'sections');
+                        _.each(sections, function(section){
+                           $http.post(sectionsLink.href, section);
                         });
                     });
                 });
@@ -34,6 +31,13 @@ angular.module('idea-boardy', ['ngResource'])
 
             $scope.addSection = function () {
                 sections.push({});
+            }
+
+            $scope.removeSection = function(index) {
+                sections[index].name = "(to be removed)";
+                $timeout(function() {
+                    sections.splice(index, 1);
+                });
             }
         }
     ])
@@ -102,7 +106,7 @@ angular.module('idea-boardy', ['ngResource'])
 
     .controller('SectionController', ['$scope', '$routeParams', '$http',
         function ($scope, $http) {
-            $http({method:'GET', url:getLink($scope.section.links, 'ideas')})
+            $http.get(getLink($scope.section.links, 'ideas').href)
                 .success(function (ideas) {
                     $scope.ideas = ideas;
                 });
@@ -130,4 +134,33 @@ angular.module('idea-boardy', ['ngResource'])
         }
     ])
 
+    .directive('autofocus', function() {
+        return function(scope, element, attrs) {
+            element.focus();
+        }
+    })
+
+    .directive('errorMessage', function(){
+        return function(scope, element, attrs) {
+            var associatedElement = element.prev(),
+                ngModel = associatedElement.controller('ngModel');
+            if(!ngModel) return;
+
+            element.addClass('error-message');
+            ngModel.$parsers.push(function(viewValue) {
+                if(ngModel.$dirty) {
+                    var keys = _.keys(ngModel.$error),
+                        errorKeys = _.filter(keys, function(key) {return ngModel.$error[key];});
+                    element.text(errorKeys.join(' '));
+                }
+                return viewValue;
+            });
+        };
+    })
+
 ;
+
+function getLink(links, rel) {
+    var link = _.find(links, function(link) { return link.rel === rel; });
+    return link || {rel: null, href: null};
+}

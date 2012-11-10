@@ -1,33 +1,43 @@
-<form name="createBoardForm" ng-controller="CreateBoardController" ng-submit="create()">
-    <dl>
-        <dt><label for="create-board-name">Name:</label></dt>
-        <dd>
-            <input id="create-board-name" type="text" name="name" ng-model="board.name" required autofocus />
-            <span error-message></span>
-        </dd>
-    </dl>
-    <dl>
-        <dt>Description:</dt>
-        <dd><input type="text" name="description" ng-model="board.description"/></dd>
-    </dl>
-    <dl>
-        <dt>Sections:</dt>
-        <dd>
-            <ul>
-                <li ng-repeat="section in sections">
-                    <input id="create-board-section-name-{{$index}}" type="text" name="sectionName{{$index}}" ng-model="section.name" required autofocus />
-                    <span error-message></span>
-                    <input type="button" value="-" ng-click="removeSection($index)" jq-ui="button" />
-                </li>
-            </ul>
-            <input type="button" value="+" ng-click="addSection()" jq-ui="button" />
-        </dd>
-    </dl>
-    <input type="submit" value="Create" jq-ui="button" />
-</form>
+<div class="guide">Select a board</div>
 
-<ul>
+<ul id="board-list">
     <li ng-repeat="board in boards">
-        <a ng-click="goToBoard(board)">{{board.name}}</a>
+        <a class="board-name" ng-click="goToBoard(board)">{{board.name}}</a>
+    </li>
+
+    <li class="blank">
+        <a class="board-name" ng-click="showCreateBoardDialog()">+ 1</a>
     </li>
 </ul>
+
+<div id="create-board-form" jq-ui-dialog='{"width": 400}' title="Create A New Board" ng-show="isCreateBoardDialogVisible" ng-cloak>
+    <form name="createBoardForm" ng-controller="CreateBoardController" ng-submit="create()" >
+        <dl>
+            <dt><label for="create-board-name">Name:</label></dt>
+            <dd>
+                <input id="create-board-name" type="text" name="name" ng-model="board.name" required autofocus />
+                <span error-message></span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>Description:</dt>
+            <dd><input type="text" name="description" ng-model="board.description"/></dd>
+        </dl>
+        <dl>
+            <dt>Sections:</dt>
+            <dd>
+                <ul>
+                    <li class="section" ng-repeat="section in sections">
+                        <input id="create-board-section-name-{{$index}}" type="text" name="sectionName{{$index}}" ng-model="section.name" required autofocus />
+                        <span error-message></span>
+                        <input type="button" value="-" ng-click="removeSection($index)" jq-ui="button" />
+                    </li>
+                </ul>
+                <input type="button" value="+" ng-click="addSection()" jq-ui="button" />
+            </dd>
+        </dl>
+        <dl>
+            <input type="submit" value="Create" jq-ui="button" />
+        </dl>
+    </form>
+</div>

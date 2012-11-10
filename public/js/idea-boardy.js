@@ -32,7 +32,10 @@
         .controller('BoardListController', ['$scope', '$http', '$location', 'params',
             function($scope, $http, $location, params) {
                 $http.get('/boards').success(function(boards) { $scope.boards = boards; });
-
+                $scope.showCreateBoardDialog = function() {
+                    console.log('showCreateBoardDialog');
+                    $scope.isCreateBoardDialogVisible = true;
+                };
                 $scope.goToBoard = function(board) {
                     var boardLink = getLink(board.links, 'board');
                     params('boardUri', boardLink.href);
@@ -49,15 +52,16 @@
                 $scope.create = function() {
                     if(!$scope.createBoardForm.$valid) return;
                     $http.post('/boards', board).success(function(createdBoard, status, headers) {
+                        board = $scope.board = {};
                         var createdBoardUri = headers('location');
                         $http.get(createdBoardUri).success(function(createdBoard) {
                             var sectionsLink = getLink(createdBoard.links, 'sections');
                             _.each(sections, function(section){
                                $http.post(sectionsLink.href, section);
                             });
+                            $route.reload();
                         });
                     });
-                    $route.reload();
                 };
 
                 $scope.addSection = function () {
@@ -193,6 +197,30 @@
             return function(scope, element, attrs) {
                 element[attrs.jqUi].apply(element);
             };
+        })
+
+        .directive('jqUiDialog', function() {
+            return function(scope, element, attrs) {
+                var options = JSON.parse(attrs.jqUiDialog || '{}');
+                var visibilityExpr = attrs.ngShow;
+                var targetElementId = attrs.for;
+                element.dialog(_.extend(options, {
+                    title: attrs.title,
+                    autoOpen: false,
+                    modal: true,
+                    resizable: false,
+//                    width: 400,
+                    position: {my: 'center center-50%', at: 'center', of: window},
+                    close: function() {
+                        scope.$apply(function() {
+                            scope[visibilityExpr] = false;
+                        });
+                    }
+                }));
+                scope.$watch(visibilityExpr, function(visible){
+                    element.dialog(visible ? 'open' : 'close');
+                });
+            }
         })
     ;
 

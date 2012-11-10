@@ -38,36 +38,23 @@ angular.module('idea-boardy', ['ngResource'])
         }
     ])
 
-    .controller('SectionController', ['$scope', '$routeParams', '$http',
-        function ($scope, $http) {
-            $http({method:'GET', url:getLink($scope.section.links, 'ideas')})
-                .success(function (ideas) {
-                    $scope.ideas = ideas;
-                });
-        }
-    ])
-
-    .controller('IdeaController', ['$scope', '$routeParams', '$http',
-        function ($scope, $http) {
-        }
-    ])
-
     .controller('BoardController', ['$scope', '$routeParams', '$resource', '$http', '$route',
         function ($scope, $routeParams, $resource, $http, $route) {
             var BoardResource = $resource('/boards/:boardId'),
                 board, sections;
             $scope.reload = function() {$route.reload();};
-            $scope.mode = "view";
             $scope.section = {};
             board = $scope.board = BoardResource.get({boardId:$routeParams.boardId}, function () {
-                $scope.title = board.name;
                 angular.extend(board, {
                     selfLink: _.find(board.links, function (l) {
                         return l.rel == 'self';
                     }),
                     sectionsLink: _.find(board.links, function (l) {
                         return l.rel == 'sections';
-                    })
+                    }),
+                    mode: "view",
+                    edit: function() {this.mode = 'edit'},
+                    cancel: function() {this.mode = 'view'}
                 });
                 $http.get(board.sectionsLink.href).success(function (sections) {
                     $scope.sections = sections;
@@ -80,14 +67,8 @@ angular.module('idea-boardy', ['ngResource'])
                     });
                 });
             });
-            $scope.edit = function() {
-                $scope.mode = "edit";
-            };
-            $scope.cancel = function() {
-                $scope.mode = "view";
-            };
-            $scope.save = function() {
-                $http.put(board.selfLink.href, $scope.board).success(reload);
+            $scope.editBoard = function(board) {
+                board.edit();
             };
             $scope.editSection = function(section) {
                 section.edit();
@@ -95,6 +76,28 @@ angular.module('idea-boardy', ['ngResource'])
             $scope.createSection = function() {
                 $http.post(board.sectionsLink.href, $scope.section).success($route.reload);
             };
+        }
+    ])
+
+    .controller('EditBoardController', ['$scope', '$http', '$route',
+        function($scope, $http, $route) {
+            $scope.editingBoard = {};
+            angular.copy($scope.board, $scope.editingBoard);
+            $scope.cancel = function() {
+                $scope.board.cancel();
+            };
+            $scope.save = function() {
+                $http.put($scope.editingBoard.selfLink.href, $scope.editingBoard).success($route.reload);
+            };
+        }
+    ])
+
+    .controller('SectionController', ['$scope', '$routeParams', '$http',
+        function ($scope, $http) {
+            $http({method:'GET', url:getLink($scope.section.links, 'ideas')})
+                .success(function (ideas) {
+                    $scope.ideas = ideas;
+                });
         }
     ])
 
@@ -112,6 +115,11 @@ angular.module('idea-boardy', ['ngResource'])
             $scope.cancel = function() {
                 $scope.section.cancel();
             };
+        }
+    ])
+
+    .controller('IdeaController', ['$scope', '$routeParams', '$http',
+        function ($scope, $http) {
         }
     ])
 

@@ -38,31 +38,35 @@ angular.module('idea-boardy', ['ngResource'])
         }
     ])
 
-    .controller('BoardController', ['$scope', '$routeParams', '$resource', '$http', '$route',
-        function ($scope, $routeParams, $resource, $http, $route) {
+    .controller('BoardController', ['$scope', '$routeParams', '$resource', '$http',
+        function ($scope, $routeParams, $resource, $http) {
             var BoardResource = $resource('/boards/:boardId'),
                 board, sections;
-            board = $scope.board = BoardResource.get({boardId:$routeParams.boardId}, function () {
+
+            var enhanceBoard = function(board) {
                 angular.extend(board, {
-                    selfLink: _.find(board.links, function (l) {
-                        return l.rel == 'self';
-                    }),
-                    sectionsLink: _.find(board.links, function (l) {
-                        return l.rel == 'sections';
-                    }),
+                    selfLink: _.find(board.links, function (l) {return l.rel == 'self';}),
+                    sectionsLink: _.find(board.links, function (l) {return l.rel == 'sections';}),
                     mode: "view",
                     edit: function() {this.mode = 'edit'},
                     cancel: function() {this.mode = 'view'}
                 });
+            };
+
+            var enhanceSection = function(section) {
+                angular.extend(section, {
+                    selfLink: _.find(section.links, function(l) {return l.rel == 'section'}),
+                    mode: "view",
+                    edit: function() {this.mode = "edit";},
+                    cancel: function() {this.mode = "view";}
+                });
+            };
+
+            board = $scope.board = BoardResource.get({boardId:$routeParams.boardId}, function () {
+                enhanceBoard(board);
                 $http.get(board.sectionsLink.href).success(function (sections) {
                     $scope.sections = sections;
-                    _.each($scope.sections, function(section) {
-                        angular.extend(section, {
-                            mode: "view",
-                            edit: function() {this.mode = "edit";},
-                            cancel: function() {this.mode = "view";}
-                        });
-                    });
+                    _.each($scope.sections, enhanceSection);
                 });
             });
             $scope.edit = function() {
@@ -109,12 +113,11 @@ angular.module('idea-boardy', ['ngResource'])
         function($scope, $http, $route) {
             $scope.editingSection = {};
             angular.copy($scope.section, $scope.editingSection);
-            var sectionLink = _.find($scope.editingSection.links, function(l) {return l.rel == 'section'});
             $scope.rename = function() {
-                $http.put(sectionLink.href, $scope.editingSection).success($route.reload);
+                $http.put($scope.editingSection.selfLink.href, $scope.editingSection).success($route.reload);
             };
             $scope.delete = function() {
-                $http.delete(sectionLink.href).success($route.reload);
+                $http.delete($scope.editingSection.selfLink.href).success($route.reload);
             };
             $scope.cancel = function() {
                 $scope.section.cancel();
@@ -128,12 +131,3 @@ angular.module('idea-boardy', ['ngResource'])
     ])
 
 ;
-
-
-function getLink(links, rel) {
-    var link = _.find(links,
-        function (link) {
-            return link.rel === rel;
-        }).href;
-    return link.href;
-}

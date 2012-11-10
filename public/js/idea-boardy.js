@@ -46,7 +46,7 @@
         .controller('BoardController', ['$scope', '$routeParams', '$resource', '$http',
             function ($scope, $routeParams, $resource, $http) {
                 var BoardResource = $resource('/boards/:boardId'),
-                    board, sections;
+                    board;
 
                 var enhanceBoard = function(board) {
                     angular.extend(board, {
@@ -88,12 +88,6 @@
                         _.each($scope.sections, enhanceSection);
                     });
                 });
-                $scope.edit = function() {
-                    board.edit();
-                };
-                $scope.editSection = function(section) {
-                    section.edit();
-                };
             }
         ])
 

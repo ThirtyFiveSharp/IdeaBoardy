@@ -5,7 +5,7 @@
             <dt>Description</dt>
             <dd>{{board.description}}</dd>
         </dl>
-        <input type="button" value="Edit" ng-click="edit(board)"/>
+        <input type="button" value="Edit" ng-click="board.edit()"/>
     </div>
     <div ng-switch-when="edit">
         <ng-include src="'template/board-edit.html'" />

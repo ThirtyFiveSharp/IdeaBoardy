@@ -50,8 +50,8 @@
 
                 var enhanceBoard = function(board) {
                     angular.extend(board, {
-                        selfLink: _.find(board.links, function (l) {return l.rel == 'self';}),
-                        sectionsLink: _.find(board.links, function (l) {return l.rel == 'sections';}),
+                        selfLink: getLink(board.links, 'self'),
+                        sectionsLink: getLink(board.links, 'sections'),
                         mode: "view",
                         edit: function() {this.mode = 'edit'},
                         cancel: function() {this.mode = 'view'}
@@ -60,7 +60,7 @@
 
                 var enhanceSection = function(section) {
                     angular.extend(section, {
-                        selfLink: _.find(section.links, function(l) {return l.rel == 'section'}),
+                        selfLink: getLink(section.links, 'section'),
                         mode: "view",
                         editable: true,
                         enable: function() {this.editable = true},

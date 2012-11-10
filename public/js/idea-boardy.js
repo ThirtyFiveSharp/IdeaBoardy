@@ -1,5 +1,5 @@
 (function() {
-    angular.module('idea-boardy', ['ngResource'])
+    angular.module('idea-boardy', [])
         .config(['$routeProvider', function($routeProvider){
             $routeProvider.when('/boards/:boardId', {templateUrl: 'template/board.html', controller: 'BoardController'})
             $routeProvider.otherwise({templateUrl: 'template/board-list.html', controller: 'BoardListController'})
@@ -72,12 +72,18 @@
             }
         ])
 
-        .controller('BoardController', ['$scope', '$resource', '$http', 'params',
-            function ($scope, $resource, $http, params) {
-                var BoardResource = $resource('/boards/:boardId'),
-                    board;
+        .controller('BoardController', ['$scope', '$http', 'params',
+            function ($scope, $http, params) {
+                $http.get(params('boardUri')).success(function(board) {
+                    enhanceBoard(board);
+                    $scope.board = board;
+                    $http.get(board.sectionsLink.href).success(function (sections) {
+                        $scope.sections = sections;
+                        _.each($scope.sections, enhanceSection);
+                    });
+                });
 
-                var enhanceBoard = function(board) {
+                function enhanceBoard(board) {
                     angular.extend(board, {
                         selfLink: getLink(board.links, 'self'),
                         sectionsLink: getLink(board.links, 'sections'),
@@ -85,9 +91,9 @@
                         edit: function() {this.mode = 'edit'},
                         cancel: function() {this.mode = 'view'}
                     });
-                };
+                }
 
-                var enhanceSection = function(section) {
+                function enhanceSection(section) {
                     angular.extend(section, {
                         selfLink: getLink(section.links, 'section'),
                         mode: "view",
@@ -96,7 +102,7 @@
                         disable: function() {this.editable = false},
                         edit: function() {
                             _.each($scope.sections, function(section) {
-                               section.disable();
+                                section.disable();
                             });
                             this.enable();
                             this.mode = "edit";
@@ -108,15 +114,7 @@
                             this.mode = "view";
                         }
                     });
-                };
-
-                board = $scope.board = BoardResource.get({boardId:params('boardId')}, function () {
-                    enhanceBoard(board);
-                    $http.get(board.sectionsLink.href).success(function (sections) {
-                        $scope.sections = sections;
-                        _.each($scope.sections, enhanceSection);
-                    });
-                });
+                }
             }
         ])
 

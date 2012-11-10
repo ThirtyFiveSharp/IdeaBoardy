@@ -188,6 +188,12 @@
                 });
             };
         })
+
+        .directive('jqUi', function() {
+            return function(scope, element, attrs) {
+                element[attrs.jqUi].apply(element);
+            };
+        })
     ;
 
     function getLink(links, rel) {

@@ -17,13 +17,13 @@
                 <li ng-repeat="section in sections">
                     <input id="create-board-section-name-{{$index}}" type="text" name="sectionName{{$index}}" ng-model="section.name" required autofocus />
                     <span error-message></span>
-                    <input type="button" value="-" ng-click="removeSection($index)" />
+                    <input type="button" value="-" ng-click="removeSection($index)" jq-ui="button" />
                 </li>
             </ul>
-            <input type="button" value="+" ng-click="addSection()" />
+            <input type="button" value="+" ng-click="addSection()" jq-ui="button" />
         </dd>
     </dl>
-    <input type="submit" value="Create" />
+    <input type="submit" value="Create" jq-ui="button" />
 </form>
 
 <ul>

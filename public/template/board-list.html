@@ -28,6 +28,6 @@
 
 <ul>
     <li ng-repeat="board in boards">
-        <a href="#/boards/{{board.id}}">{{board.name}}</a>
+        <a ng-click="goToBoard(board)">{{board.name}}</a>
     </li>
 </ul>

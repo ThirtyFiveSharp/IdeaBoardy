@@ -5,9 +5,38 @@
             $routeProvider.otherwise({templateUrl: 'template/board-list.html', controller: 'BoardListController'})
         }])
 
-        .controller('BoardListController', ['$scope', '$http',
-            function($scope, $http) {
+        .factory('params', ['$routeParams',
+            function($routeParams) {
+                var params = {},
+                    fresh = true;
+
+                return function(key, value) {
+                    if(arguments.length == 0) {
+                        fresh = false;
+                        return _.extend(_.clone(params), $routeParams);
+                    }
+                    if(arguments.length == 1) {
+                        fresh = false;
+                        return $routeParams[key] || params[key];
+                    }
+                    if(!fresh) {
+                        delete params;
+                        params = {};
+                        fresh = true;
+                    }
+                    params[key] = value;
+                };
+            }
+        ])
+
+        .controller('BoardListController', ['$scope', '$http', '$location', 'params',
+            function($scope, $http, $location, params) {
                 $http.get('/boards').success(function(boards) { $scope.boards = boards; });
+
+                $scope.goToBoard = function(board) {
+                    params('boardUri', getLink(board.links, 'board').href);
+                    $location.path('/boards/'+board.id);
+                };
             }
         ])
 
@@ -43,8 +72,8 @@
             }
         ])
 
-        .controller('BoardController', ['$scope', '$routeParams', '$resource', '$http',
-            function ($scope, $routeParams, $resource, $http) {
+        .controller('BoardController', ['$scope', '$resource', '$http', 'params',
+            function ($scope, $resource, $http, params) {
                 var BoardResource = $resource('/boards/:boardId'),
                     board;
 
@@ -81,7 +110,7 @@
                     });
                 };
 
-                board = $scope.board = BoardResource.get({boardId:$routeParams.boardId}, function () {
+                board = $scope.board = BoardResource.get({boardId:params('boardId')}, function () {
                     enhanceBoard(board);
                     $http.get(board.sectionsLink.href).success(function (sections) {
                         $scope.sections = sections;
@@ -113,7 +142,7 @@
             }
         ])
 
-        .controller('SectionController', ['$scope', '$routeParams', '$http',
+        .controller('SectionController', ['$scope', '$http',
             function ($scope, $http) {
                 $http.get(getLink($scope.section.links, 'ideas').href)
                     .success(function (ideas) {
@@ -138,7 +167,7 @@
             }
         ])
 
-        .controller('IdeaController', ['$scope', '$routeParams', '$http',
+        .controller('IdeaController', ['$scope', '$http',
             function ($scope, $http) {
             }
         ])

@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class IdeaTest < ActiveSupport::TestCase
+  setup do
+    Idea.delete_all
+  end
+
   test "idea content should not be blank" do
     assert_raise "Idea content should not be blank", ActiveRecord::RecordInvalid do
       Idea.create!(content: "")
@@ -29,6 +33,18 @@ class IdeaTest < ActiveSupport::TestCase
 
     actual_idea = Idea.find existed_idea.id
     assert_equal original_vote_number + 1, actual_idea.vote, "vote! should increase vote number by one"
+  end
+
+  test "should raise ActiveRecord::StaleObjectError when update already modified idea" do
+    Idea.create!(content: "idea_for_optimistic_lock")
+    idea1 = Idea.find_by_content("idea_for_optimistic_lock")
+    idea2 = Idea.find_by_content("idea_for_optimistic_lock")
+    idea1.content = "idea1"
+    idea1.save!
+    assert_raise "not allowed to update already modified idea", ActiveRecord::StaleObjectError do
+      idea2.content = "idea2"
+      idea2.save!
+    end
   end
 
 end

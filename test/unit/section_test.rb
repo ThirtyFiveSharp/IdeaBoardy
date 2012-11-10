@@ -51,4 +51,16 @@ class SectionTest < ActiveSupport::TestCase
       new_section.save!
     end
   end
+
+  test "should raise ActiveRecord::StaleObjectError when update already modified section" do
+    Section.create!(name: "section_for_optimistic_lock")
+    section1 = Section.find_by_name("section_for_optimistic_lock")
+    section2 = Section.find_by_name("section_for_optimistic_lock")
+    section1.name = "section1"
+    section1.save!
+    assert_raise "not allowed to update already modified idea", ActiveRecord::StaleObjectError do
+      section2.name = "section2"
+      section2.save!
+    end
+  end
 end

@@ -31,4 +31,16 @@ class BoardTest < ActiveSupport::TestCase
       Board.create!
     end
   end
+
+  test "should raise ActiveRecord::StaleObjectError when update already modified board" do
+    Board.create!(name: "board_for_optimistic_lock")
+    board1 = Board.find_by_name("board_for_optimistic_lock")
+    board2 = Board.find_by_name("board_for_optimistic_lock")
+    board1.name = "board1"
+    board1.save!
+    assert_raise "not allowed to update already modified idea", ActiveRecord::StaleObjectError do
+      board2.name = "board2"
+      board2.save!
+    end
+  end
 end

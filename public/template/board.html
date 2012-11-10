@@ -5,7 +5,7 @@
             <dt>Description</dt>
             <dd>{{board.description}}</dd>
         </dl>
-        <input type="button" value="Edit" ng-click="editBoard(board)"/>
+        <input type="button" value="Edit" ng-click="edit(board)"/>
     </div>
     <div ng-switch-when="edit">
         <ng-include src="'template/board-edit.html'" />
@@ -14,10 +14,7 @@
 <dl>
     <dt>Sections</dt>
     <dd>
-        <form name="create-section">
-            <input type="text" ng-model="section.name"/>
-            <input type="button" value="Create Section" ng-click="createSection()"/>
-        </form>
+        <ng-include src="'template/section-create.html'"/>
     </dd>
     <dd>
         <ul>

@@ -44,6 +44,13 @@ class SectionsControllerTest < ActionController::TestCase
     assert_equal @board.id, actual_section.board.id
   end
 
+  test "should return unprocessable_entity status when create a section without name" do
+    post :create, board_id: @board.id, section: {}
+    assert_response :unprocessable_entity
+    errors = ActiveSupport::JSON.decode @response.body
+    assert_includes errors["name"], "can't be blank"
+  end
+
   test "should return 404 Not Found when given board is not existed (POST)" do
     post :create, board_id: 99999, section: { name: "New section name" }
     assert_response :not_found
@@ -83,6 +90,13 @@ class SectionsControllerTest < ActionController::TestCase
     assert_blank @response.body
     actual_section = Section.find(@section1.id)
     assert_equal new_section_name, actual_section.name
+  end
+
+  test "should return unprocessable_entity status when clear name of a section" do
+    put :update, board_id: @board.id, id: @section1, section: { name: "" }
+    assert_response :unprocessable_entity
+    errors = ActiveSupport::JSON.decode @response.body
+    assert_includes errors["name"], "can't be blank"
   end
 
   test "should return 404 Not Found when section is not under given board (UPDATE)" do

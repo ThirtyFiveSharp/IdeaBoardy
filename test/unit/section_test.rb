@@ -32,6 +32,12 @@ class SectionTest < ActiveSupport::TestCase
     end
   end
 
+  test "section should have name" do
+    assert_raise "Section should have name", ActiveRecord::RecordInvalid do
+      Section.create!(name: "")
+    end
+  end
+
   test "sections with same name are allowed within different boards" do
     board = Board.create!(name: "Board name")
     another_board = Board.create!(name: "Another board name")

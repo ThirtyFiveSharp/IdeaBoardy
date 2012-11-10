@@ -71,8 +71,14 @@ angular.module('idea-boardy', ['ngResource'])
                 });
                 $http.get(board.sectionsLink.href).success(function (sections) {
                     $scope.sections = sections;
+                    _.each($scope.sections, function(section) {
+                        angular.extend(section, {
+                            mode: "view",
+                            edit: function() {this.mode = "edit";},
+                            cancel: function() {this.mode = "view";}
+                        });
+                    });
                 });
-
             });
             $scope.edit = function() {
                 $scope.mode = "edit";
@@ -83,8 +89,18 @@ angular.module('idea-boardy', ['ngResource'])
             $scope.save = function() {
                 $http.put(board.selfLink.href, $scope.board).success(reload);
             };
+            $scope.editSection = function(section) {
+                section.edit();
+            };
+            $scope.cancelEditSection = function(section) {
+                section.cancel();
+            }
             $scope.createSection = function() {
                 $http.post(board.sectionsLink.href, $scope.section).success(reload);
+            };
+            $scope.renameSection = function(section) {
+                var sectionLink = _.find(section.links, function(l) {return l.rel == 'section'});
+                $http.put(sectionLink.href, section).success(reload);
             };
             $scope.deleteSection = function(section) {
                 var sectionLink = _.find(section.links, function(l) {return l.rel == 'section'});

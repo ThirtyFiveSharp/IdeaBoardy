@@ -31,8 +31,18 @@
     <dd>
         <ul>
             <li ng-repeat="section in sections">
-                <h2>{{section.name}}</h2>
-                <input type="button" value="Delete" ng-click="deleteSection(section)"/>
+                <div ng-switch on="section.mode">
+                    <div ng-switch-when="view">
+                        {{section.name}}
+                        <input type="button" value="Edit" ng-click="editSection(section)"/>
+                    </div>
+                    <div ng-switch-when="edit">
+                        <input type="text" ng-model="section.name"/>
+                        <input type="button" value="Rename" ng-click="renameSection(section)"/>
+                        <input type="button" value="Delete" ng-click="deleteSection(section)"/>
+                        <input type="button" value="Back" ng-click="cancelEditSection(section)"/>
+                    </div>
+                </div>
             </li>
         </ul>
     </dd>

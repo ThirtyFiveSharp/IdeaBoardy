@@ -22,7 +22,7 @@
                 <div ng-switch on="section.mode">
                     <div ng-switch-when="view">
                         {{section.name}}
-                        <input type="button" value="Edit" ng-click="editSection(section)"/>
+                        <input type="button" value="Edit" ng-click="section.edit()" ng-disabled="!section.editable"/>
                     </div>
                     <div ng-switch-when="edit">
                         <ng-include src="'template/section-edit.html'" />

@@ -62,8 +62,22 @@
                     angular.extend(section, {
                         selfLink: _.find(section.links, function(l) {return l.rel == 'section'}),
                         mode: "view",
-                        edit: function() {this.mode = "edit";},
-                        cancel: function() {this.mode = "view";}
+                        editable: true,
+                        enable: function() {this.editable = true},
+                        disable: function() {this.editable = false},
+                        edit: function() {
+                            _.each($scope.sections, function(section) {
+                               section.disable();
+                            });
+                            this.enable();
+                            this.mode = "edit";
+                        },
+                        cancel: function() {
+                            _.each($scope.sections, function(section) {
+                                section.enable();
+                            });
+                            this.mode = "view";
+                        }
                     });
                 };
 

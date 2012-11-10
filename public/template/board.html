@@ -37,10 +37,7 @@
                         <input type="button" value="Edit" ng-click="editSection(section)"/>
                     </div>
                     <div ng-switch-when="edit">
-                        <input type="text" ng-model="section.name"/>
-                        <input type="button" value="Rename" ng-click="renameSection(section)"/>
-                        <input type="button" value="Delete" ng-click="deleteSection(section)"/>
-                        <input type="button" value="Back" ng-click="cancelEditSection(section)"/>
+                        <ng-include src="'template/section-edit.html'" />
                     </div>
                 </div>
             </li>

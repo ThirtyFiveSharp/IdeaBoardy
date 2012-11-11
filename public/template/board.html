@@ -1,15 +1,15 @@
-<div id="board" class="clear-fix">
+<div id="board" class="clear-fix" ng-controller="BoardController">
     <div id="board-title" class="clear-fix" ng-switch on="board.mode">
         <div ng-switch-when="view">
+            <dl class="board-info">
+                <dd class="name"><span>{{board.name}}</span></dd>
+                <dd class="description"><span>{{board.description}}</span></dd>
+            </dl>
             <div class="command-bar">
                 <input class="btn-3 btn-delete" type="button" value="Delete" ng-click="board.delete()" jq-ui="button"/>
                 <input class="btn-3" type="button" value="Edit" ng-click="board.edit()" jq-ui="button"/>
                 <input class="btn-3" type="button" value="+ 1 section" ng-click="addSection()" jq-ui="button"/>
             </div>
-            <dl class="board-info">
-                <dd class="name"><span>{{board.name}}</span></dd>
-                <dd class="description"><span>{{board.description}}</span></dd>
-            </dl>
         </div>
         <div ng-switch-when="edit">
             <form name="editBoardForm" ng-controller="EditBoardController">
@@ -45,7 +45,8 @@
             </div>
         </li>
     </ul>
+
+    <ng-include src="'template/section-create.html'"></ng-include>
+    <ng-include src="'template/board-delete.html'"></ng-include>
 </div>
 
-<ng-include src="'template/board-delete.html'" />
-<ng-include src="'template/section-create.html'" />

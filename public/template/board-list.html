@@ -1,13 +1,15 @@
-<div class="guide">Select a board</div>
+<div ng-controller="BoardListController">
+    <div class="guide">Select a board</div>
 
-<ul id="board-list">
-    <li ng-repeat="board in boards">
-        <a class="board-name" ng-click="goToBoard(board)">{{board.name}}</a>
-    </li>
+    <ul id="board-list">
+        <li ng-repeat="board in boards">
+            <a class="board-name" ng-click="goToBoard(board)">{{board.name}}</a>
+        </li>
 
-    <li class="blank">
-        <a class="board-name" ng-click="createNewBoard()">+ 1 board</a>
-    </li>
-</ul>
+        <li class="blank">
+            <a class="board-name" ng-click="createNewBoard()">+ 1 board</a>
+        </li>
+    </ul>
 
-<ng-include src="'template/board-create.html'" />
+    <ng-include src="'template/board-create.html'" />
+</div>

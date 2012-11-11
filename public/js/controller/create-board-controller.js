@@ -3,7 +3,6 @@ angular.module('idea-boardy')
         function ($scope, $route, $http, $timeout) {
             $scope.board = {};
             $scope.sections = [];
-
             $scope.create = function () {
                 if (!$scope.createBoardForm.$valid) return;
                 $scope.isCreateBoardDialogVisible = false;

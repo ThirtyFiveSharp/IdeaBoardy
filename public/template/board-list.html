@@ -6,41 +6,8 @@
     </li>
 
     <li class="blank">
-        <a class="board-name" ng-click="createNewBoard()">+ 1</a>
+        <a class="board-name" ng-click="createNewBoard()">+ 1 board</a>
     </li>
 </ul>
 
-<div id="create-board-form" title="Create A New Board" ng-controller="CreateBoardController"
-     jq-ui-dialog='{"width": 400}' ng-show="isCreateBoardDialogVisible" on-close="resetCreateBoardForm" ng-cloak>
-    <form name="createBoardForm" ng-submit="create()" >
-        <dl>
-            <dt><label for="create-board-name">Name:</label></dt>
-            <dd>
-                <input id="create-board-name" type="text" name="name" ng-model="board.name" required autofocus />
-                <span error-message></span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>Description:</dt>
-            <dd><input type="text" name="description" ng-model="board.description"/></dd>
-        </dl>
-        <dl>
-            <dt>Sections:</dt>
-            <dd>
-                <ul>
-                    <li class="section" ng-repeat="section in sections">
-                        <input id="create-board-section-name-{{$index}}" type="text" name="sectionName{{$index}}" ng-model="section.name" required autofocus />
-                        <span error-message></span>
-                        <input class="btn-1" type="button" value="-" ng-click="removeSection($index)" jq-ui="button" />
-                    </li>
-                </ul>
-                <input class="btn-3" type="button" value="+1 section" ng-click="addSection()" jq-ui="button" />
-            </dd>
-        </dl>
-        <dl>
-            <input id="create-board" class="btn-ok" type="submit" value="OK" jq-ui="button" />
-        </dl>
-    </form>
-</div>
-
-<div class="clear-fix"></div>
+<ng-include src="'template/board-create.html'" />

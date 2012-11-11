@@ -1,5 +1,16 @@
-<form name="createSectionForm" ng-controller="CreateSectionController">
-    <input type="text" ng-model="section.name" required />
-    <span error-message></span>
-    <input type="button" value="Create" ng-click="create()" ng-disabled="!createSectionForm.$valid"/>
-</form>
+<div title="Create A New Section" ng-controller="CreateSectionController"
+     jq-ui-dialog='{"width": 350}' ng-show="isCreateSectionFormVisible" on-close="resetCreateSectionForm" ng-cloak>
+    <form id="create-section-form" name="createSectionForm">
+        <dl>
+            <dt>Section Name</dt>
+            <dd>
+                <input type="text" ng-model="section.name" required autofocus />
+                <span error-message></span>
+            </dd>
+        </dl>
+        <dl>
+            <input id="create-section" class="btn-3 btn-ok" type="button" value="Create"
+                   ng-click="create()" ng-disabled="!createSectionForm.$valid" jq-ui="button" />
+        </dl>
+    </form>
+</div>

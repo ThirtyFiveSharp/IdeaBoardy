@@ -29,16 +29,18 @@
     <script type="text/javascript" src="js/controller/create-board-controller.js"></script>
     <script type="text/javascript" src="js/controller/board-controller.js"></script>
     <script type="text/javascript" src="js/controller/edit-board-controller.js"></script>
+    <script type="text/javascript" src="js/controller/delete-board-controller.js"></script>
     <script type="text/javascript" src="js/controller/create-section-controller.js"></script>
     <script type="text/javascript" src="js/controller/section-controller.js"></script>
     <script type="text/javascript" src="js/controller/edit-section-controller.js"></script>
     <script type="text/javascript" src="js/controller/idea-controller.js"></script>
 </head>
 <body>
-    <header>IdeaBoardy - Put your ideas on board, now!</header>
-    <div id="main">
+    <header><a href="#">IdeaBoardy - Put your ideas on board, now!</a></header>
+    <div id="main" class="clear-fix">
         <ng-view></ng-view>
     </div>
+    <a name="footer"></a>
     <footer>
         IdeaBoardy v<span id="version-info"></span>
     </footer>

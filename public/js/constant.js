@@ -1,3 +1,5 @@
 var ScopeEvent = {
-    createNewBoard: 'CreateNewBoard'
+    createNewBoard: 'createNewBoard',
+    createNewSection: 'createNewSection',
+    deleteBoard: 'deleteBoard'
 };

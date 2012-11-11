@@ -1,35 +1,51 @@
-<h1>{{board.name}}</h1>
-<div ng-switch on="board.mode">
-    <div ng-switch-when="view">
-        <dl>
-            <dt>Description</dt>
-            <dd>{{board.description}}</dd>
-        </dl>
-        <input type="button" value="Edit" ng-click="board.edit()"/>
-    </div>
-    <div ng-switch-when="edit">
-        <ng-include src="'template/board-edit.html'" />
-    </div>
-</div>
-<dl>
-    <dt>Sections</dt>
-    <dd>
-        <ng-include src="'template/section-create.html'"/>
-    </dd>
-    <dd>
-        <ul>
-            <li ng-repeat="section in sections">
-                <div ng-switch on="section.mode">
-                    <div ng-switch-when="view">
-                        {{section.name}}
-                        <input type="button" value="Edit" ng-click="section.edit()" ng-disabled="!section.editable"/>
-                        <ng-include src="'template/ideas.html'" />
-                    </div>
-                    <div ng-switch-when="edit">
-                        <ng-include src="'template/section-edit.html'" />
-                    </div>
+<div id="board" class="clear-fix">
+    <div id="board-title" class="clear-fix" ng-switch on="board.mode">
+        <div ng-switch-when="view">
+            <div class="command-bar">
+                <input class="btn-3 btn-delete" type="button" value="Delete" ng-click="board.delete()" jq-ui="button"/>
+                <input class="btn-3" type="button" value="Edit" ng-click="board.edit()" jq-ui="button"/>
+                <input class="btn-3" type="button" value="+ 1 section" ng-click="addSection()" jq-ui="button"/>
+            </div>
+            <dl class="board-info">
+                <dd class="name"><span>{{board.name}}</span></dd>
+                <dd class="description"><span>{{board.description}}</span></dd>
+            </dl>
+        </div>
+        <div ng-switch-when="edit">
+            <form name="editBoardForm" ng-controller="EditBoardController">
+                <dl class="board-info">
+                    <dd class="name">
+                        <input type="text" ng-model="editingBoard.name" required autofocus />
+                        <span error-message></span>
+                    </dd>
+                    <dd class="description">
+                        <input type="text" ng-model="editingBoard.description"/>
+                    </dd>
+                </dl>
+                <div class="command-bar">
+                    <input class="btn-3 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button" />
+                    <input class="btn-3 btn-ok" type="button" value="Save" ng-click="save()" ng-disabled="!editBoardForm.$valid" jq-ui="button" />
                 </div>
-            </li>
-        </ul>
-    </dd>
-</dl>
+            </form>
+        </div>
+    </div>
+
+    <ul id="section-list">
+        <li ng-repeat="section in sections">
+            <div ng-switch on="section.mode">
+                <div ng-switch-when="view">
+                    {{section.name}}
+                    <input class="btn-2" type="button" value="Edit" ng-click="section.edit()"
+                           ng-disabled="!section.editable" jq-ui="button"/>
+                    <ng-include src="'template/ideas.html'"/>
+                </div>
+                <div ng-switch-when="edit">
+                    <ng-include src="'template/section-edit.html'"/>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<ng-include src="'template/board-delete.html'" />
+<ng-include src="'template/section-create.html'" />

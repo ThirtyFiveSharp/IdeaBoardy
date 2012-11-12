@@ -18,6 +18,9 @@ angular.module('idea-boardy')
                     });
                 });
             };
+            $scope.cancel = function() {
+                $scope.isCreateBoardDialogVisible = false;
+            };
             $scope.resetCreateBoardForm = function() {
                 $scope.board = {};
                 $scope.sections = [];

@@ -5,11 +5,11 @@ angular.module('idea-boardy')
         };
     })
 
-    .directive('jqUiDialog', function () {
+    .directive('jqUiDialog', ['$parse', function ($parse) {
         return function (scope, element, attrs) {
             var options = JSON.parse(attrs.jqUiDialog || '{}'),
                 visibilityExpr = attrs.ngShow,
-                onCloseFnExpr = attrs.onClose;
+                closeExpr = attrs.close;
             element.dialog(_.extend(options, {
                 title:attrs.title,
                 autoOpen:false,
@@ -17,8 +17,8 @@ angular.module('idea-boardy')
                 resizable:false,
                 position:{my:'center center-50%', at:'center', of:window},
                 close:function () {
-                    scope[visibilityExpr] = false;
-                    (scope[onCloseFnExpr] || angular.noop)();
+                    $parse(visibilityExpr).assign(scope, false) ;
+                    $parse(closeExpr)(scope);
                 }
             }));
             scope.$watch(function () {
@@ -28,4 +28,4 @@ angular.module('idea-boardy')
                 }
             });
         }
-    });
+    }]);

@@ -1,6 +1,6 @@
 <div ng-controller="CreateBoardController">
     <div title="Create A New Board" jq-ui-dialog='{"width": 400}'
-         ng-show="isCreateBoardDialogVisible" on-close="resetCreateBoardForm" ng-cloak>
+         ng-show="isCreateBoardDialogVisible" close="resetCreateBoardForm()" ng-cloak>
         <form id="create-board-form"  name="createBoardForm" ng-submit="create()" >
             <dl>
                 <dt>Name:</dt>
@@ -27,8 +27,9 @@
                 </dd>
             </dl>
             <dl>
-                <input id="create-board" class="btn-3 btn-ok" type="submit" value="OK"
+                <input id="create-board" class="btn-3 btn-ok" type="submit" value="Create"
                        ng-disabled="!createBoardForm.$valid" jq-ui="button" />
+                <input class="btn-3 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button" />
             </dl>
         </form>
     </div>

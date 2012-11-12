@@ -48,6 +48,9 @@ angular.module('idea-boardy')
                         this.enable();
                         this.mode = "edit";
                     },
+                    delete:function() {
+                        $scope.$broadcast(ScopeEvent.deleteSection, this);
+                    },
                     cancel:function () {
                         _.each($scope.sections, function (section) {
                             section.enable();

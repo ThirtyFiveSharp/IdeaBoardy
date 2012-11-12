@@ -1,0 +1,13 @@
+<div ng-controller="DeleteSectionController">
+    <div id="delete-section-dialog" title="Delete A Section"
+         jq-ui-dialog='{"width": 400}' ng-show="isDeleteSectionDialogVisible" ng-cloak >
+        <p>All ideas under this section will be deleted as well.</p>
+        <p>Is that OK?</p>
+        <div class="command-bar">
+            <input class="btn-5 btn-ok" type="button" value="Yes, go ahead."
+                   ng-click="delete(section)" jq-ui="button" />
+            <input class="btn-5 btn-cancel" type="button" value="No, take me back."
+                   ng-click="close()" jq-ui="button" />
+        </div>
+    </div>
+</div>

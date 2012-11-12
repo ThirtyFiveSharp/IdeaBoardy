@@ -6,9 +6,6 @@ angular.module('idea-boardy')
             $scope.rename = function () {
                 $http.put($scope.editingSection.selfLink.href, $scope.editingSection).success($route.reload);
             };
-            $scope.delete = function () {
-                $http.delete($scope.editingSection.selfLink.href).success($route.reload);
-            };
             $scope.cancel = function () {
                 $scope.section.cancel();
             };

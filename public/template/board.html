@@ -37,6 +37,8 @@
                     {{section.name}}
                     <input class="btn-2" type="button" value="Edit" ng-click="section.edit()"
                            ng-disabled="!section.editable" jq-ui="button"/>
+                    <input class="btn-2 btn-delete" type="button" value="Delete" ng-click="section.delete()"
+                           jq-ui="button"/>
                     <ng-include src="'template/ideas.html'"/>
                 </div>
                 <div ng-switch-when="edit">
@@ -48,5 +50,6 @@
 
     <ng-include src="'template/section-create.html'"></ng-include>
     <ng-include src="'template/board-delete.html'"></ng-include>
+    <ng-include src="'template/section-delete.html'"></ng-include>
 </div>
 

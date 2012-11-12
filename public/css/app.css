@@ -72,3 +72,6 @@ input.btn-delete.ui-state-hover { background: #ffc0cb;}
 #delete-section-dialog p { margin: 0em 0 1em; font-size: 1.1em;}
 #delete-section-dialog .command-bar { margin-bottom: 0.5em; }
 
+.launchy { display:none; position: fixed; top: 38.2%; left:50%; width: 30em; height: 6em; margin:-3em 0 0 -15em; border: 1px #a9a9a9 solid; background-color: #f3f3f3; -moz-border-radius: 15px; border-radius: 15px; }
+.launchy .tip { position: absolute; top: 0.7em; left: 50%; width: 16em; margin-left: -8em; border: 1px transparent solid; font-size: 1.2em; text-align: center; }
+.launchy .command {position: absolute; top:61.8%; left: 50%; width: 16em; height: 2em; margin: -1em 0 0 -8em; border-top: none; border-right: none; border-left: none; border-bottom: 1px #a9a9a9 solid; background-color: transparent; font-size: 1.5em;}

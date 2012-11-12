@@ -38,10 +38,10 @@
                         <dd class="name"><span>{{section.name}}</span></dd>
                     </dl>
                     <div class="command-bar">
+                        <input class="btn-2 btn-delete" type="button" value="Delete" ng-click="section.delete()"
+                               jq-ui="button"/>
                         <input class="btn-2" type="button" value="Edit" ng-click="section.edit()"
                            ng-disabled="!section.editable" jq-ui="button"/>
-                        <input class="btn-2 btn-delete" type="button" value="Delete" ng-click="section.delete()"
-                           jq-ui="button"/>
                     </div>
                     <ng-include src="'template/ideas.html'"/>
                 </div>

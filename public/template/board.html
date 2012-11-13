@@ -42,6 +42,7 @@
                                jq-ui="button"/>
                         <input class="btn-2" type="button" value="Edit" ng-click="section.edit()"
                            ng-disabled="!section.editable" jq-ui="button"/>
+                        <input class="btn-2" type="button" value="+ 1 idea" ng-click="section.addIdea()" jq-ui="button"/>
                     </div>
                     <ng-include src="'template/ideas.html'"/>
                 </div>
@@ -55,5 +56,6 @@
     <ng-include src="'template/section-create.html'"></ng-include>
     <ng-include src="'template/board-delete.html'"></ng-include>
     <ng-include src="'template/section-delete.html'"></ng-include>
+    <ng-include src="'template/idea-create.html'"></ng-include>
 </div>
 

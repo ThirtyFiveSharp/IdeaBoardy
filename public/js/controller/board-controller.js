@@ -51,6 +51,9 @@ angular.module('idea-boardy')
                     delete:function() {
                         $scope.$broadcast(ScopeEvent.deleteSection, this);
                     },
+                    addIdea:function() {
+                        $scope.$broadcast(ScopeEvent.createNewIdea, this);
+                    },
                     cancel:function () {
                         _.each($scope.sections, function (section) {
                             section.enable();

@@ -1,0 +1,19 @@
+<div ng-controller="CreateIdeaController">
+    <div title="Create A New Idea" jq-ui-dialog='{"width": 350}'
+         ng-show="isCreateIdeaFormVisible" close="resetCreateSectionForm()" ng-cloak>
+        <form id="create-Idea-form" name="createSectionForm" ng-submit="create()">
+            <dl>
+                <dt>Idea Content</dt>
+                <dd>
+                    <textarea ng-model="Idea.content" required autofocus />
+                    <span error-message></span>
+                </dd>
+            </dl>
+            <dl>
+                <input id="create-Idea" class="btn-3 btn-ok" type="submit" value="Create"
+                       ng-disabled="!createSectionForm.$valid" jq-ui="button" />
+                <input class="btn-3 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button" />
+            </dl>
+        </form>
+    </div>
+</div>

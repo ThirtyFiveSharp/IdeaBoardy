@@ -1,6 +1,6 @@
-<div ng:controller="IdeaController">
-    <div ng:repeat="idea in ideas">
+<ul id="idea-list" ng:controller="IdeaController">
+    <li ng:repeat="idea in ideas">
         <sticker ng:model="idea" />
-    </div>
+    </li>
     <input type="button" ng:click="addIdeas()" />
-</div>
+</ul>

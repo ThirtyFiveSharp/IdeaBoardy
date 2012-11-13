@@ -1,5 +1,5 @@
 angular.module('idea-boardy')
-    .directive('sticker', function () {
+    .directive('sticker', ['$http', function ($http) {
     return {
         template:'<div>'
             + ' <div class="dialog" title="Sticker Edition">'
@@ -20,20 +20,25 @@ angular.module('idea-boardy')
                 dialog = element.find('.dialog'),
                 opener = element.find('.opener');
 
+
             ngModel.$formatters.push(function(modelValue){
-                sticker = modelValue;
+                sticker = scope.sticker = transformSticker(modelValue);
             });
+
+            function transformSticker(newSticker){
+                newSticker.update = function(){
+                     $http.put(sticker.links.getLink("idea").href, { content: sticker.newContent});
+                };
+                return newSticker;
+            }
 
             scope.showDialog = function () {
                 sticker.newContent = sticker.content;
                 dialog.dialog("open");
             };
 
-            scope.showDialog = function () {
-                dialog.dialog("open");
-            };
-
             scope.update = function () {
+                sticker.update();
                 sticker.content = sticker.newContent;
                 dialog.dialog("close");
             };
@@ -46,7 +51,6 @@ angular.module('idea-boardy')
                 sticker.vote++;
             };
 
-//            $.fx.speeds._default = 1000;
             $(function () {
                 dialog.dialog({
                     autoOpen:false,
@@ -61,4 +65,4 @@ angular.module('idea-boardy')
             });
         }
     }
-});
+}]);

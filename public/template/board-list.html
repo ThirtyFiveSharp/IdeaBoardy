@@ -1,12 +1,12 @@
 <div ng-controller="BoardListController">
     <div class="guide">Select a board</div>
 
-    <ul id="board-list">
-        <li ng-repeat="board in boards">
+    <ul class="board-list">
+        <li class="board" ng-repeat="board in boards">
             <a class="board-name" ng-click="goToBoard(board)">{{board.name}}</a>
         </li>
 
-        <li class="blank">
+        <li class="board blank">
             <a class="board-name" ng-click="createNewBoard()">+ 1 board</a>
         </li>
     </ul>

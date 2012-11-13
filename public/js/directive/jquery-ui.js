@@ -15,7 +15,9 @@ angular.module('idea-boardy')
                 autoOpen:false,
                 modal:true,
                 resizable:false,
-                position:{my:'center center-50%', at:'center', of:window},
+                position:{my:'center center-30%', at:'center', of:window},
+                show: 'fade',
+                hide: 'fade',
                 close:function () {
                     $parse(visibilityExpr).assign(scope, false) ;
                     $parse(closeExpr)(scope);

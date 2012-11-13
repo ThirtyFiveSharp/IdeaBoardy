@@ -1,6 +1,10 @@
-<ul id="idea-list" ng:controller="IdeaController">
-    <li ng:repeat="idea in ideas">
-        <sticker ng:model="idea" />
-    </li>
-    <input type="button" ng:click="addIdeas()" />
-</ul>
+<div ng:controller="IdeaController">
+    <ul class="idea-list clear-fix">
+        <li class="idea" ng:repeat="idea in ideas">
+           <sticker ng:model="idea"/>
+        </li>
+        <li class="idea blank">
+            <idea-creation ng:model="section"/>
+        </li>
+    </ul>
+</div>

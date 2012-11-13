@@ -30,9 +30,9 @@
         </div>
     </div>
 
-    <ul id="section-list">
-        <li ng-repeat="section in sections">
-            <div ng-switch on="section.mode">
+    <ul class="section-list clear-fix">
+        <li class="section" ng-repeat="section in sections">
+            <div class="section-title clear-fix" ng-switch on="section.mode">
                 <div ng-switch-when="view">
                     <dl class="section-info">
                         <dd class="name"><span>{{section.name}}</span></dd>
@@ -42,14 +42,24 @@
                                jq-ui="button"/>
                         <input class="btn-2" type="button" value="Edit" ng-click="section.edit()"
                            ng-disabled="!section.editable" jq-ui="button"/>
-                        <idea-creation ng:model="section"/>
                     </div>
-                    <ng-include src="'template/ideas.html'"/>
                 </div>
                 <div ng-switch-when="edit">
-                    <ng-include src="'template/section-edit.html'"/>
+                    <form name="editSectionForm" ng-controller="EditSectionController" ng-submit="save()">
+                        <dl class="section-info">
+                            <dd class="name">
+                                <input class="name" type="text" ng-model="editingSection.name" required autofocus />
+                                <!--<span error-message></span>-->
+                            </dd>
+                        </dl>
+                        <div class="command-bar">
+                            <input class="btn-2 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button"/>
+                            <input class="btn-2 btn-ok" type="submit" value="Save" ng-disabled="!editSectionForm.$valid" jq-ui="button"/>
+                        </div>
+                    </form>
                 </div>
             </div>
+            <ng-include src="'template/ideas.html'"/>
         </li>
     </ul>
 

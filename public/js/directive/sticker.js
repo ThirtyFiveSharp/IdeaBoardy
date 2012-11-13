@@ -9,20 +9,30 @@ angular.module('idea-boardy').directive('doubleClick', ['$parse', function ($par
     };
 }]);
 
-
 angular.module('idea-boardy')
     .directive('sticker', ['$http', '$route', function ($http, $route) {
     return {
         template:'<div>'
-            + ' <div class="dialog" title="Sticker Edition">'
-            + '     <textarea ng:model="sticker.newContent"/>'
-            + '     <input type="button" value="Update" ng:click="update()">'
-            + '     <input type="button" value="Cancel" ng:click="cancel()">'
+            + ' <div class="edit-idea-dialog" title="Edit An Idea">'
+            + '     <dl>'
+            + '         <textarea style="width:100%; height: 5em;" ng:model="sticker.newContent"/>'
+            + '     </dl>'
+            + '     <div class="command-bar">'
+            + '         <input class="btn-3 btn-ok" type="button" value="OK" ng:click="update()" jq-ui="button" />'
+            + '         <input class="btn-3 btn-cancel" type="button" value="Cancel" ng:click="cancelEdit()" jq-ui="button" />'
+            + '     </div>        '
             + ' </div>        '
-            + ' <div style="width: 100; height: 100px;" double-click="showDialog()">{{sticker.content}}</div>'
-            + ' <span>{{sticker.vote}}</span>'
-            + ' <input class="btn-1 btn-cancel" type="button" value="+1" ng:click="vote()" jq-ui="button">'
-            + ' <input class="btn-1 btn-delete"type="button" value="X" ng:click="delete()" jq-ui="button">'
+            + ' <div class="delete-idea-dialog" title="Delete An Idea">'
+            + '     <p>This brilliant idea is to be delete.</p>'
+            + '     <p>Is that OK?</p>'
+            + '     <div class="command-bar">'
+            + '         <input class="btn-5 btn-ok" type="button" value="Yes, go ahead." ng:click="delete()" jq-ui="button" />'
+            + '         <input class="btn-5 btn-cancel" type="button" value="No, take me back." ng:click="cancelDelete()" jq-ui="button" />'
+            + '     </div>'
+            + ' </div>        '
+            + ' <div class="idea-wrapper"><div class="idea-info"><a class="idea-content" ng-click="showEditDialog()">{{sticker.content}}</a></div></div>'
+            + ' <input class="btn-2 btn-trivial" type="button" value="+{{sticker.vote}}" ng:click="vote()" jq-ui="button" />'
+            + ' <input class="btn-2 btn-trivial" type="button" value="Delete" ng:click="showDeleteDialog()" jq-ui="button" />'
             + '</div>',
         replace:true,
         restrict:'E',
@@ -30,14 +40,13 @@ angular.module('idea-boardy')
         require:"ngModel",
         link:function (scope, element, attr, ngModel) {
             var sticker,
-                dialog = element.find('.dialog'),
-                opener = element.find('.opener');
+                editDialog = element.find('.edit-idea-dialog'),
+                deleteDialog = element.find('.delete-idea-dialog');
 
 
             ngModel.$formatters.push(function (modelValue) {
                 $http.get(modelValue.links.getLink("idea").href).success(function (data) {
                     sticker = scope.sticker = enhanceSticker(data);
-                    console.log("sticker", sticker)
                 });
             });
 
@@ -54,19 +63,27 @@ angular.module('idea-boardy')
                 return newSticker;
             }
 
-            scope.showDialog = function () {
+            scope.showEditDialog = function () {
                 sticker.newContent = sticker.content;
-                dialog.dialog("open");
+                editDialog.dialog("open");
+            };
+
+            scope.showDeleteDialog = function () {
+                deleteDialog.dialog("open");
             };
 
             scope.update = function () {
+                editDialog.dialog("close");
                 sticker.update();
                 sticker.content = sticker.newContent;
-                dialog.dialog("close");
             };
 
-            scope.cancel = function () {
-                dialog.dialog("close");
+            scope.cancelEdit = function () {
+                editDialog.dialog("close");
+            };
+
+            scope.cancelDelete = function () {
+                deleteDialog.dialog("close");
             };
 
             scope.vote = function () {
@@ -74,44 +91,54 @@ angular.module('idea-boardy')
             };
 
             scope.delete = function () {
+                deleteDialog.dialog("close");
                 sticker.delete();
             };
 
             $(function () {
-                dialog.dialog({
+                editDialog.dialog({
                     autoOpen:false,
-                    show:"blind",
-                    hide:"explode"
+                    resizable:false,
+                    width:400,
+                    position: {of: element},
+                    show:"fade",
+                    hide:"fade"
                 });
-
-                opener.click(function () {
-                    dialog.dialog("open");
-                    return false;
+                deleteDialog.dialog({
+                    autoOpen:false,
+                    modal:true,
+                    resizable:false,
+                    width:400,
+                    show:"fade",
+                    hide:"fade"
                 });
             });
         }
     }
 }]);
 
-
 angular.module('idea-boardy')
     .directive('ideaCreation', ['$http', '$route', function ($http, $route) {
     return {
-        template:'<div>'
-            + ' <div class="dialog" title="Create a New Idea">'
-            + '     <textarea ng:model="idea.content"/>'
-            + '     <input type="button" value="Create" ng:click="createNewIdea()">'
-            + '     <input type="button" value="Cancel" ng:click="cancel()">'
+        template:'<a ng:click="showDialog()">'
+            + ' <div class="create-idea-dialog" title="Create A New Idea">'
+            + '     <dl>'
+            + '         <textarea style="width:100%; height: 5em;" ng:model="idea.content"/>'
+            + '     </dl>'
+            + '     <div class="command-bar">'
+            + '         <input class="btn-3 btn-ok" type="button" value="OK" ng:click="createNewIdea()" jq-ui="button" />'
+            + '         <input class="btn-3 btn-cancel" type="button" value="Cancel" ng:click="cancel()" jq-ui="button" />'
+            + '     </div>        '
             + ' </div>        '
-            + ' <input type="button" class="btn-2"  jq-ui="button" value="+ 1 idea" ng:click="showDialog()">'
-            + '</div>',
+            + ' + 1 idea '
+            + '</a>',
         replace:true,
         restrict:'E',
         scope:true,
         require:"ngModel",
         link:function (scope, element, attr, ngModel) {
             var section,
-                dialog = element.find('.dialog');
+                dialog = element.find('.create-idea-dialog');
 
             ngModel.$formatters.push(function (modelValue) {
                 $http.get(modelValue.links.getLink("section").href).success(function (data) {
@@ -132,8 +159,8 @@ angular.module('idea-boardy')
             };
 
             scope.createNewIdea = function () {
-                section.createNewIdea();
                 dialog.dialog("close");
+                section.createNewIdea();
             };
 
             scope.cancel = function () {
@@ -143,8 +170,11 @@ angular.module('idea-boardy')
             $(function () {
                 dialog.dialog({
                     autoOpen:false,
-                    show:"blind",
-                    hide:"explode"
+                    resizable:false,
+                    width:400,
+                    position:{of: element},
+                    show:"fade",
+                    hide:"fade"
                 });
             });
         }

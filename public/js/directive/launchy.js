@@ -5,15 +5,15 @@
     ];
 
     function createBoard(input) {
-        console.log('Create board: ', input);
+//        console.log('Create board: ', input);
     }
 
     function deleteBoard(input) {
-        console.log('Delete board: ', input);
+//        console.log('Delete board: ', input);
     }
 
     function search(input) {
-        console.log('Search for: ', input);
+//        console.log('Search for: ', input);
     }
 
     angular.module('idea-boardy')
@@ -38,9 +38,9 @@
                         }
 
                         function printDebugInfo() {
-                            console.log('========key pressed========')
-                            console.log(e)
-                            console.log(e.originalEvent.originalTarget)
+//                            console.log('========key pressed========')
+//                            console.log(e)
+//                            console.log(e.originalEvent.originalTarget)
                         }
                     });
                 }

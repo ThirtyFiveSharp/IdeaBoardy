@@ -21,8 +21,8 @@ angular.module('idea-boardy')
             + ' </div>        '
             + ' <div style="width: 100; height: 100px;" double-click="showDialog()">{{sticker.content}}</div>'
             + ' <span>{{sticker.vote}}</span>'
-            + ' <input type="button" value="Vote" ng:click="vote()">'
-            + ' <input type="button" value="Delete" ng:click="delete()">'
+            + ' <input class="btn-1 btn-cancel" type="button" value="+1" ng:click="vote()" jq-ui="button">'
+            + ' <input class="btn-1 btn-delete"type="button" value="X" ng:click="delete()" jq-ui="button">'
             + '</div>',
         replace:true,
         restrict:'E',

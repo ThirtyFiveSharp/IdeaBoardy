@@ -1,5 +1,17 @@
+angular.module('idea-boardy').directive('doubleClick', ['$parse', function ($parse) {
+    return function (scope, element, attr) {
+        var fn = $parse(attr['doubleClick']);
+        element.bind('dblclick', function (event) {
+            scope.$apply(function () {
+                fn(scope, {$event:event});
+            });
+        });
+    };
+}]);
+
+
 angular.module('idea-boardy')
-    .directive('sticker', ['$http', '$route',  function ($http, $route) {
+    .directive('sticker', ['$http', '$route', function ($http, $route) {
     return {
         template:'<div>'
             + ' <div class="dialog" title="Sticker Edition">'
@@ -7,7 +19,7 @@ angular.module('idea-boardy')
             + '     <input type="button" value="Update" ng:click="update()">'
             + '     <input type="button" value="Cancel" ng:click="cancel()">'
             + ' </div>        '
-            + ' <div style="width: 100; height: 100px;" ng:click="showDialog()">{{sticker.content}}</div>'
+            + ' <div style="width: 100; height: 100px;" double-click="showDialog()">{{sticker.content}}</div>'
             + ' <span>{{sticker.vote}}</span>'
             + ' <input type="button" value="Vote" ng:click="vote()">'
             + ' <input type="button" value="Delete" ng:click="delete()">'
@@ -22,21 +34,21 @@ angular.module('idea-boardy')
                 opener = element.find('.opener');
 
 
-            ngModel.$formatters.push(function(modelValue){
-                $http.get(modelValue.links.getLink("idea").href).success(function(data){
+            ngModel.$formatters.push(function (modelValue) {
+                $http.get(modelValue.links.getLink("idea").href).success(function (data) {
                     sticker = scope.sticker = enhanceSticker(data);
                     console.log("sticker", sticker)
                 });
             });
 
-            function enhanceSticker(newSticker){
-                newSticker.update = function(){
-                    $http.put(sticker.links.getLink("self").href, { content: sticker.newContent});
+            function enhanceSticker(newSticker) {
+                newSticker.update = function () {
+                    $http.put(sticker.links.getLink("self").href, { content:sticker.newContent});
                 };
-                newSticker.addVote = function(){
+                newSticker.addVote = function () {
                     $http.post(sticker.links.getLink("vote").href).success($route.reload);
                 };
-                newSticker.delete = function(){
+                newSticker.delete = function () {
                     $http.delete(sticker.links.getLink("self").href).success($route.reload);
                 };
                 return newSticker;
@@ -85,8 +97,7 @@ angular.module('idea-boardy')
 angular.module('idea-boardy')
     .directive('ideaCreation', ['$http', '$route', function ($http, $route) {
     return {
-        template:
-            '<div>'
+        template:'<div>'
             + ' <div class="dialog" title="Create a New Idea">'
             + '     <textarea ng:model="idea.content"/>'
             + '     <input type="button" value="Create" ng:click="createNewIdea()">'
@@ -102,15 +113,15 @@ angular.module('idea-boardy')
             var section,
                 dialog = element.find('.dialog');
 
-            ngModel.$formatters.push(function(modelValue){
-                $http.get(modelValue.links.getLink("section").href).success(function(data){
+            ngModel.$formatters.push(function (modelValue) {
+                $http.get(modelValue.links.getLink("section").href).success(function (data) {
                     section = transformSection(data);
                 });
             });
 
-            function transformSection(newSection){
-                newSection.createNewIdea = function(){
-                    $http.post(section.links.getLink("ideas").href, { content: scope.idea.content}).success($route.reload);
+            function transformSection(newSection) {
+                newSection.createNewIdea = function () {
+                    $http.post(section.links.getLink("ideas").href, { content:scope.idea.content}).success($route.reload);
                 };
                 return newSection;
             }

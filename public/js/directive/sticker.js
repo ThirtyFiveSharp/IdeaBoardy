@@ -73,6 +73,7 @@ angular.module('idea-boardy')
             };
 
             scope.update = function () {
+                if(!sticker.newContent) return;
                 editDialog.dialog("close");
                 sticker.update();
                 sticker.content = sticker.newContent;
@@ -159,6 +160,7 @@ angular.module('idea-boardy')
             };
 
             scope.createNewIdea = function () {
+                if(!scope.idea.content) return;
                 dialog.dialog("close");
                 section.createNewIdea();
             };

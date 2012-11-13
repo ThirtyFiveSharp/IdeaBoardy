@@ -31,7 +31,7 @@ angular.module('idea-boardy')
             + '     </div>'
             + ' </div>        '
             + ' <div class="idea-wrapper"><div class="idea-info"><a class="idea-content" ng-click="showEditDialog()">{{sticker.content}}</a></div></div>'
-            + ' <input class="btn-2 btn-trivial" type="button" value="+{{sticker.vote}}" ng:click="vote()" jq-ui="button" />'
+            + ' <input class="btn-2 btn-trivial" type="button" value="+ {{sticker.vote}}" ng:click="vote()" jq-ui="button" />'
             + ' <input class="btn-2 btn-trivial" type="button" value="Delete" ng:click="showDeleteDialog()" jq-ui="button" />'
             + '</div>',
         replace:true,

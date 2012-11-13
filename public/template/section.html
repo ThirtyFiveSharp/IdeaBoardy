@@ -1,0 +1,39 @@
+<div ng-controller="SectionController">
+    <div class="section-title clear-fix" ng-switch on="section.mode">
+        <div ng-switch-when="view">
+            <dl class="section-info">
+                <dd class="name"><span>{{section.name}}</span></dd>
+            </dl>
+            <div class="command-bar">
+                <input class="btn-2 btn-delete" type="button" value="Delete" ng-click="section.delete()"
+                       jq-ui="button"/>
+                <input class="btn-2" type="button" value="Edit" ng-click="section.edit()"
+                       ng-disabled="!section.editable" jq-ui="button"/>
+            </div>
+        </div>
+        <div ng-switch-when="edit">
+            <form name="editSectionForm" ng-controller="EditSectionController" ng-submit="save()">
+                <dl class="section-info">
+                    <dd class="name">
+                        <input class="name" type="text" ng-model="editingSection.name" required autofocus />
+                        <!--<span error-message></span>-->
+                    </dd>
+                </dl>
+                <div class="command-bar">
+                    <input class="btn-2 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button"/>
+                    <input class="btn-2 btn-ok" type="submit" value="Save" ng-disabled="!editSectionForm.$valid" jq-ui="button"/>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div ng:controller="IdeaListController">
+        <ul class="idea-list clear-fix">
+            <li class="idea" ng:repeat="idea in ideas">
+                <sticker ng:model="idea"/>
+            </li>
+            <li class="idea blank">
+                <idea-creation ng:model="section"/>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -32,34 +32,7 @@
 
     <ul class="section-list clear-fix">
         <li class="section section-{{$index % 6}}" ng-repeat="section in sections">
-            <div class="section-title clear-fix" ng-switch on="section.mode">
-                <div ng-switch-when="view">
-                    <dl class="section-info">
-                        <dd class="name"><span>{{section.name}}</span></dd>
-                    </dl>
-                    <div class="command-bar">
-                        <input class="btn-2 btn-delete" type="button" value="Delete" ng-click="section.delete()"
-                               jq-ui="button"/>
-                        <input class="btn-2" type="button" value="Edit" ng-click="section.edit()"
-                           ng-disabled="!section.editable" jq-ui="button"/>
-                    </div>
-                </div>
-                <div ng-switch-when="edit">
-                    <form name="editSectionForm" ng-controller="EditSectionController" ng-submit="save()">
-                        <dl class="section-info">
-                            <dd class="name">
-                                <input class="name" type="text" ng-model="editingSection.name" required autofocus />
-                                <!--<span error-message></span>-->
-                            </dd>
-                        </dl>
-                        <div class="command-bar">
-                            <input class="btn-2 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button"/>
-                            <input class="btn-2 btn-ok" type="submit" value="Save" ng-disabled="!editSectionForm.$valid" jq-ui="button"/>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <ng-include src="'template/ideas.html'"/>
+            <ng-include src="'template/section.html'"></ng-include>
         </li>
     </ul>
 

@@ -32,7 +32,8 @@ class IdeasController < ApplicationController
         content: @idea.content,
         vote: @idea.vote,
         links: [
-            {rel: 'self', href: board_section_idea_url(board_id, section_id, idea_id)}
+            {rel: 'self', href: board_section_idea_url(board_id, section_id, idea_id)},
+            {rel: 'vote', href: "#{board_section_idea_url(board_id, section_id, idea_id)}/vote"}
         ]
     }
   end
@@ -76,5 +77,26 @@ class IdeasController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       head :no_content
     end
+  end
+
+  def vote
+    board_id = params[:board_id]
+    section_id = params[:section_id]
+    idea_id = params[:id]
+    return head(:not_found) unless Section.of_board(board_id).exists?(section_id)
+    return head(:not_found) unless Idea.of_section(section_id).exists?(idea_id)
+
+    begin
+      @idea = Idea.find(idea_id)
+      @idea.vote!
+      if @idea.save
+        head status: :no_content
+      else
+        render json: @idea.errors, status: :unprocessable_entity
+      end
+    rescue ActiveRecord::RecordNotFound
+      head :not_found
+    end
+
   end
 end

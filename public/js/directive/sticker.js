@@ -1,5 +1,5 @@
 angular.module('idea-boardy')
-    .directive('sticker', ['$http', function ($http) {
+    .directive('sticker', ['$http', '$route',  function ($http, $route) {
     return {
         template:'<div>'
             + ' <div class="dialog" title="Sticker Edition">'
@@ -10,6 +10,7 @@ angular.module('idea-boardy')
             + ' <div style="width: 100; height: 100px;" ng:click="showDialog()">{{sticker.content}}</div>'
             + ' <span>{{sticker.vote}}</span>'
             + ' <input type="button" value="Vote" ng:click="vote()">'
+            + ' <input type="button" value="Delete" ng:click="delete()">'
             + '</div>',
         replace:true,
         restrict:'E',
@@ -22,12 +23,21 @@ angular.module('idea-boardy')
 
 
             ngModel.$formatters.push(function(modelValue){
-                sticker = scope.sticker = transformSticker(modelValue);
+                $http.get(modelValue.links.getLink("idea").href).success(function(data){
+                    sticker = scope.sticker = enhanceSticker(data);
+                    console.log("sticker", sticker)
+                });
             });
 
-            function transformSticker(newSticker){
+            function enhanceSticker(newSticker){
                 newSticker.update = function(){
-                     $http.put(sticker.links.getLink("idea").href, { content: sticker.newContent});
+                    $http.put(sticker.links.getLink("self").href, { content: sticker.newContent});
+                };
+                newSticker.addVote = function(){
+                    $http.post(sticker.links.getLink("vote").href).success($route.reload);
+                };
+                newSticker.delete = function(){
+                    $http.delete(sticker.links.getLink("self").href).success($route.reload);
                 };
                 return newSticker;
             }
@@ -48,7 +58,11 @@ angular.module('idea-boardy')
             };
 
             scope.vote = function () {
-                sticker.vote++;
+                sticker.addVote();
+            };
+
+            scope.delete = function () {
+                sticker.delete();
             };
 
             $(function () {
@@ -66,3 +80,63 @@ angular.module('idea-boardy')
         }
     }
 }]);
+
+
+angular.module('idea-boardy')
+    .directive('ideaCreation', ['$http', '$route', function ($http, $route) {
+    return {
+        template:
+            '<div>'
+            + ' <div class="dialog" title="Create a New Idea">'
+            + '     <textarea ng:model="idea.content"/>'
+            + '     <input type="button" value="Create" ng:click="createNewIdea()">'
+            + '     <input type="button" value="Cancel" ng:click="cancel()">'
+            + ' </div>        '
+            + ' <input type="button" class="btn-2"  jq-ui="button" value="+ 1 idea" ng:click="showDialog()">'
+            + '</div>',
+        replace:true,
+        restrict:'E',
+        scope:true,
+        require:"ngModel",
+        link:function (scope, element, attr, ngModel) {
+            var section,
+                dialog = element.find('.dialog');
+
+            ngModel.$formatters.push(function(modelValue){
+                $http.get(modelValue.links.getLink("section").href).success(function(data){
+                    section = transformSection(data);
+                });
+            });
+
+            function transformSection(newSection){
+                newSection.createNewIdea = function(){
+                    $http.post(section.links.getLink("ideas").href, { content: scope.idea.content}).success($route.reload);
+                };
+                return newSection;
+            }
+
+            scope.showDialog = function () {
+                scope.idea = {};
+                dialog.dialog("open");
+            };
+
+            scope.createNewIdea = function () {
+                section.createNewIdea();
+                dialog.dialog("close");
+            };
+
+            scope.cancel = function () {
+                dialog.dialog("close");
+            };
+
+            $(function () {
+                dialog.dialog({
+                    autoOpen:false,
+                    show:"blind",
+                    hide:"explode"
+                });
+            });
+        }
+    }
+}]);
+

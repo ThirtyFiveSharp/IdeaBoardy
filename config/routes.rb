@@ -1,7 +1,11 @@
 Ideaboardy::Application.routes.draw do
   resources :boards do
     resources :sections do
-      resources :ideas
+      resources :ideas do
+        member do
+          post 'vote'
+        end
+      end
     end
   end
 

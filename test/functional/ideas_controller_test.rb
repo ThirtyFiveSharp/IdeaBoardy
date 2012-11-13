@@ -83,9 +83,11 @@ class IdeasControllerTest < ActionController::TestCase
     assert_equal @idea1.content, actual_idea['content']
     assert_equal @idea1.vote, actual_idea['vote']
     links = actual_idea['links']
-    assert_equal 1, links.count
+    assert_equal 2, links.count
     self_link = links.select { |l| l['rel'] == 'self' }.first
     assert_equal board_section_idea_url(@idea1.section.board.id, @idea1.section.id, @idea1.id), self_link['href']
+    vote_link = links.select { |l| l['rel'] == 'vote' }.first
+    assert_equal board_section_idea_url(@idea1.section.board.id, @idea1.section.id, @idea1.id)+"/vote", vote_link['href']
   end
 
   test "should return 404 Not Found when section is not under given board (GET)" do
@@ -164,6 +166,31 @@ class IdeasControllerTest < ActionController::TestCase
   test "should return 204 No Content when idea is not existed" do
     delete :destroy, board_id: @board, section_id: @section1, id: 99999
     assert_response :no_content
+    assert_blank @response.body
+  end
+
+  test "should return 204 No Content and add one vote number when vote for idea" do
+    assert_difference('Idea.find(@idea1.id).vote') do
+      post :vote, board_id: @board, section_id: @section1, id: @idea1
+    end
+    assert_response :no_content
+  end
+
+  test "should return 404 Not Found when section is not under given board (VOTE)" do
+    post :vote, board_id: @board2, section_id: @section1, id: @idea1
+    assert_response :not_found
+    assert_blank @response.body
+  end
+
+  test "should return 404 Not Found when idea is not under given section (VOTE)" do
+    post :vote, board_id: @board.id, section_id: @section2.id, id: @idea1.id
+    assert_response :not_found
+    assert_blank @response.body
+  end
+
+  test "should return 404 Not Found when idea is not existed (VOTE)" do
+    post :vote, board_id: @board, section_id: @section2, id: 99999
+    assert_response :not_found
     assert_blank @response.body
   end
 end

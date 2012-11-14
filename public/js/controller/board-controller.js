@@ -16,10 +16,17 @@ angular.module('idea-boardy')
                 if(event.targetScope == $scope) return;
                 $scope.$broadcast(ScopeEvent.editSection, targetSection);
             });
+
             $scope.$on(ScopeEvent.cancelEditSection, function(event, targetSection) {
                 event.stopPropagation();
                 if(event.targetScope == $scope) return;
                 $scope.$broadcast(ScopeEvent.cancelEditSection, targetSection);
+            });
+            $scope.$on(ScopeEvent.beginRefreshBoardSections, function(event) {
+                if(event.stopPropagation) event.stopPropagation();
+                $http.get($scope.board.sectionsLink.href).success(function (sections) {
+                    $scope.sections = sections;
+                });
             });
 
             function enhanceBoard(board) {

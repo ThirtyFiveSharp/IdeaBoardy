@@ -1,7 +1,6 @@
 angular.module('idea-boardy')
     .controller('CreateIdeaController', [ '$scope', '$http',
     function ($scope, $http) {
-        console.log('CreateIdeaController')
         $scope.idea = {};
         $scope.resetCreateIdeaForm = function() {
             $scope.idea = {};

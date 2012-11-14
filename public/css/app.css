@@ -71,6 +71,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .section-2 .idea { background-color: #e6e6fa; }
 .section-3 .idea { background-color: #ffffe0; }
 .section-4 .idea { background-color: #e0ffff; }
+.section-5 .idea { background-color: #ffefd5; }
 .idea-list .idea:hover { border-color: black; }
 .idea-list .idea .idea-wrapper { margin:5px; width: 225px; height: 95px; overflow: hidden; }
 .idea-list .idea .idea-info { display: table; }

@@ -1,6 +1,6 @@
 angular.module('idea-boardy')
-    .controller('CreateBoardController', ['$scope', '$route', '$http', '$timeout',
-        function ($scope, $route, $http, $timeout) {
+    .controller('CreateBoardController', ['$scope', '$http', '$timeout',
+        function ($scope, $http, $timeout) {
             $scope.board = {};
             $scope.sections = [];
             $scope.create = function () {
@@ -14,7 +14,7 @@ angular.module('idea-boardy')
                         _.each(sections, function (section) {
                             $http.post(sectionsLink.href, section);
                         });
-                        $route.reload();
+                        $scope.$emit(ScopeEvent.beginRefreshBoardList);
                     });
                 });
             };

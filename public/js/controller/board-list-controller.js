@@ -12,5 +12,12 @@ angular.module('idea-boardy')
                 params('boardUri', boardLink.href);
                 $location.path('/boards/' + board.id).search('boardUri', boardLink.href);
             };
+
+            $scope.$on(ScopeEvent.beginRefreshBoardList, function(event) {
+                if(event.stopPropagation) event.stopPropagation();
+                $http.get('/boards').success(function (boards) {
+                    $scope.boards = boards;
+                });
+            });
         }
     ]);

@@ -8,6 +8,7 @@ var ScopeEvent = {
     deleteBoard: 'deleteBoard',
     deleteSection: 'deleteSection',
     deleteIdea: 'deleteIdea',
+    beginRefreshBoardList: 'beginRefreshBoardList',
     beginRefreshBoardSections: 'beginRefreshBoardSections',
     beginRefreshSection: 'beginRefreshSection',
     beginRefreshIdea: 'beginRefreshIdea',

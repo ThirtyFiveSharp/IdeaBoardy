@@ -18,7 +18,7 @@ angular.module('idea-boardy')
             });
 
             $scope.$on(ScopeEvent.cancelEditSection, function(event, targetSection) {
-                event.stopPropagation();
+                if(event.stopPropagation) event.stopPropagation();
                 if(event.targetScope == $scope) return;
                 $scope.$broadcast(ScopeEvent.cancelEditSection, targetSection);
             });

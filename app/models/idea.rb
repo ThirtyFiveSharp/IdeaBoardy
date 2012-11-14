@@ -5,7 +5,7 @@ class Idea < ActiveRecord::Base
 
   validates :content, presence: true
 
-  scope :of_section, lambda {|section_id| where("section_id = ?", section_id)}
+  scope :of_section, lambda {|section_id| where("section_id = ?", section_id).order("vote desc")}
 
   def vote!
     self.vote += 1

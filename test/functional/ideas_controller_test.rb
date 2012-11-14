@@ -14,7 +14,7 @@ class IdeasControllerTest < ActionController::TestCase
   test "should get index" do
     get :index, board_id: @board.id, section_id: @section1.id
     assert_response :success
-    expected_ideas = [@idea1, @idea2]
+    expected_ideas = [@idea2, @idea1]
     actual_ideas = ActiveSupport::JSON.decode @response.body
     assert_equal 2, actual_ideas.count, "should return all two ideas"
     expected_ideas.each_with_index do |expected_idea, index|

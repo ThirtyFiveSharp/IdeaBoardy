@@ -7,7 +7,7 @@ class IdeasController < ApplicationController
 
     return head(:not_found) unless Section.of_board(board_id).exists?(section_id)
 
-    @ideas = Idea.find_all_by_section_id(section_id)
+    @ideas = Idea.of_section(section_id)
     render json: @ideas.collect {|idea| {
         id: idea.id,
         content: idea.content,

@@ -16,7 +16,6 @@
                 <dl class="section-info">
                     <dd class="name">
                         <input class="name" type="text" ng-model="editingSection.name" required autofocus />
-                        <!--<span error-message></span>-->
                     </dd>
                 </dl>
                 <div class="command-bar">
@@ -29,11 +28,14 @@
     <div ng:controller="IdeaListController">
         <ul class="idea-list clear-fix">
             <li class="idea" ng:repeat="idea in ideas">
-                <sticker ng:model="idea"/>
+                <ng-include src="'template/idea.html'"></ng-include>
             </li>
             <li class="idea blank">
-                <idea-creation ng:model="section"/>
+                <a ng:click="section.addIdea()">+ 1 idea</a>
             </li>
         </ul>
     </div>
+
+    <ng-include src="'template/idea-create.html'"></ng-include>
+    <ng-include src="'template/section-delete.html'"></ng-include>
 </div>

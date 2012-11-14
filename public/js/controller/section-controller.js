@@ -1,11 +1,37 @@
 angular.module('idea-boardy')
     .controller('SectionController', ['$scope', '$http',
         function ($scope, $http) {
-            enhanceSection($scope.section);
-
+            $http.get($scope.section.links.getLink('section').href)
+                .success(function(data) {
+                    $scope.section = enhanceSection(data);
+                });
+            $scope.$on(ScopeEvent.beginRefreshSection, function(event) {
+                if(event.stopPropagation) event.stopPropagation();
+                $http.get($scope.section.selfLink.href)
+                    .success(function(data) {
+                        $scope.section = enhanceSection(data);
+                        $scope.$broadcast(ScopeEvent.refresh);
+                    });
+            });
+            $scope.$on(ScopeEvent.editSection, function(event, targetSection) {
+                if($scope.section == targetSection) {
+                    $scope.section.mode = "edit";
+                }
+                else {
+                    $scope.section.editable = false;
+                }
+            });
+            $scope.$on(ScopeEvent.cancelEditSection, function(event, targetSection) {
+                if($scope.section == targetSection) {
+                    $scope.section.mode = "view";
+                }
+                else {
+                    $scope.section.editable = true;
+                }
+            });
             function enhanceSection(section) {
-                angular.extend(section, {
-                    selfLink:section.links.getLink('section'),
+                return angular.extend(section, {
+                    selfLink:section.links.getLink('self'),
                     mode:"view",
                     editable:true,
                     enable:function () {
@@ -15,11 +41,7 @@ angular.module('idea-boardy')
                         this.editable = false
                     },
                     edit:function () {
-                        _.each($scope.sections, function (section) {
-                            section.disable();
-                        });
-                        this.enable();
-                        this.mode = "edit";
+                        $scope.$emit(ScopeEvent.editSection, this);
                     },
                     delete:function() {
                         $scope.$broadcast(ScopeEvent.deleteSection, this);
@@ -28,10 +50,7 @@ angular.module('idea-boardy')
                         $scope.$broadcast(ScopeEvent.createNewIdea, this);
                     },
                     cancel:function () {
-                        _.each($scope.sections, function (section) {
-                            section.enable();
-                        });
-                        this.mode = "view";
+                        $scope.$emit(ScopeEvent.cancelEditSection, this);
                     }
                 });
             }

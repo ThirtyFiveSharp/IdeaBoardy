@@ -1,0 +1,14 @@
+<div ng-controller="EditIdeaController">
+    <div title="Edit An Idea" jq-ui-dialog='{"width": 350}' for=".idea"
+            ng-show="isEditIdeaFormVisible" close="resetEditIdeaForm()" ng-cloak>
+        <form class="edit-idea-form" ng-submit="save()">
+            <dl>
+                <textarea class="idea-content" ng-model="editingIdea.content"></textarea>
+            </dl>
+            <div class="command-bar">
+                <input class="btn-3 btn-ok" type="submit" value="OK" jq-ui="button"/>
+                <input class="btn-3 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button"/>
+            </div>
+        </form>
+    </div>
+</div>

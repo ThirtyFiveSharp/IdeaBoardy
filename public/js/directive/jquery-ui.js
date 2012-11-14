@@ -5,17 +5,20 @@ angular.module('idea-boardy')
         };
     })
 
-    .directive('jqUiDialog', ['$parse', function ($parse) {
+    .directive('jqUiDialog', ['$parse', '$window', function ($parse, $window) {
         return function (scope, element, attrs) {
             var options = JSON.parse(attrs.jqUiDialog || '{}'),
                 visibilityExpr = attrs.ngShow,
-                closeExpr = attrs.close;
+                closeExpr = attrs.close,
+                forExpr = attrs.for,
+                targetElement = !!forExpr ? element.parents(forExpr) : $window,
+                positionReference = targetElement.length > 0 ? targetElement : $window;
             element.dialog(_.extend(options, {
                 title:attrs.title,
                 autoOpen:false,
                 modal:true,
                 resizable:false,
-                position:{my:'center center-30%', at:'center', of:window},
+                position:{my:'center center', at:'center', of: positionReference },
                 show: 'fade',
                 hide: 'fade',
                 close:function () {

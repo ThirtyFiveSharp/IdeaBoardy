@@ -11,6 +11,16 @@ angular.module('idea-boardy')
             $scope.addSection = function() {
                 $scope.$broadcast(ScopeEvent.createNewSection);
             };
+            $scope.$on(ScopeEvent.editSection, function(event, targetSection) {
+                if(event.stopPropagation) event.stopPropagation();
+                if(event.targetScope == $scope) return;
+                $scope.$broadcast(ScopeEvent.editSection, targetSection);
+            });
+            $scope.$on(ScopeEvent.cancelEditSection, function(event, targetSection) {
+                event.stopPropagation();
+                if(event.targetScope == $scope) return;
+                $scope.$broadcast(ScopeEvent.cancelEditSection, targetSection);
+            });
 
             function enhanceBoard(board) {
                 angular.extend(board, {

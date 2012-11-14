@@ -52,15 +52,23 @@ angular.module('idea-boardy')
 
             function enhanceSticker(newSticker) {
                 newSticker.update = function () {
-                    $http.put(sticker.links.getLink("self").href, { content:sticker.newContent});
+                    $http.put(sticker.links.getLink("self").href, {content:sticker.newContent})
+                        .success(refreshIdea);
                 };
                 newSticker.addVote = function () {
-                    $http.post(sticker.links.getLink("vote").href).success($route.reload);
+                    $http.post(sticker.links.getLink("vote").href).success(refreshIdea);
                 };
                 newSticker.delete = function () {
                     $http.delete(sticker.links.getLink("self").href).success($route.reload);
                 };
                 return newSticker;
+            }
+
+            function refreshIdea() {
+                $http.get(scope.sticker.links.getLink("self").href)
+                    .success(function(data) {
+                        sticker = scope.sticker = enhanceSticker(data);
+                    });
             }
 
             scope.showEditDialog = function () {

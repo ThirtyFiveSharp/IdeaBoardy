@@ -128,4 +128,10 @@ class BoardsControllerTest < ActionController::TestCase
       end
     end
   end
+
+  test "should return 404 Not Found when board is not existed (report)" do
+    get :report, id: 99999
+    assert_response :not_found
+    assert_blank @response.body
+  end
 end

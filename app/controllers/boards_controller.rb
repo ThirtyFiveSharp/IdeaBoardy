@@ -75,17 +75,21 @@ class BoardsController < ApplicationController
 
   # GET /boards/1/report
   def report
-    @board = Board.find(params[:id])
-    render json: {
-        name: @board.name,
-        description: @board.description,
-        sections: @board.sections.collect { |section| {
-            name: section.name,
-            ideas: section.ideas.collect { |idea| {
-                content: idea.content,
-                vote: idea.vote
-            } }
-        } }
-    }
+    begin
+      @board = Board.find(params[:id])
+      render json: {
+          name: @board.name,
+          description: @board.description,
+          sections: @board.sections.collect { |section| {
+              name: section.name,
+              ideas: section.ideas.collect { |idea| {
+                  content: idea.content,
+                  vote: idea.vote
+              } }
+          } }
+      }
+    rescue ActiveRecord::RecordNotFound
+      head :not_found
+    end
   end
 end

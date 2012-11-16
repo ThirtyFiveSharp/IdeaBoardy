@@ -1,5 +1,8 @@
 Ideaboardy::Application.routes.draw do
   resources :boards do
+    member do
+      get 'report'
+    end
     resources :sections do
       resources :ideas do
         member do

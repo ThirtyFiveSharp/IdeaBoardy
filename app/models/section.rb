@@ -1,6 +1,6 @@
 class Section < ActiveRecord::Base
   attr_accessible :name
-  has_many :ideas, dependent: :destroy
+  has_many :ideas, order: 'vote desc', dependent: :destroy
   belongs_to :board
   validates :name, presence:true, uniqueness: {scope: :board_id, message: "section name should be unique in a board"}
 

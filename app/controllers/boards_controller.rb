@@ -1,4 +1,6 @@
 class BoardsController < ApplicationController
+  respond_to :json
+
   # GET /boards
   # GET /boards.json
   def index
@@ -71,4 +73,19 @@ class BoardsController < ApplicationController
     end
   end
 
+  # GET /boards/1/report
+  def report
+    @board = Board.find(params[:id])
+    render json: {
+        name: @board.name,
+        description: @board.description,
+        sections: @board.sections.collect { |section| {
+            name: section.name,
+            ideas: section.ideas.collect { |idea| {
+                content: idea.content,
+                vote: idea.vote
+            } }
+        } }
+    }
+  end
 end

@@ -18,7 +18,7 @@ class BoardsController < ApplicationController
   # GET /boards/1
   # GET /boards/1.json
   def show
-    begin
+    until_found do
       @board = Board.find(params[:id])
       render json: {
           id: @board.id,
@@ -29,8 +29,6 @@ class BoardsController < ApplicationController
               {rel: 'sections', href: board_sections_url(@board.id)}
           ]
       }
-    rescue ActiveRecord::RecordNotFound
-      head :not_found
     end
   end
 
@@ -49,33 +47,29 @@ class BoardsController < ApplicationController
   # PUT /boards/1
   # PUT /boards/1.json
   def update
-    begin
+    until_found do
       @board = Board.find(params[:id])
       if @board.update_attributes(params[:board])
         head :no_content
       else
         render json: @board.errors, status: :unprocessable_entity
       end
-    rescue ActiveRecord::RecordNotFound
-      head :not_found
     end
   end
 
   # DELETE /boards/1
   # DELETE /boards/1.json
   def destroy
-    begin
+    until_found :no_content do
       @board = Board.find(params[:id])
       @board.destroy
-      head :no_content
-    rescue ActiveRecord::RecordNotFound
       head :no_content
     end
   end
 
   # GET /boards/1/report
   def report
-    begin
+    until_found do
       @board = Board.includes(:sections => :ideas).find(params[:id])
       render json: {
           name: @board.name,
@@ -88,12 +82,10 @@ class BoardsController < ApplicationController
               } }
           } },
           links: [
-            {rel: 'self', href: "#{board_url(@board.id)}/report"},
-            {rel: 'board', href: board_url(@board.id)}
+              {rel: 'self', href: "#{board_url(@board.id)}/report"},
+              {rel: 'board', href: board_url(@board.id)}
           ]
       }
-    rescue ActiveRecord::RecordNotFound
-      head :not_found
     end
   end
 end

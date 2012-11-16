@@ -8,14 +8,14 @@ class IdeasController < ApplicationController
     return head(:not_found) unless Section.of_board(board_id).exists?(section_id)
 
     @ideas = Idea.of_section(section_id)
-    render json: @ideas.collect {|idea| {
+    render json: @ideas.collect { |idea| {
         id: idea.id,
         content: idea.content,
         vote: idea.vote,
-        links:[
+        links: [
             {rel: 'idea', href: board_section_idea_url(board_id, section_id, idea.id)}
         ]
-    }}
+    } }
   end
 
   def show
@@ -70,11 +70,9 @@ class IdeasController < ApplicationController
   end
 
   def destroy
-    begin
+    until_found :no_content do
       @idea = Idea.find(params[:id])
       @idea.destroy
-      head :no_content
-    rescue ActiveRecord::RecordNotFound
       head :no_content
     end
   end
@@ -85,8 +83,7 @@ class IdeasController < ApplicationController
     idea_id = params[:id]
     return head(:not_found) unless Section.of_board(board_id).exists?(section_id)
     return head(:not_found) unless Idea.of_section(section_id).exists?(idea_id)
-
-    begin
+    until_found do
       @idea = Idea.find(idea_id)
       @idea.vote!
       if @idea.save
@@ -94,9 +91,6 @@ class IdeasController < ApplicationController
       else
         render json: @idea.errors, status: :unprocessable_entity
       end
-    rescue ActiveRecord::RecordNotFound
-      head :not_found
     end
-
   end
 end

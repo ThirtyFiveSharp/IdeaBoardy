@@ -16,7 +16,7 @@ class SectionsController < ApplicationController
   def show
     board_id = params[:board_id]
     section_id = params[:id]
-    begin
+    until_found do
       @section = Section.of_board(board_id).find(section_id)
       render json: {
           id: @section.id,
@@ -26,14 +26,11 @@ class SectionsController < ApplicationController
               {rel: 'ideas', href: board_section_ideas_url(board_id, section_id)}
           ]
       }
-    rescue ActiveRecord::RecordNotFound
-      head :not_found
     end
-
   end
 
   def create
-    begin
+    until_found do
       board_id = params[:board_id]
       board = Board.find board_id
 
@@ -44,33 +41,27 @@ class SectionsController < ApplicationController
       else
         render json: @section.errors, status: :unprocessable_entity
       end
-    rescue ActiveRecord::RecordNotFound
-      head :not_found
     end
   end
 
   def update
     board_id = params[:board_id]
     section_id = params[:id]
-    begin
+    until_found do
       @section = Section.of_board(board_id).find(section_id)
       if @section.update_attributes(params[:section])
         head :no_content
       else
         render json: @section.errors, status: :unprocessable_entity
       end
-    rescue ActiveRecord::RecordNotFound
-      head :not_found
     end
   end
 
   def destroy
     section_id = params[:id]
-    begin
+    until_found :no_content do
       @section = Section.find(section_id)
       @section.destroy
-      head :no_content
-    rescue ActiveRecord::RecordNotFound
       head :no_content
     end
   end

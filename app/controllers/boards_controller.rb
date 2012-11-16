@@ -76,7 +76,7 @@ class BoardsController < ApplicationController
   # GET /boards/1/report
   def report
     begin
-      @board = Board.find(params[:id])
+      @board = Board.includes(:sections => :ideas).find(params[:id])
       render json: {
           name: @board.name,
           description: @board.description,

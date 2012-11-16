@@ -86,7 +86,11 @@ class BoardsController < ApplicationController
                   content: idea.content,
                   vote: idea.vote
               } }
-          } }
+          } },
+          links: [
+            {rel: 'self', href: "#{board_url(@board.id)}/report"},
+            {rel: 'board', href: board_url(@board.id)}
+          ]
       }
     rescue ActiveRecord::RecordNotFound
       head :not_found

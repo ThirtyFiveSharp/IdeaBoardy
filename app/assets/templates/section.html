@@ -28,7 +28,7 @@
     <div ng-controller="IdeaListController">
         <ul class="idea-list clear-fix">
             <li class="idea" ng-repeat="idea in ideas">
-                <ng-include src="'template/idea.html'"></ng-include>
+                <ng-include src="'assets/idea.html'"></ng-include>
             </li>
             <li class="idea blank">
                 <a ng-click="section.addIdea()">+ 1 idea</a>
@@ -36,6 +36,6 @@
         </ul>
     </div>
 
-    <ng-include src="'template/idea-create.html'"></ng-include>
-    <ng-include src="'template/section-delete.html'"></ng-include>
+    <ng-include src="'assets/idea-create.html'"></ng-include>
+    <ng-include src="'assets/section-delete.html'"></ng-include>
 </div>

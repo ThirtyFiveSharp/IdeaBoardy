@@ -20,7 +20,7 @@
         .directive('launchy', ['$window', function($window) {
             return {
                 restrict: 'E',
-                templateUrl: 'template/launchy.html',
+                templateUrl: 'assets/launchy.html',
                 replace: true,
                 scope: {},
                 controller: 'LaunchyController',

@@ -1,4 +1,6 @@
 class SectionsController < ApplicationController
+  respond_to :json
+
   def index
     board_id = params[:board_id]
     return head :not_found unless Board.exists?(board_id)

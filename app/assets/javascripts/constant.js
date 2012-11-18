@@ -1,5 +1,4 @@
 var ScopeEvent = {
-    createNewBoard: 'createNewBoard',
     editSection: 'editSection',
     cancelEditSection: 'cancelEditSection',
     beginRefreshBoardList: 'beginRefreshBoardList',

@@ -8,7 +8,7 @@ angular.module('idea-boardy')
             $scope.$broadcast(ScopeEvent.editIdea);
         };
         $scope.showDeleteDialog = function() {
-            $scope.$broadcast(ScopeEvent.deleteIdea);
+            $scope.$broadcast(ScopeEvent.deleteIdea, $scope.idea);
         };
 
         $scope.$on(ScopeEvent.beginRefreshIdea, function(event) {
@@ -21,12 +21,20 @@ angular.module('idea-boardy')
             });
         });
 
-        function enhanceIdea(idea) {
-            return _.extend(idea, {
+        function enhanceIdea(rawIdea) {
+            return _.extend(rawIdea, {
                 addVote: function() {
+                    var idea = this;
                     $http.post(idea.links.getLink("vote").href).success(function() {
                         $scope.$broadcast(ScopeEvent.refresh);
                     });
+                },
+                delete: function() {
+                    var idea = this;
+                    $http.delete(idea.links.getLink('self').href)
+                        .success(function() {
+                            $scope.$emit(ScopeEvent.beginRefreshSection);
+                        });
                 }
             });
         }

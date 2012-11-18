@@ -1,9 +1,7 @@
 <div ng-controller="IdeaController">
     <div class="idea-wrapper">
-        <div class="idea-info"><a class="idea-content" ng-click="showEditDialog()">{{idea.content}}</a></div>
+        <div class="idea-info"><a class="idea-content" ng-click="showEditDialog($event)">{{idea.content}}</a></div>
     </div>
     <input class="btn-2 btn-trivial" type="button" value="+ {{idea.vote}}" ng-click="idea.addVote()" jq-ui="button"/>
     <input class="btn-2 btn-trivial" type="button" value="Delete" ng-click="showDeleteDialog()" jq-ui="button"/>
-
-    <ng-include src="'assets/idea-edit.html'"></ng-include>
 </div>

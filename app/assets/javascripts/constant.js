@@ -3,7 +3,6 @@ var ScopeEvent = {
     createNewSection: 'createNewSection',
     createNewIdea: 'createNewIdea',
     editSection: 'editSection',
-    editIdea: 'editIdea',
     cancelEditSection: 'cancelEditSection',
     deleteBoard: 'deleteBoard',
     deleteSection: 'deleteSection',

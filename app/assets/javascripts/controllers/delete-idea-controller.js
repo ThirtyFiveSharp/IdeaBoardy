@@ -6,5 +6,8 @@ angular.module('idea-boardy')
             $scope.dialog.close();
             $scope.dialog.params.ideaToDelete.delete();
         };
+        $scope.cancel = function() {
+            $scope.dialog.close();
+        };
     }
 ]);

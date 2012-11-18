@@ -1,12 +1,13 @@
 angular.module('idea-boardy')
     .controller('IdeaController', ['$scope', '$http', 'dialog',
     function ($scope, $http, dialog) {
-        var deleteIdeaDialog = dialog('deleteIdeaDialog');
+        var editIdeaDialog = dialog('editIdeaDialog'),
+            deleteIdeaDialog = dialog('deleteIdeaDialog');
         $http.get($scope.idea.links.getLink('idea').href).success(function (idea) {
             $scope.idea = enhanceIdea(idea);
         });
-        $scope.showEditDialog = function() {
-            $scope.$broadcast(ScopeEvent.editIdea);
+        $scope.showEditDialog = function($event) {
+            editIdeaDialog.open({ideaToEdit: _.clone($scope.idea), $event: $event});
         };
         $scope.showDeleteDialog = function() {
             deleteIdeaDialog.open({ideaToDelete: $scope.idea});
@@ -29,6 +30,13 @@ angular.module('idea-boardy')
                     $http.post(idea.links.getLink("vote").href).success(function() {
                         $scope.$broadcast(ScopeEvent.refresh);
                     });
+                },
+                save: function() {
+                    var idea = this;
+                    $http.put(idea.links.getLink('self').href, idea)
+                        .success(function() {
+                            $scope.$emit(ScopeEvent.beginRefreshIdea);
+                        });
                 },
                 delete: function() {
                     var idea = this;

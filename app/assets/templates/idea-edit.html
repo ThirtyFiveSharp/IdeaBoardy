@@ -1,9 +1,8 @@
 <div ng-controller="EditIdeaController">
-    <div title="Edit An Idea" jq-ui-dialog='{"width": 350}' for=".idea"
-            ng-show="isEditIdeaFormVisible" close="resetEditIdeaForm()" ng-cloak>
-        <form class="edit-idea-form" ng-submit="save()">
+    <div title="Edit An Idea" name="editIdeaDialog" jq-ui-dialog='{"width": 350}' ng-show="dialog.visible" ng-cloak>
+        <form class="edit-idea-form" ng-submit="update()">
             <dl>
-                <textarea class="idea-content" ng-model="editingIdea.content"></textarea>
+                <textarea class="idea-content" ng-model="dialog.params.ideaToEdit.content"></textarea>
             </dl>
             <div class="command-bar">
                 <input class="btn-3 btn-ok" type="submit" value="OK" jq-ui="button"/>

@@ -5,7 +5,6 @@ var ScopeEvent = {
     editSection: 'editSection',
     cancelEditSection: 'cancelEditSection',
     deleteBoard: 'deleteBoard',
-    deleteSection: 'deleteSection',
     beginRefreshBoardList: 'beginRefreshBoardList',
     beginRefreshBoardSections: 'beginRefreshBoardSections',
     beginRefreshSection: 'beginRefreshSection',

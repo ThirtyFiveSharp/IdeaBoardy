@@ -1,10 +1,14 @@
 angular.module('idea-boardy')
-    .controller('SectionController', ['$scope', '$http',
-        function ($scope, $http) {
+    .controller('SectionController', ['$scope', '$http', 'dialog',
+        function ($scope, $http, dialog) {
+            var deleteSectionDialog = dialog('deleteSectionDialog');
             $http.get($scope.section.links.getLink('section').href)
                 .success(function(data) {
                     $scope.section = enhanceSection(data);
                 });
+            $scope.showDeleteSectionDialog = function() {
+                deleteSectionDialog.open({sectionToDelete: $scope.section});
+            };
             $scope.$on(ScopeEvent.beginRefreshSection, function(event) {
                 if(event.stopPropagation) event.stopPropagation();
                 $http.get($scope.section.selfLink.href)
@@ -29,9 +33,9 @@ angular.module('idea-boardy')
                     $scope.section.editable = true;
                 }
             });
-            function enhanceSection(section) {
-                return angular.extend(section, {
-                    selfLink:section.links.getLink('self'),
+            function enhanceSection(rawSection) {
+                return angular.extend(rawSection, {
+                    selfLink:rawSection.links.getLink('self'),
                     mode:"view",
                     editable:true,
                     enable:function () {
@@ -44,7 +48,11 @@ angular.module('idea-boardy')
                         $scope.$emit(ScopeEvent.editSection, this);
                     },
                     delete:function() {
-                        $scope.$broadcast(ScopeEvent.deleteSection, this);
+                        var section = this;
+                        $http.delete(section.selfLink.href)
+                            .success(function() {
+                                $scope.$emit(ScopeEvent.beginRefreshBoardSections)
+                            });
                     },
                     addIdea:function() {
                         $scope.$broadcast(ScopeEvent.createNewIdea, this);

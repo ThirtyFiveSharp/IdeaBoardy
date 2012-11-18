@@ -1,13 +1,17 @@
 angular.module('idea-boardy')
     .controller('SectionController', ['$scope', '$http', 'dialog',
         function ($scope, $http, dialog) {
-            var deleteSectionDialog = dialog('deleteSectionDialog');
+            var deleteSectionDialog = dialog('deleteSectionDialog'),
+                createIdeaDialog = dialog('createIdeaDialog');
             $http.get($scope.section.links.getLink('section').href)
                 .success(function(data) {
                     $scope.section = enhanceSection(data);
                 });
             $scope.showDeleteSectionDialog = function() {
                 deleteSectionDialog.open({sectionToDelete: $scope.section});
+            };
+            $scope.showCreateIdeaDialog = function($event) {
+                createIdeaDialog.open({section: $scope.section, ideaToCreate: {}, $event: $event});
             };
             $scope.$on(ScopeEvent.beginRefreshSection, function(event) {
                 if(event.stopPropagation) event.stopPropagation();
@@ -54,8 +58,12 @@ angular.module('idea-boardy')
                                 $scope.$emit(ScopeEvent.beginRefreshBoardSections)
                             });
                     },
-                    addIdea:function() {
-                        $scope.$broadcast(ScopeEvent.createNewIdea, this);
+                    createIdea:function(ideaToCreate) {
+                        var section = this;
+                        $http.post(section.links.getLink('ideas').href, ideaToCreate)
+                            .success(function() {
+                                $scope.$emit(ScopeEvent.beginRefreshSection);
+                            });
                     },
                     cancel:function () {
                         $scope.$emit(ScopeEvent.cancelEditSection, this);

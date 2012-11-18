@@ -1,23 +1,14 @@
 angular.module('idea-boardy')
-    .controller('CreateIdeaController', [ '$scope', '$http',
-    function ($scope, $http) {
-        $scope.idea = {};
-        $scope.resetCreateIdeaForm = function() {
-            $scope.idea = {};
-        };
+    .controller('CreateIdeaController', [ '$scope', 'dialog',
+    function ($scope, dialog) {
+        $scope.dialog = dialog('createIdeaDialog');
         $scope.create = function () {
             if(!$scope.createIdeaForm.$valid) return;
-            $scope.isCreateIdeaFormVisible = false;
-            $http.post($scope.section.links.getLink('ideas').href, $scope.idea)
-                .success(function() {
-                    $scope.$emit(ScopeEvent.beginRefreshSection);
-                });
+            $scope.dialog.close();
+            $scope.dialog.params.section.createIdea($scope.dialog.params.ideaToCreate);
         };
         $scope.cancel = function() {
-            $scope.isCreateIdeaFormVisible = false;
+            $scope.dialog.close();
         };
-        $scope.$on(ScopeEvent.createNewIdea, function() {
-            $scope.isCreateIdeaFormVisible = true;
-        });
     }
 ]);

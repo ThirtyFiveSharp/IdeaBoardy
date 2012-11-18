@@ -1,9 +1,9 @@
 <div ng-controller="CreateIdeaController">
-    <div title="Create A New Idea" jq-ui-dialog='{"width": 350}'
-         ng-show="isCreateIdeaFormVisible" close="resetCreateIdeaForm()" ng-cloak>
+    <div name="createIdeaDialog" title="Create A New Idea"
+         jq-ui-dialog='{"width": 350}' ng-show="dialog.visible" ng-cloak>
         <form class="create-idea-form" name="createIdeaForm" ng-submit="create()">
             <dl>
-                <textarea class="idea-content" ng-model="idea.content" required autofocus />
+                <textarea class="idea-content" ng-model="dialog.params.ideaToCreate.content" required autofocus />
             </dl>
             <div class="command-bar">
                 <input id="create-Idea" class="btn-3 btn-ok" type="submit" value="OK"

@@ -8,8 +8,7 @@ angular.module('idea-boardy')
     .directive('jqUiDialog', ['dialog', function (dialog) {
         return function (scope, element, attrs) {
             var name = attrs.name || getRandomDialogName(),
-                options = JSON.parse(attrs.jqUiDialog || '{}'),
-                visibilityExpr = attrs.ngShow;
+                options = JSON.parse(attrs.jqUiDialog || '{}');
             element.dialog(_.extend(options, {
                 title:attrs.title,
                 autoOpen:false,

@@ -1,7 +1,8 @@
 angular.module('idea-boardy')
     .controller('BoardController', ['$scope', '$http', '$location', 'params', 'dialog',
         function ($scope, $http, $location, params, dialog) {
-            var createSectionDialog = dialog('createSectionDialog');
+            var deleteBoardDialog = dialog('deleteBoardDialog'),
+                createSectionDialog = dialog('createSectionDialog');
             $http.get(params('boardUri')).success(function (board) {
                 enhanceBoard(board);
                 $scope.board = board;
@@ -9,6 +10,9 @@ angular.module('idea-boardy')
                     $scope.sections = sections;
                 });
             });
+            $scope.showDeleteBoardDialog = function() {
+                deleteBoardDialog.open({boardToDelete: $scope.board});
+            };
             $scope.showCreateSectionDialog = function() {
                 createSectionDialog.open({board: $scope.board, sectionToCreate: {}});
             };
@@ -45,7 +49,11 @@ angular.module('idea-boardy')
                         this.mode = 'edit'
                     },
                     delete:function() {
-                        $scope.$broadcast(ScopeEvent.deleteBoard, this);
+                        var board = this;
+                        $http.delete(board.links.getLink('self').href)
+                            .success(function() {
+                                $location.path("/");
+                            });
                     },
                     createSection: function(sectionToCreate) {
                         var board = this;

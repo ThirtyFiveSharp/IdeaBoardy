@@ -6,7 +6,7 @@
                 <dd class="description"><span>{{board.description}}</span></dd>
             </dl>
             <div class="command-bar">
-                <input class="btn-3 btn-delete" type="button" value="Delete" ng-click="board.delete()" jq-ui="button"/>
+                <input class="btn-3 btn-delete" type="button" value="Delete" ng-click="showDeleteBoardDialog()" jq-ui="button"/>
                 <input class="btn-3" type="button" value="Report" ng-click="goToReport(board)" jq-ui="button"/>
                 <input class="btn-3" type="button" value="Edit" ng-click="board.edit()" jq-ui="button"/>
                 <input class="btn-3" type="button" value="+ 1 section" ng-click="showCreateSectionDialog()" jq-ui="button"/>
@@ -36,7 +36,5 @@
             <ng-include src="'assets/section.html'"></ng-include>
         </li>
     </ul>
-
-    <ng-include src="'assets/board-delete.html'"></ng-include>
 </div>
 

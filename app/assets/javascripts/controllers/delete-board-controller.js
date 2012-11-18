@@ -1,20 +1,13 @@
 angular.module('idea-boardy')
-    .controller('DeleteBoardController', ['$scope', '$http', '$location',
-        function ($scope, $http, $location) {
-            $scope.board = {};
-            $scope.delete = function(board) {
-                $scope.isDeleteBoardDialogVisible = false;
-                $http.delete(board.links.getLink('self').href)
-                    .success(function() {
-                        $location.path("/");
-                    });
+    .controller('DeleteBoardController', ['$scope', 'dialog',
+        function ($scope, dialog) {
+            $scope.dialog = dialog('deleteBoardDialog');
+            $scope.delete = function() {
+                $scope.dialog.close();
+                $scope.dialog.params.boardToDelete.delete();
             };
             $scope.close = function() {
-                $scope.isDeleteBoardDialogVisible = false;
+                $scope.dialog.close();
             };
-            $scope.$on(ScopeEvent.deleteBoard, function(event, board) {
-                $scope.board = board;
-                $scope.isDeleteBoardDialogVisible = true;
-            });
         }
     ]);

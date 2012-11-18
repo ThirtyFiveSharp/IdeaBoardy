@@ -20,9 +20,9 @@ describe('BoardReportController', function () {
             ]};
 
         beforeEach(inject(function (_$httpBackend_, $rootScope, $controller, params) {
+            params('reportUri', boardReportUri);
             $httpBackend = _$httpBackend_;
             $httpBackend.expectGET(boardReportUri).respond(report);
-            params('reportUri', boardReportUri);
             scope = $rootScope.$new();
             ctrl = $controller('BoardReportController', {$scope:scope});
         }));

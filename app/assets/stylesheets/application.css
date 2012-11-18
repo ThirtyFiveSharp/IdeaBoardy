@@ -57,8 +57,8 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 
 #board { display:block; padding: 1em 0; }
 #board-title { margin-bottom: 2em; }
-#board-title .board-info { display:block; float:left; width: 60%; overflow: hidden;}
-#board-title .command-bar { display:block; float: right; width: 40%; min-width: 8em; }
+#board-title .board-info { display:block; float:left; width: 50%; overflow: hidden;}
+#board-title .command-bar { display:block; float: right; width: 50%; min-width: 8em; }
 #board-title .command-bar input { float: right; vertical-align: top; margin-left: 0.5em; }
 #board-title dd { display: block; }
 #board-title .name { line-height: 2em; }

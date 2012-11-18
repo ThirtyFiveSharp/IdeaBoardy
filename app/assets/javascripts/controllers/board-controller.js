@@ -11,6 +11,11 @@ angular.module('idea-boardy')
             $scope.addSection = function() {
                 $scope.$broadcast(ScopeEvent.createNewSection);
             };
+            $scope.goToReport = function(board) {
+                var reportLinkUri = board.reportLink.href;
+                params('reportUri', reportLinkUri);
+                $location.path('/boards/' + board.id + '/report').search('reportUri', reportLinkUri);
+            };
             $scope.$on(ScopeEvent.editSection, function(event, targetSection) {
                 if(event.stopPropagation) event.stopPropagation();
                 if(event.targetScope == $scope) return;
@@ -32,7 +37,8 @@ angular.module('idea-boardy')
             function enhanceBoard(board) {
                 angular.extend(board, {
                     selfLink:board.links.getLink('self'),
-                    sectionsLink:board.links.getLink( 'sections'),
+                    sectionsLink:board.links.getLink('sections'),
+                    reportLink:board.links.getLink('report'),
                     mode:"view",
                     edit:function () {
                         this.mode = 'edit'

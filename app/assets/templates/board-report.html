@@ -1,0 +1,14 @@
+<div ng-controller="BoardReportController">
+    <h1>{{report.name}}</h1>
+    <span>{{report.description}}</span>
+    <dl ng-repeat="section in report.sections">
+        <dt>{{section.name}}</dt>
+        <dd>
+            <ol>
+                <li ng-repeat="idea in section.ideas">
+                    [{{idea.vote}} votes] {{idea.content}}
+                </li>
+            </ol>
+        </dd>
+    </dl>
+</div>

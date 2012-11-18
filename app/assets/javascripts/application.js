@@ -28,6 +28,7 @@
 //= require controllers/board-controller
 //= require controllers/edit-board-controller
 //= require controllers/delete-board-controller
+//= require controllers/board-report-controller
 //= require controllers/create-section-controller
 //= require controllers/section-controller
 //= require controllers/edit-section-controller

@@ -5,7 +5,7 @@ angular.module('idea-boardy')
             $scope.create = function () {
                 if(!$scope.createSectionForm.$valid) return;
                 $scope.dialog.close();
-                $scope.dialog.params.board.createSection($scope.dialog.params.sectionToCreate);
+                $scope.dialog.context.board.createSection($scope.dialog.context.sectionToCreate);
             };
             $scope.cancel = function() {
                 $scope.dialog.close();

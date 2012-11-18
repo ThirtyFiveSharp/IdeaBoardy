@@ -5,12 +5,11 @@ angular.module('idea-boardy')
         };
     })
 
-    .directive('jqUiDialog', ['$parse', 'dialog', function ($parse, dialog) {
+    .directive('jqUiDialog', ['dialog', function (dialog) {
         return function (scope, element, attrs) {
-            var name = attrs.name,
+            var name = attrs.name || getRandomDialogName(),
                 options = JSON.parse(attrs.jqUiDialog || '{}'),
-                visibilityExpr = attrs.ngShow,
-                closeExpr = attrs.close;
+                visibilityExpr = attrs.ngShow;
             element.dialog(_.extend(options, {
                 title:attrs.title,
                 autoOpen:false,
@@ -19,16 +18,20 @@ angular.module('idea-boardy')
                 show: 'fade',
                 hide: 'fade',
                 close:function () {
-                    $parse(visibilityExpr).assign(scope, false) ;
-                    $parse(closeExpr)(scope);
+                    dialog(name).close();
                 }
             }));
             scope.$watch(function () {
-                var needToOpen = scope.$eval(visibilityExpr);
+                var needToOpen = dialog(name).visible;
                 if(element.dialog('isOpen') !== needToOpen) {
-                    var targetElement = (dialog(name).params.$event || {}).currentTarget || window;
-                    element.dialog('option', 'position', {of: targetElement}).dialog(needToOpen ? 'open' : 'close');
+                    var targetElement = (dialog(name).context.$event || {}).currentTarget || window;
+                    element.dialog('option', 'position', {of: targetElement})
+                        .dialog(needToOpen ? 'open' : 'close');
                 }
             });
+
+            function getRandomDialogName() {
+                return "dialog_" + new Date().getTime();
+            }
         }
     }]);

@@ -1,23 +1,22 @@
 <div ng-controller="CreateBoardController">
-    <div title="Create A New Board" jq-ui-dialog='{"width": 400}'
-         ng-show="dialog.visible" ng-cloak>
-        <form id="create-board-form"  name="createBoardForm" ng-submit="create()" >
+    <div title="Create A New Board" name="createBoardDialog" jq-ui-dialog='{"width": 400}' ng-cloak>
+        <form id="create-board-form" name="createBoardForm" ng-submit="create()" >
             <dl>
                 <dt>Name:</dt>
                 <dd>
-                    <input type="text" name="name" ng-model="dialog.params.boardToCreate.name" required autofocus />
+                    <input type="text" name="name" ng-model="dialog.context.boardToCreate.name" required autofocus />
                     <span error-message></span>
                 </dd>
             </dl>
             <dl>
                 <dt>Description:</dt>
-                <dd><input type="text" name="description" ng-model="dialog.params.boardToCreate.description"/></dd>
+                <dd><input type="text" name="description" ng-model="dialog.context.boardToCreate.description"/></dd>
             </dl>
             <dl>
                 <dt>Sections:</dt>
                 <dd>
                     <ul>
-                        <li class="section" ng-repeat="section in dialog.params.sectionsToCreate">
+                        <li class="section" ng-repeat="section in dialog.context.sectionsToCreate">
                             <input id="create-board-section-name-{{$index}}" type="text" name="sectionName{{$index}}" ng-model="section.name" required autofocus />
                             <span error-message></span>
                             <input class="btn-1" type="button" value="-" ng-click="removeSection($index)" jq-ui="button" />

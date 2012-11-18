@@ -4,7 +4,7 @@ angular.module('idea-boardy')
         $scope.dialog = dialog('deleteSectionDialog');
         $scope.delete = function() {
             $scope.dialog.close();
-            $scope.dialog.params.sectionToDelete.delete();
+            $scope.dialog.context.sectionToDelete.delete();
         };
         $scope.cancel = function() {
             $scope.dialog.close();

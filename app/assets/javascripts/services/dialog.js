@@ -11,13 +11,14 @@ angular.module('idea-boardy')
 
         function Dialog() {
             this.visible = false;
-            this.params = {};
-            this.open = function (params) {
-                this.params = params || {};
+            this.context = {};
+            this.open = function (context) {
+                this.context = context || {};
                 this.visible = true;
             };
             this.close = function() {
                 this.visible = false;
+                this.context = {};
             };
         }
     }

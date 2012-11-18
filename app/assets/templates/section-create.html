@@ -1,11 +1,10 @@
 <div ng-controller="CreateSectionController">
-    <div title="Create A New Section" jq-ui-dialog='{"width": 350}'
-         ng-show="isCreateSectionFormVisible" close="resetCreateSectionForm()" ng-cloak>
+    <div title="Create A New Section" jq-ui-dialog='{"width": 350}' ng-show="dialog.visible" ng-cloak>
         <form id="create-section-form" name="createSectionForm" ng-submit="create()">
             <dl>
                 <dt>Section Name</dt>
                 <dd>
-                    <input type="text" ng-model="section.name" required autofocus />
+                    <input type="text" ng-model="dialog.params.sectionToCreate.name" required autofocus />
                     <span error-message></span>
                 </dd>
             </dl>

@@ -1,6 +1,7 @@
 angular.module('idea-boardy')
-    .controller('BoardController', ['$scope', '$http', '$location', 'params',
-        function ($scope, $http, $location, params) {
+    .controller('BoardController', ['$scope', '$http', '$location', 'params', 'dialog',
+        function ($scope, $http, $location, params, dialog) {
+            var createSectionDialog = dialog('createSectionDialog');
             $http.get(params('boardUri')).success(function (board) {
                 enhanceBoard(board);
                 $scope.board = board;
@@ -8,8 +9,8 @@ angular.module('idea-boardy')
                     $scope.sections = sections;
                 });
             });
-            $scope.addSection = function() {
-                $scope.$broadcast(ScopeEvent.createNewSection);
+            $scope.showCreateSectionDialog = function() {
+                createSectionDialog.open({board: $scope.board, sectionToCreate: {}});
             };
             $scope.goToReport = function(board) {
                 var reportLinkUri = board.reportLink.href;
@@ -34,17 +35,24 @@ angular.module('idea-boardy')
                 });
             });
 
-            function enhanceBoard(board) {
-                angular.extend(board, {
-                    selfLink:board.links.getLink('self'),
-                    sectionsLink:board.links.getLink('sections'),
-                    reportLink:board.links.getLink('report'),
+            function enhanceBoard(rawBoard) {
+                angular.extend(rawBoard, {
+                    selfLink:rawBoard.links.getLink('self'),
+                    sectionsLink:rawBoard.links.getLink('sections'),
+                    reportLink:rawBoard.links.getLink('report'),
                     mode:"view",
                     edit:function () {
                         this.mode = 'edit'
                     },
                     delete:function() {
                         $scope.$broadcast(ScopeEvent.deleteBoard, this);
+                    },
+                    createSection: function(sectionToCreate) {
+                        var board = this;
+                        $http.post(board.sectionsLink.href, sectionToCreate)
+                            .success(function() {
+                                $scope.$emit(ScopeEvent.beginRefreshBoardSections);
+                            });
                     },
                     cancel:function () {
                         this.mode = 'view'

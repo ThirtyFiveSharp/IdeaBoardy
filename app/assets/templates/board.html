@@ -9,7 +9,7 @@
                 <input class="btn-3 btn-delete" type="button" value="Delete" ng-click="board.delete()" jq-ui="button"/>
                 <input class="btn-3" type="button" value="Report" ng-click="goToReport(board)" jq-ui="button"/>
                 <input class="btn-3" type="button" value="Edit" ng-click="board.edit()" jq-ui="button"/>
-                <input class="btn-3" type="button" value="+ 1 section" ng-click="addSection()" jq-ui="button"/>
+                <input class="btn-3" type="button" value="+ 1 section" ng-click="showCreateSectionDialog()" jq-ui="button"/>
             </div>
         </div>
         <div ng-switch-when="edit">
@@ -37,7 +37,6 @@
         </li>
     </ul>
 
-    <ng-include src="'assets/section-create.html'"></ng-include>
     <ng-include src="'assets/board-delete.html'"></ng-include>
 </div>
 

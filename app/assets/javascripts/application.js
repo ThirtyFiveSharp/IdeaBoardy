@@ -18,7 +18,7 @@
 //= require constant
 //= require util
 //= require module
-//= require services/params
+//= require_tree ./services
 //= require directives/autofocus
 //= require directives/error-message
 //= require directives/jquery-ui

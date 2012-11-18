@@ -1,6 +1,7 @@
 angular.module('idea-boardy')
-    .controller('IdeaController', ['$scope', '$http',
-    function ($scope, $http) {
+    .controller('IdeaController', ['$scope', '$http', 'dialog',
+    function ($scope, $http, dialog) {
+        var deleteIdeaDialog = dialog('deleteIdeaDialog');
         $http.get($scope.idea.links.getLink('idea').href).success(function (idea) {
             $scope.idea = enhanceIdea(idea);
         });
@@ -8,7 +9,7 @@ angular.module('idea-boardy')
             $scope.$broadcast(ScopeEvent.editIdea);
         };
         $scope.showDeleteDialog = function() {
-            $scope.$broadcast(ScopeEvent.deleteIdea, $scope.idea);
+            deleteIdeaDialog.open({ideaToDelete: $scope.idea});
         };
 
         $scope.$on(ScopeEvent.beginRefreshIdea, function(event) {

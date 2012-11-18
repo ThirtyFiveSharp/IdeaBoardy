@@ -4,4 +4,6 @@ rvm:
   - "1.9.3"
 
 before_script:
-  - "rake db:migrate"
+  - "bundle exec rake db:migrate"
+
+

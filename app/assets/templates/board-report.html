@@ -1,12 +1,14 @@
-<div ng-controller="BoardReportController">
-    <h1>{{report.name}}</h1>
-    <span>{{report.description}}</span>
-    <dl ng-repeat="section in report.sections">
+<div id="report" ng-controller="BoardReportController">
+    <dl class="board-info">
+        <dd class="name">{{report.name}}</dd>
+        <dd class="description">{{report.description}}</dd>
+    </dl>
+    <dl class="section section-{{$index % 6}}" ng-repeat="section in report.sections">
         <dt>{{section.name}}</dt>
         <dd>
             <ol>
                 <li ng-repeat="idea in section.ideas">
-                    [{{idea.vote}} votes] {{idea.content}}
+                    {{idea.content}} [<span class="vote">{{idea.vote}}</span> votes]
                 </li>
             </ol>
         </dd>

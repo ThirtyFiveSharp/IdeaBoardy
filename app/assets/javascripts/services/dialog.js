@@ -18,7 +18,6 @@ angular.module('idea-boardy')
             };
             this.close = function() {
                 this.visible = false;
-                this.context = {};
             };
         }
     }

@@ -25,14 +25,12 @@
             </form>
         </div>
     </div>
-    <div ng-controller="IdeaListController">
-        <ul class="idea-list clear-fix">
-            <li class="idea" ng-repeat="idea in ideas">
-                <ng-include src="'assets/idea.html'"></ng-include>
-            </li>
-            <li class="idea blank">
-                <a ng-click="showCreateIdeaDialog($event)">+ 1 idea</a>
-            </li>
-        </ul>
-    </div>
+    <ul class="idea-list clear-fix">
+        <li class="idea" ng-repeat="idea in ideas">
+            <ng-include src="'assets/idea.html'"></ng-include>
+        </li>
+        <li class="idea blank">
+            <a ng-click="showCreateIdeaDialog($event)">+ 1 idea</a>
+        </li>
+    </ul>
 </div>

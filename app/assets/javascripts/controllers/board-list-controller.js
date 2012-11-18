@@ -2,9 +2,8 @@ angular.module('idea-boardy')
     .controller('BoardListController', ['$scope', '$http', '$location', 'params', 'dialog',
         function ($scope, $http, $location, params, dialog) {
             var createBoardDialog = dialog('createBoardDialog');
-            $http.get('/boards').success(function (boards) {
-                $scope.boards = boards;
-            });
+            refreshBoardList();
+
             $scope.showCreateBoardDialog = function () {
                 createBoardDialog.open({
                     boardToCreate: {},
@@ -19,7 +18,7 @@ angular.module('idea-boardy')
                                 _.each(sections, function (section) {
                                     $http.post(sectionsLink.href, section);
                                 });
-                                $scope.$emit(ScopeEvent.beginRefreshBoardList);
+                                refreshBoardList();
                             });
                         });
                     }
@@ -27,15 +26,13 @@ angular.module('idea-boardy')
             };
             $scope.goToBoard = function (board) {
                 var boardLink = board.links.getLink('board');
-                params('boardUri', boardLink.href);
                 $location.path('/boards/' + board.id).search('boardUri', boardLink.href);
             };
 
-            $scope.$on(ScopeEvent.beginRefreshBoardList, function(event) {
-                if(event.stopPropagation) event.stopPropagation();
+            function refreshBoardList() {
                 $http.get('/boards').success(function (boards) {
                     $scope.boards = boards;
                 });
-            });
+            }
         }
     ]);

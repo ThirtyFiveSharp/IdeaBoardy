@@ -6,10 +6,9 @@ angular.module('idea-boardy')
             $http.get(params('boardUri')).success(function (board) {
                 enhanceBoard(board);
                 $scope.board = board;
-                $http.get(board.sectionsLink.href).success(function (sections) {
-                    $scope.sections = sections;
-                });
+                refreshSections();
             });
+
             $scope.showDeleteBoardDialog = function() {
                 deleteBoardDialog.open({boardToDelete: $scope.board});
             };
@@ -21,6 +20,7 @@ angular.module('idea-boardy')
                 params('reportUri', reportLinkUri);
                 $location.path('/boards/' + board.id + '/report').search('reportUri', reportLinkUri);
             };
+
             $scope.$on(ScopeEvent.editSection, function(event, targetSection) {
                 if(event.stopPropagation) event.stopPropagation();
                 if(event.targetScope == $scope) return;
@@ -32,11 +32,10 @@ angular.module('idea-boardy')
                 if(event.targetScope == $scope) return;
                 $scope.$broadcast(ScopeEvent.cancelEditSection, targetSection);
             });
-            $scope.$on(ScopeEvent.beginRefreshBoardSections, function(event) {
+            $scope.$on(ScopeEvent.sectionDeleted, function(event, index) {
                 if(event.stopPropagation) event.stopPropagation();
-                $http.get($scope.board.sectionsLink.href).success(function (sections) {
-                    $scope.sections = sections;
-                });
+                $scope.sections.splice(index, 1);
+                refreshSections();
             });
 
             function enhanceBoard(rawBoard) {
@@ -49,22 +48,21 @@ angular.module('idea-boardy')
                         this.mode = 'edit'
                     },
                     delete:function() {
-                        var board = this;
-                        $http.delete(board.links.getLink('self').href)
-                            .success(function() {
-                                $location.path("/");
-                            });
+                        $http.delete(this.links.getLink('self').href).success(function() {
+                            $location.path("/");
+                        });
                     },
                     createSection: function(sectionToCreate) {
-                        var board = this;
-                        $http.post(board.sectionsLink.href, sectionToCreate)
-                            .success(function() {
-                                $scope.$emit(ScopeEvent.beginRefreshBoardSections);
-                            });
+                        $http.post(this.sectionsLink.href, sectionToCreate).success(refreshSections);
                     },
                     cancel:function () {
                         this.mode = 'view'
                     }
+                });
+            }
+            function refreshSections() {
+                $http.get($scope.board.sectionsLink.href).success(function (sections) {
+                    $scope.sections = sections;
                 });
             }
         }

@@ -54,11 +54,13 @@ class BoardsControllerTest < ActionController::TestCase
     assert_equal @board1.name, actual_board['name']
     assert_equal @board1.description, actual_board['description']
     links = actual_board['links']
-    assert_equal 2, links.count
+    assert_equal 3, links.count
     self_link = links.select { |l| l['rel']=='self' }.first
     assert_equal board_url(@board1.id), self_link['href']
     sections_link = links.select { |l| l['rel']=='sections' }.first
     assert_equal board_sections_url(@board1.id), sections_link['href']
+    report_link = links.select { |l| l['rel']=='report' }.first
+    assert_equal "#{board_url(@board1.id)}/report", report_link['href']
   end
 
   test "should return 404 Not Found when board is not existed (GET)" do

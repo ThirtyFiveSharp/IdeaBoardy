@@ -24,6 +24,11 @@ describe('BoardController', function () {
         ctrl = $controller('BoardController', {$scope:scope});
     }));
 
+    afterEach((function() {
+        $httpBackend.verifyNoOutstandingExpectation();
+        $httpBackend.verifyNoOutstandingRequest();
+    }));
+
     describe("initialize", function () {
         it("should enhance board", function () {
             $httpBackend.flush();

@@ -1,0 +1,1 @@
+task :travis => ['db:migrate', 'test', 'jasmine:ci']

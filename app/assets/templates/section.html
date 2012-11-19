@@ -1,4 +1,4 @@
-<div ng-controller="SectionController">
+<div ng-controller="SectionController" drop-target="" ng-model="section">
     <div class="section-title clear-fix" ng-switch on="section.mode">
         <div ng-switch-when="view">
             <dl class="section-info">
@@ -26,7 +26,7 @@
         </div>
     </div>
     <ul class="idea-list clear-fix">
-        <li class="idea" ng-repeat="idea in ideas">
+        <li class="idea" ng-repeat="idea in ideas" ng-model="idea" drop-source="">
             <ng-include src="'assets/idea.html'"></ng-include>
         </li>
         <li class="idea blank">

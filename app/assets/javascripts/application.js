@@ -22,6 +22,7 @@
 //= require directives/autofocus
 //= require directives/error-message
 //= require directives/jquery-ui
+//= require directives/droppable
 //= require directives/launchy
 //= require controllers/board-list-controller
 //= require controllers/create-board-controller

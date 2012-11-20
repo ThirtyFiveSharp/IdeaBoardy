@@ -63,4 +63,17 @@ class SectionTest < ActiveSupport::TestCase
       section2.save!
     end
   end
+
+  test "should raise ActiveRecord::RecordInvalid when create section with incorrect color" do
+    section = Section.new(name: "section_for_color")
+    section.color = "dummy"
+    assert_raise "color is incorrect", ActiveRecord::RecordInvalid do
+      section.save!
+    end
+  end
+
+  test "should set default color when creating new section" do
+    section = Section.create!(name: "section_for_color")
+    assert_equal Section::Colors[0], section.color
+  end
 end

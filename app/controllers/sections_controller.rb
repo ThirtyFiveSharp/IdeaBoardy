@@ -23,6 +23,7 @@ class SectionsController < ApplicationController
       render json: {
           id: @section.id,
           name: @section.name,
+          color: @section.color,
           links: [
               {rel: 'self', href: board_section_url(board_id, section_id)},
               {rel: 'ideas', href: board_section_ideas_url(board_id, section_id)}

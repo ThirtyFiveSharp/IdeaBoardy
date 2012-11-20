@@ -63,6 +63,7 @@ class SectionsControllerTest < ActionController::TestCase
     actual_section = ActiveSupport::JSON.decode @response.body
     assert_equal @section1.id, actual_section['id']
     assert_equal @section1.name, actual_section['name']
+    assert_equal @section1.color, actual_section['color']
     links = actual_section['links']
     assert_equal 2, links.count
     self_link = links.select {|l| l['rel']=='self'}.first

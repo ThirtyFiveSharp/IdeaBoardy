@@ -18,7 +18,7 @@ angular.module('idea-boardy')
             $scope.goToReport = function(board) {
                 var reportLinkUri = board.reportLink.href;
                 params('reportUri', reportLinkUri);
-                $location.path('/boards/' + board.id + '/report').search('reportUri', reportLinkUri);
+                $location.path('/boards/' + board.id + '/report').search({reportUri: reportLinkUri});
             };
 
             $scope.$on(ScopeEvent.editSection, function(event, targetSection) {

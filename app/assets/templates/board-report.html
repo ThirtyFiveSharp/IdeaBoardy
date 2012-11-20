@@ -1,6 +1,6 @@
 <div id="report" ng-controller="BoardReportController">
     <dl class="board-info">
-        <dd class="name">{{report.name}}</dd>
+        <dd class="name"><a ng-click="goToBoard()">{{report.name}}</a></dd>
         <dd class="description">{{report.description}}</dd>
     </dl>
     <dl class="section section-{{$index % 6}}" ng-repeat="section in report.sections">

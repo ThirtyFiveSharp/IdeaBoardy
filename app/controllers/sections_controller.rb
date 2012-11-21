@@ -27,7 +27,7 @@ class SectionsController < ApplicationController
           links: [
               {rel: 'self', href: board_section_url(board_id, section_id)},
               {rel: 'ideas', href: board_section_ideas_url(board_id, section_id)},
-              {rel: 'immigration', href: "#{board_section_ideas_url(board_id, section_id)}/immigration"}
+              {rel: 'immigration', href: "#{board_section_url(board_id, section_id)}/immigration"}
           ]
       }
     end

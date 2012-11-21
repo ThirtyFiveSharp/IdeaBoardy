@@ -82,7 +82,7 @@ class SectionsControllerTest < ActionController::TestCase
     ideas_link = links.select { |l| l['rel']=='ideas' }.first
     assert_equal board_section_ideas_url(@board.id, @section1.id), ideas_link['href']
     immigration_link = links.select { |l| l['rel']=='immigration' }.first
-    assert_equal "#{board_section_ideas_url(@board.id, @section1.id)}/immigration", immigration_link['href']
+    assert_equal "#{board_section_url(@board.id, @section1.id)}/immigration", immigration_link['href']
   end
 
   test "should return 404 Not Found when section is not under given board (GET)" do

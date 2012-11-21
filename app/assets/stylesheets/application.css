@@ -134,3 +134,4 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 
 .drop-start {  filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 0.5;z-index:2000; background-color:#ffffff;  }
 .section-highlight {background-color:#8a2be2; }
+.handle {display: block; position: absolute; top: 0; right: 0;}

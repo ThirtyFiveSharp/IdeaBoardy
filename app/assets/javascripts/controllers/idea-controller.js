@@ -26,6 +26,20 @@ angular.module('idea-boardy')
                         .success(function() {
                             $scope.$emit(ScopeEvent.ideaDeleted, $scope.$index);
                         });
+                },
+                mergeWith: function(sourceIdea) {
+                    var destIdea = this;
+                    dialog('mergeIdeaDialog').open({
+                        mergedIdea: {content: destIdea.content + "\n" + sourceIdea.content},
+                        merge: function() {
+                            var requestBody = {content: this.mergedIdea.content, source: sourceIdea.id};
+                            $http.post(destIdea.links.getLink('merging').href, requestBody)
+                                .success(function() {
+                                    sourceIdea.notifyEmigrated();
+                                    $scope.$emit(ScopeEvent.ideaMerged, sourceIdea);
+                                });
+                        }
+                    });
                 }
             });
         }

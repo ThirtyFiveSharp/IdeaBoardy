@@ -25,8 +25,9 @@
             </form>
         </div>
     </div>
-    <ul class="idea-list clear-fix" drop-target="" >
-        <li class="idea" ng-repeat="idea in ideas" ng-model="idea" drop-source="">
+    <ul class="idea-list clear-fix" droppable="section.addImmigrant($draggableModel)">
+        <li class="idea" ng-repeat="idea in ideas" ng-model="idea" draggable>
+            <div class="handle">Handle</div>
             <ng-include src="'assets/idea.html'"></ng-include>
         </li>
         <li class="idea blank">

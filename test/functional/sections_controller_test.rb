@@ -19,7 +19,7 @@ class SectionsControllerTest < ActionController::TestCase
       assert_equal expected_section.name, actual_sections[index]['name']
       links = actual_sections[index]['links']
       assert_equal 1, links.count
-      section_link = links.select {|l| l['rel'] == 'section'}.first
+      section_link = links.select { |l| l['rel'] == 'section' }.first
       assert_equal board_section_url(expected_section.board.id, expected_section.id), section_link['href']
     end
   end
@@ -33,7 +33,7 @@ class SectionsControllerTest < ActionController::TestCase
   test "should create section for given board" do
     expected_name = "New section name"
     assert_difference('Section.count') do
-      post :create, board_id: @board.id, section: { name: expected_name, color: Section::Colors[3] }
+      post :create, board_id: @board.id, section: {name: expected_name, color: Section::Colors[3]}
     end
     created_section = assigns :section
     assert_response :created
@@ -45,6 +45,15 @@ class SectionsControllerTest < ActionController::TestCase
     assert_equal Section::Colors[3], actual_section.color
   end
 
+  test "should set default color when creating section without specifiy color" do
+    expected_name = "New section name"
+    post :create, board_id: @board.id, section: {name: expected_name}
+    created_section = assigns :section
+    actual_section = Section.find created_section.id
+    hash = Hash[@board.sections.map.with_index{|*ki| ki}]
+    assert_equal Section::Colors[hash[actual_section]], actual_section.color
+  end
+
   test "should return unprocessable_entity status when create a section without name" do
     post :create, board_id: @board.id, section: {}
     assert_response :unprocessable_entity
@@ -53,7 +62,7 @@ class SectionsControllerTest < ActionController::TestCase
   end
 
   test "should return 404 Not Found when given board is not existed (POST)" do
-    post :create, board_id: 99999, section: { name: "New section name" }
+    post :create, board_id: 99999, section: {name: "New section name"}
     assert_response :not_found
     assert_blank @response.body
   end
@@ -67,27 +76,27 @@ class SectionsControllerTest < ActionController::TestCase
     assert_equal @section1.color, actual_section['color']
     links = actual_section['links']
     assert_equal 2, links.count
-    self_link = links.select {|l| l['rel']=='self'}.first
+    self_link = links.select { |l| l['rel']=='self' }.first
     assert_equal board_section_url(@board.id, @section1.id), self_link['href']
-    ideas_link = links.select {|l| l['rel']=='ideas'}.first
+    ideas_link = links.select { |l| l['rel']=='ideas' }.first
     assert_equal board_section_ideas_url(@board.id, @section1.id), ideas_link['href']
   end
 
   test "should return 404 Not Found when section is not under given board (GET)" do
-    get :show, board_id:@board2.id, id: @section1.id
+    get :show, board_id: @board2.id, id: @section1.id
     assert_response :not_found
     assert_blank @response.body
   end
 
   test "should return 404 Not Found when section is not existed (GET)" do
-    get :show, board_id:@board.id, id: 99999
+    get :show, board_id: @board.id, id: 99999
     assert_response :not_found
     assert_blank @response.body
   end
 
   test "should update section" do
     new_section_name = "new section name"
-    put :update, board_id: @board.id, id: @section1, section: { name: new_section_name }
+    put :update, board_id: @board.id, id: @section1, section: {name: new_section_name}
     assert_response :no_content
     assert_blank @response.body
     actual_section = Section.find(@section1.id)
@@ -95,7 +104,7 @@ class SectionsControllerTest < ActionController::TestCase
   end
 
   test "should return unprocessable_entity status when clear name of a section" do
-    put :update, board_id: @board.id, id: @section1, section: { name: "" }
+    put :update, board_id: @board.id, id: @section1, section: {name: ""}
     assert_response :unprocessable_entity
     errors = ActiveSupport::JSON.decode @response.body
     assert_includes errors["name"], "can't be blank"
@@ -114,14 +123,14 @@ class SectionsControllerTest < ActionController::TestCase
   end
 
   test "should delete existed section and associated ideas" do
-    idea_ids = @section1.ideas.collect {|i| i.id}
+    idea_ids = @section1.ideas.collect { |i| i.id }
     assert_difference('Section.count', -1) do
       delete :destroy, board_id: @board.id, id: @section1
     end
     assert_response :no_content
     assert_blank @response.body
     assert_equal false, Section.exists?(@section1.id), "section should be deleted"
-    idea_ids.each {|id| assert_equal false, Idea.exists?(id), "Associated ideas should be deleted."}
+    idea_ids.each { |id| assert_equal false, Idea.exists?(id), "Associated ideas should be deleted." }
   end
 
   test "should return 204 No Content when section is not under given board (DELETE)" do

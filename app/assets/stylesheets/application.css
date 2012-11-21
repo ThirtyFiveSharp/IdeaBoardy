@@ -133,3 +133,4 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .launchy .command {position: absolute; top:61.8%; left: 50%; width: 16em; height: 2em; margin: -1em 0 0 -8em; border-top: none; border-right: none; border-left: none; border-bottom: 1px #a9a9a9 solid; background-color: transparent; font-size: 1.5em;}
 
 .drop-start {  filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 0.5;z-index:2000; background-color:#ffffff;  }
+.section-highlight {background-color:#8a2be2; }

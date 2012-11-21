@@ -8,6 +8,10 @@ angular.module('idea-boardy')
                 });
 
                 droppable.draggable({
+                    revert: "invalid",
+                    containment: "document",
+                    helper: "clone",
+                    cursor: "move",
                     start:function (event, ui) {
                         droppable.addClass("drop-start");
                     },
@@ -20,7 +24,7 @@ angular.module('idea-boardy')
     });
 
 angular.module('idea-boardy')
-    .directive('dropTarget', ['$http', function ($http) {
+    .directive('dropTarget', ['$http', '$compile', function ($http, $compile) {
     return {
         require:'^?ngModel',
         link:function (scope, dropTarget, attrs, ngModelCtrl) {
@@ -30,21 +34,31 @@ angular.module('idea-boardy')
             });
 
             dropTarget.droppable({
-//                    activate:function (event, ui) {
-//                        console.log("Drop here !", ui);
-//                    },
-//                    over:function (event, ui) {
-//                        console.log("Oh, Yeah!", ui);
-//                    },
-//                    out:function (event, ui) {
-//                        console.log("Don't leave me!", ui);
-//                    },
                 drop:function (event, ui) {
-                    var idea = $(ui.draggable).inheritedData("$$idea");
+                    var item = ui.draggable;
+                    var idea = $(item).inheritedData("$$idea");
+
                     $http.delete(idea.links.getLink("idea").href);
                     $http.post(section.links.getLink("ideas").href, idea);
+
+                    moveItem(dropTarget, item);
                 }
             });
+
+            function moveItem(target, item){
+                var blankIdeaContainer = $("li.blank", target).remove();
+                item.fadeOut(function () {
+                    item.appendTo(target).fadeIn(function () {
+                        blankIdeaContainer.appendTo(target).fadeIn();
+                        $("a", blankIdeaContainer).removeAttr("href");
+                        scope.$apply(function(){
+                            $compile(blankIdeaContainer)(scope);
+                        });
+                    });
+                });
+            }
         }
     };
+
+
 }]);

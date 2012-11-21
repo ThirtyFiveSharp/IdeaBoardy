@@ -5,9 +5,9 @@ angular.module('idea-boardy')
                 revert:'invalid',
                 handle:'.handle',
                 helper:'clone',
+                appendTo: 'body',
                 cursor:'move',
-                opacity:0.5,
-                zIndex:9999
+                opacity:0.8
             });
         };
     })

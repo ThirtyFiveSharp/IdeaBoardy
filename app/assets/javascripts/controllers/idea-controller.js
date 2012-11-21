@@ -30,7 +30,7 @@ angular.module('idea-boardy')
                 mergeWith: function(sourceIdea) {
                     var destIdea = this;
                     dialog('mergeIdeaDialog').open({
-                        mergedIdea: {content: destIdea.content + "\n" + sourceIdea.content},
+                        mergedIdea: {content: destIdea.content + "\n========\n" + sourceIdea.content},
                         merge: function() {
                             var requestBody = {content: this.mergedIdea.content, source: sourceIdea.id};
                             $http.post(destIdea.links.getLink('merging').href, requestBody)

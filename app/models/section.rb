@@ -6,7 +6,7 @@ class Section < ActiveRecord::Base
   belongs_to :board
 
   validates :name, presence:true, uniqueness: {scope: :board_id, message: "section name should be unique in a board"}
-  validates :color,  inclusion: {in: Colors, message: "%{value} is not a valid color"}
+  validates :color,  inclusion: {in: Colors, message: "%{value} is not a valid color, should be one of #{Colors.join(", ")}"}
 
   after_initialize :default_value!
 
@@ -14,6 +14,6 @@ class Section < ActiveRecord::Base
 
   private
   def default_value!
-    self.color = Colors[0]
+    self.color ||= Colors[0]
   end
 end

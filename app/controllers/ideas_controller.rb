@@ -33,7 +33,8 @@ class IdeasController < ApplicationController
         vote: @idea.vote,
         links: [
             {rel: 'self', href: board_section_idea_url(board_id, section_id, idea_id)},
-            {rel: 'vote', href: "#{board_section_idea_url(board_id, section_id, idea_id)}/vote"}
+            {rel: 'vote', href: "#{board_section_idea_url(board_id, section_id, idea_id)}/vote"},
+            {rel: 'merging', href: "#{board_section_idea_url(board_id, section_id, idea_id)}/merging"}
         ]
     }
   end
@@ -92,5 +93,17 @@ class IdeasController < ApplicationController
         render json: @idea.errors, status: :unprocessable_entity
       end
     end
+  end
+
+  def merging
+    source_idea = Idea.find(params[:source])
+    idea = Idea.find(params[:id])
+    idea.content = params[:content]
+    idea.vote += source_idea.vote
+    Idea.transaction do
+      source_idea.delete
+      idea.save!
+    end
+    head :no_content
   end
 end

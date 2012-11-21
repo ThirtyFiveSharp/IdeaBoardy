@@ -83,11 +83,13 @@ class IdeasControllerTest < ActionController::TestCase
     assert_equal @idea1.content, actual_idea['content']
     assert_equal @idea1.vote, actual_idea['vote']
     links = actual_idea['links']
-    assert_equal 2, links.count
+    assert_equal 3, links.count
     self_link = links.select { |l| l['rel'] == 'self' }.first
     assert_equal board_section_idea_url(@idea1.section.board.id, @idea1.section.id, @idea1.id), self_link['href']
     vote_link = links.select { |l| l['rel'] == 'vote' }.first
     assert_equal board_section_idea_url(@idea1.section.board.id, @idea1.section.id, @idea1.id)+"/vote", vote_link['href']
+    merging_link = links.select { |l| l['rel'] == 'merging' }.first
+    assert_equal board_section_idea_url(@idea1.section.board.id, @idea1.section.id, @idea1.id)+"/merging", merging_link['href']
   end
 
   test "should return 404 Not Found when section is not under given board (GET)" do
@@ -192,5 +194,16 @@ class IdeasControllerTest < ActionController::TestCase
     post :vote, board_id: @board, section_id: @section2, id: 99999
     assert_response :not_found
     assert_blank @response.body
+  end
+
+  test "should merge two ideas with given contents and sum up their votes" do
+    merged_content = 'merged content'
+    assert_difference('Idea.find(@idea2.id).vote', Idea.find(@idea1.id).vote) do
+      post :merging, board_id: @board, section_id: @section1, id:@idea2, content: merged_content, source:@idea1.id
+    end
+    assert_response :no_content
+    assert_blank @response.body
+    assert_equal merged_content, Idea.find(@idea2.id).content
+    assert_equal false, Idea.exists?(@idea1.id)
   end
 end

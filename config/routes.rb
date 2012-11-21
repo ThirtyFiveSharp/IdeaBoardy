@@ -9,6 +9,7 @@ Ideaboardy::Application.routes.draw do
       resources :ideas do
         member do
           post 'vote'
+          post 'merging'
         end
       end
     end

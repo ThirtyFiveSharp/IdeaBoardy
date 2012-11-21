@@ -14,6 +14,6 @@ class Section < ActiveRecord::Base
 
   private
   def default_value!
-    self.color = Colors[0]
+    self.color ||= Colors[0]
   end
 end

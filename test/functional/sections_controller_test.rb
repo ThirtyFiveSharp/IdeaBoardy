@@ -6,6 +6,7 @@ class SectionsControllerTest < ActionController::TestCase
     @board2 = boards(:two)
     @section1 = sections(:one)
     @section2 = sections(:two)
+    @idea1 = ideas(:one)
   end
 
   test "should get index" do
@@ -75,11 +76,13 @@ class SectionsControllerTest < ActionController::TestCase
     assert_equal @section1.name, actual_section['name']
     assert_equal @section1.color, actual_section['color']
     links = actual_section['links']
-    assert_equal 2, links.count
+    assert_equal 3, links.count
     self_link = links.select { |l| l['rel']=='self' }.first
     assert_equal board_section_url(@board.id, @section1.id), self_link['href']
     ideas_link = links.select { |l| l['rel']=='ideas' }.first
     assert_equal board_section_ideas_url(@board.id, @section1.id), ideas_link['href']
+    immigration_link = links.select { |l| l['rel']=='immigration' }.first
+    assert_equal "#{board_section_ideas_url(@board.id, @section1.id)}/immigration", immigration_link['href']
   end
 
   test "should return 404 Not Found when section is not under given board (GET)" do
@@ -145,4 +148,11 @@ class SectionsControllerTest < ActionController::TestCase
     assert_blank @response.body
   end
 
+  test "should move an idea into the section" do
+    assert_difference('Idea.of_section(@section2).count') do
+      post :immigration, board_id: @board, id: @section2, source: @idea1.id
+    end
+    assert_response :no_content
+    assert_blank @response.body
+  end
 end

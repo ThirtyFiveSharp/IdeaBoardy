@@ -6,6 +6,9 @@ Ideaboardy::Application.routes.draw do
       get 'report'
     end
     resources :sections do
+      member do
+        post 'immigration'
+      end
       resources :ideas do
         member do
           post 'vote'

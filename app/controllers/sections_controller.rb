@@ -26,7 +26,8 @@ class SectionsController < ApplicationController
           color: @section.color,
           links: [
               {rel: 'self', href: board_section_url(board_id, section_id)},
-              {rel: 'ideas', href: board_section_ideas_url(board_id, section_id)}
+              {rel: 'ideas', href: board_section_ideas_url(board_id, section_id)},
+              {rel: 'immigration', href: "#{board_section_ideas_url(board_id, section_id)}/immigration"}
           ]
       }
     end
@@ -67,5 +68,12 @@ class SectionsController < ApplicationController
       @section.destroy
       head :no_content
     end
+  end
+
+  def immigration
+    source_idea = Idea.find(params[:source])
+    source_idea.section_id = params[:id]
+    source_idea.save!
+    head :no_content
   end
 end

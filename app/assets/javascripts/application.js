@@ -15,7 +15,6 @@
 //= require underscore
 //= require angular
 //= require version
-//= require constant
 //= require util
 //= require module
 //= require_tree ./services

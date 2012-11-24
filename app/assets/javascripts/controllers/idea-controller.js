@@ -1,6 +1,6 @@
 angular.module('idea-boardy')
-    .controller('IdeaController', ['$scope', '$http', 'dialog',
-    function ($scope, $http, dialog) {
+    .controller('IdeaController', ['$scope', '$http', 'dialog', 'events',
+    function ($scope, $http, dialog, events) {
         var editIdeaDialog = dialog('editIdeaDialog'),
             deleteIdeaDialog = dialog('deleteIdeaDialog');
         $http.get($scope.idea.links.getLink('idea').href).success(function (idea) {
@@ -24,7 +24,7 @@ angular.module('idea-boardy')
                 delete: function() {
                     $http.delete(this.links.getLink('self').href)
                         .success(function() {
-                            $scope.$emit(ScopeEvent.ideaDeleted, $scope.$index);
+                            $scope.$emit(events.ideaDeleted, $scope.$index);
                         });
                 },
                 mergeWith: function(sourceIdea) {
@@ -36,7 +36,7 @@ angular.module('idea-boardy')
                             $http.post(destIdea.links.getLink('merging').href, requestBody)
                                 .success(function() {
                                     sourceIdea.notifyEmigrated();
-                                    $scope.$emit(ScopeEvent.ideaMerged, sourceIdea);
+                                    $scope.$emit(events.ideaMerged, sourceIdea);
                                 });
                         }
                     });

@@ -1,6 +1,6 @@
 angular.module('idea-boardy')
-    .controller('SectionController', ['$scope', '$http', 'dialog',
-    function ($scope, $http, dialog) {
+    .controller('SectionController', ['$scope', '$http', 'dialog', 'events',
+    function ($scope, $http, dialog, events) {
         var deleteSectionDialog = dialog('deleteSectionDialog'),
             createIdeaDialog = dialog('createIdeaDialog');
         $http.get($scope.section.links.getLink('section').href)
@@ -16,7 +16,7 @@ angular.module('idea-boardy')
             createIdeaDialog.open({section:$scope.section, ideaToCreate:{}, $event:$event});
         };
 
-        $scope.$on(ScopeEvent.editSection, function (event, targetSection) {
+        $scope.$on(events.editSection, function (event, targetSection) {
             if ($scope.section == targetSection) {
                 $scope.section.mode = "edit";
             }
@@ -24,7 +24,7 @@ angular.module('idea-boardy')
                 $scope.section.editable = false;
             }
         });
-        $scope.$on(ScopeEvent.cancelEditSection, function (event, targetSection) {
+        $scope.$on(events.cancelEditSection, function (event, targetSection) {
             if ($scope.section == targetSection) {
                 $scope.section.mode = "view";
             }
@@ -32,17 +32,17 @@ angular.module('idea-boardy')
                 $scope.section.editable = true;
             }
         });
-        $scope.$on(ScopeEvent.ideaDeleted, function (event, ideaIndex) {
+        $scope.$on(events.ideaDeleted, function (event, ideaIndex) {
             if (event.stopPropagation) event.stopPropagation();
             $scope.ideas.splice(ideaIndex, 1);
             refreshSection();
         });
-        $scope.$on(ScopeEvent.ideaMerged, function (event, sourceIdea) {
+        $scope.$on(events.ideaMerged, function (event, sourceIdea) {
             if (event.stopPropagation) event.stopPropagation();
             if(_.any($scope.ideas, function(idea) {return idea.id == sourceIdea.id})) return;
             refreshSection();
         });
-        $scope.$on(ScopeEvent.ideaEmigrated, function (event) {
+        $scope.$on(events.ideaEmigrated, function (event) {
             if (event.stopPropagation) event.stopPropagation();
             refreshSection();
         });
@@ -59,11 +59,11 @@ angular.module('idea-boardy')
                     this.editable = false
                 },
                 edit:function () {
-                    $scope.$emit(ScopeEvent.editSection, this);
+                    $scope.$emit(events.editSection, this);
                 },
                 delete:function () {
                     $http.delete(this.selfLink.href).success(function () {
-                        $scope.$emit(ScopeEvent.sectionDeleted, $scope.$index);
+                        $scope.$emit(events.sectionDeleted, $scope.$index);
                     });
                 },
                 createIdea:function (ideaToCreate) {
@@ -80,7 +80,7 @@ angular.module('idea-boardy')
                         });
                 },
                 cancel:function () {
-                    $scope.$emit(ScopeEvent.cancelEditSection, this);
+                    $scope.$emit(events.cancelEditSection, this);
                 }
             });
         }

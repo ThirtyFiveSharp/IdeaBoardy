@@ -1,6 +1,6 @@
 angular.module('idea-boardy')
-    .controller('BoardController', ['$scope', '$http', '$location', 'params', 'dialog', 'color',
-        function ($scope, $http, $location, params, dialog, color) {
+    .controller('BoardController', ['$scope', '$http', '$location', 'params', 'dialog', 'color', 'events',
+        function ($scope, $http, $location, params, dialog, color, events) {
             var deleteBoardDialog = dialog('deleteBoardDialog'),
                 createSectionDialog = dialog('createSectionDialog');
             $http.get(params('uri')).success(function (board) {
@@ -21,18 +21,18 @@ angular.module('idea-boardy')
                 $location.path('report').search({uri: reportLinkUri});
             };
 
-            $scope.$on(ScopeEvent.editSection, function(event, targetSection) {
+            $scope.$on(events.editSection, function(event, targetSection) {
                 if(event.stopPropagation) event.stopPropagation();
                 if(event.targetScope == $scope) return;
-                $scope.$broadcast(ScopeEvent.editSection, targetSection);
+                $scope.$broadcast(events.editSection, targetSection);
             });
 
-            $scope.$on(ScopeEvent.cancelEditSection, function(event, targetSection) {
+            $scope.$on(events.cancelEditSection, function(event, targetSection) {
                 if(event.stopPropagation) event.stopPropagation();
                 if(event.targetScope == $scope) return;
-                $scope.$broadcast(ScopeEvent.cancelEditSection, targetSection);
+                $scope.$broadcast(events.cancelEditSection, targetSection);
             });
-            $scope.$on(ScopeEvent.sectionDeleted, function(event, index) {
+            $scope.$on(events.sectionDeleted, function(event, index) {
                 if(event.stopPropagation) event.stopPropagation();
                 $scope.sections.splice(index, 1);
                 refreshSections();

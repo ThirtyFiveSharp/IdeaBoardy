@@ -5,12 +5,13 @@ angular.module('idea-boardy')
             templateUrl:'assets/color-picker.html',
             replace:true,
             link: function(scope, element, attrs) {
-                var model = scope.$eval(attrs['for']);
                 scope.pickColor = function(index) {
+                    var model = scope.$eval(attrs['for']);
                     model.color = colors[index];
                 };
                 scope.mark = function(index) {
-                    return model.color && model.color == colors[index % 6]
+                    var model = scope.$eval(attrs['for']);
+                    return model && model.color && model.color == colors[index % 6]
                         ? "X"
                         : "";
                 };

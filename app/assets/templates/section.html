@@ -26,7 +26,7 @@
         </div>
     </div>
     <ul class="idea-list clear-fix" droppable="section.addImmigrant($draggableModel)">
-        <li class="idea" ng-repeat="idea in ideas" ng-model="idea" draggable>
+        <li style="background-color: #{{section.color}}" class="idea" ng-repeat="idea in ideas" ng-model="idea" draggable>
             <div class="handle"></div>
             <ng-include src="'assets/idea.html'"></ng-include>
         </li>

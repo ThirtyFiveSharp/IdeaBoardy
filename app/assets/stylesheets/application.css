@@ -72,12 +72,6 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #report .board-info .name { line-height: 2em; font-size: 1.8em; font-weight: bold; padding-left: 1px; }
 #report .board-info .description { font-size: 1.2em; font-style: italic; padding-left: 5px; }
 #report .section {margin-bottom: 1em; padding: 8px 5px; border-radius: 10px;}
-/*#report .section-0 { background-color: #ddffdd; }*/
-/*#report .section-1 { background-color: #fff0f5; }*/
-/*#report .section-2 { background-color: #e6e6fa; }*/
-/*#report .section-3 { background-color: #ffffe0; }*/
-/*#report .section-4 { background-color: #e0ffff; }*/
-/*#report .section-5 { background-color: #ffefd5; }*/
 #report .section dt {font-size: 1.3em; font-weight: bold; margin-bottom: 0.4em;}
 #report .section dd {padding-left: 5px;}
 #report .section ol {list-style-type: decimal;}
@@ -109,6 +103,16 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #create-board-form dt { margin-bottom: 0.5em; }
 #create-board-form .section { margin-bottom: 0.5em; }
 #create-board { margin-top: 2em; }
+
+.color-picker {display: inline-block;}
+.color-picker .color-box {margin: 3px; line-height: 15px; height: 15px; width: 15px; display: inline-block; border: 1px solid gray;}
+.color-picker .color-box:hover {border: 3px solid #ff8c00; cursor: hand;}
+.color-picker .color-box.color-0 {background-color: #ddffdd; }
+.color-picker .color-box.color-1 {background-color: #fff0f5;}
+.color-picker .color-box.color-2 {background-color: #e6e6fa;}
+.color-picker .color-box.color-3 {background-color: #ffffe0;}
+.color-picker .color-box.color-4 {background-color: #e0ffff;}
+.color-picker .color-box.color-5 {background-color: #ffefd5;}
 
 #delete-board-dialog p, .delete-idea-dialog p { margin-bottom: 1em; font-size: 1.1em;}
 #delete-board-dialog .command-bar { margin-bottom: 0.5em; }

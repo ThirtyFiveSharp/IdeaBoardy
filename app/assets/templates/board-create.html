@@ -1,5 +1,5 @@
 <div ng-controller="CreateBoardController">
-    <div title="Create A New Board" name="createBoardDialog" jq-ui-dialog='{"width": 400}' ng-cloak>
+    <div title="Create A New Board" name="createBoardDialog" jq-ui-dialog='{"width": 500}' ng-cloak>
         <form id="create-board-form" name="createBoardForm" ng-submit="create()" >
             <dl>
                 <dt>Name:</dt>
@@ -19,6 +19,7 @@
                         <li class="section" ng-repeat="section in dialog.context.sectionsToCreate">
                             <input id="create-board-section-name-{{$index}}" type="text" name="sectionName{{$index}}" ng-model="section.name" required autofocus />
                             <span error-message></span>
+                            <color-picker for="section"></color-picker>
                             <input class="btn-1" type="button" value="-" ng-click="removeSection($index)" jq-ui="button" />
                         </li>
                     </ul>

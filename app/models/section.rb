@@ -10,7 +10,7 @@ class Section < ActiveRecord::Base
 
   after_initialize :default_value!
 
-  scope :of_board, lambda {|board_id| where("board_id = ?", board_id)}
+  scope :of_board, lambda {|board_id| where("board_id = ?", board_id).order("id")}
 
   private
   def default_value!

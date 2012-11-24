@@ -5,7 +5,7 @@ class SectionsController < ApplicationController
     board_id = params[:board_id]
     return head :not_found unless Board.exists?(board_id)
 
-    @sections = Section.find_all_by_board_id(board_id)
+    @sections = Section.of_board(board_id)
     render json: @sections.collect { |section| {
         id: section.id,
         name: section.name,

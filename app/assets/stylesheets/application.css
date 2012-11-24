@@ -105,9 +105,9 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #create-board { margin-top: 2em; }
 
 .color-picker {display: inline-block;}
-.color-picker .color-box {margin: 3px; line-height: 15px; height: 15px; width: 15px; display: inline-block; border: 1px solid gray;}
-.color-picker .color-box:hover {border: 3px solid #ff8c00; cursor: hand;}
-.color-picker .color-box.color-0 {background-color: #ddffdd; }
+.color-picker .color-box {margin: 3px; line-height: 15px; height: 15px; width: 13px; display: inline-block; border: 2px solid gray;}
+.color-picker .color-box:hover {border: 2px solid orange;}
+.color-picker .color-box.color-0 {background-color: #ddffdd;}
 .color-picker .color-box.color-1 {background-color: #fff0f5;}
 .color-picker .color-box.color-2 {background-color: #e6e6fa;}
 .color-picker .color-box.color-3 {background-color: #ffffe0;}

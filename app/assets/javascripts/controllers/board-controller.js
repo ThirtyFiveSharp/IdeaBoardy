@@ -3,7 +3,7 @@ angular.module('idea-boardy')
         function ($scope, $http, $location, params, dialog, color) {
             var deleteBoardDialog = dialog('deleteBoardDialog'),
                 createSectionDialog = dialog('createSectionDialog');
-            $http.get(params('boardUri')).success(function (board) {
+            $http.get(params('uri')).success(function (board) {
                 enhanceBoard(board);
                 $scope.board = board;
                 refreshSections();
@@ -17,8 +17,8 @@ angular.module('idea-boardy')
             };
             $scope.goToReport = function(board) {
                 var reportLinkUri = board.reportLink.href;
-                params('reportUri', reportLinkUri);
-                $location.path('report').search({reportUri: reportLinkUri});
+                params('uri', reportLinkUri);
+                $location.path('report').search({uri: reportLinkUri});
             };
 
             $scope.$on(ScopeEvent.editSection, function(event, targetSection) {
@@ -49,7 +49,7 @@ angular.module('idea-boardy')
                     },
                     delete:function() {
                         $http.delete(this.links.getLink('self').href).success(function() {
-                            $location.path("/").search({});
+                            $location.path("").search({});
                         });
                     },
                     createSection: function(sectionToCreate) {

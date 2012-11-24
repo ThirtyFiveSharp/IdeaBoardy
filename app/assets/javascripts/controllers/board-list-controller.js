@@ -26,7 +26,7 @@ angular.module('idea-boardy')
             };
             $scope.goToBoard = function (board) {
                 var boardLink = board.links.getLink('board');
-                $location.path('/board').search({boardUri: boardLink.href});
+                $location.path('/board').search({uri: boardLink.href});
             };
 
             function refreshBoardList() {

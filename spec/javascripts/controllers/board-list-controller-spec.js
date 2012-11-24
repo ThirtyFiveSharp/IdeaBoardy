@@ -34,7 +34,7 @@ describe('BoardListController', function() {
             var boardToGo = scope.boards[1];
             scope.goToBoard(boardToGo);
             expect($location.path()).toEqual('/board');
-            expect($location.search()).toEqual({boardUri: boardToGo.links.getLink('board').href});
+            expect($location.search()).toEqual({uri: boardToGo.links.getLink('board').href});
         }));
     });
 });

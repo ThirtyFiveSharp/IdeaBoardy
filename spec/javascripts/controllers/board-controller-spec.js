@@ -13,7 +13,7 @@ describe('BoardController', function () {
     beforeEach(module('idea-boardy'));
 
     beforeEach(inject(function (_$httpBackend_, $rootScope, $controller, params) {
-        params('boardUri', boardUri);
+        params('uri', boardUri);
         $httpBackend = _$httpBackend_;
         $httpBackend.expectGET(boardUri).respond(board);
         $httpBackend.expectGET(sectionsLinkUri).respond(sections);
@@ -44,9 +44,9 @@ describe('BoardController', function () {
     describe("goToReport", function () {
         it("should go to report", inject(function(params, $location) {
             scope.goToReport(scope.board);
-            expect(params('reportUri')).toBe(reportUri);
+            expect(params('uri')).toBe(reportUri);
             expect($location.path()).toBe('/report');
-            expect($location.search().reportUri).toBe(reportUri);
+            expect($location.search().uri).toBe(reportUri);
         }));
     });
 });

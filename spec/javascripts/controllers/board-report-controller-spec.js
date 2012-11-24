@@ -18,7 +18,7 @@ describe('BoardReportController', function () {
     beforeEach(module('idea-boardy'));
 
     beforeEach(inject(function (_$httpBackend_, $rootScope, $controller, params) {
-        params('reportUri', boardReportUri);
+        params('uri', boardReportUri);
         $httpBackend = _$httpBackend_;
         $httpBackend.expectGET(boardReportUri).respond(report);
         scope = $rootScope.$new();
@@ -40,7 +40,7 @@ describe('BoardReportController', function () {
             $location.path('/reports');
             scope.goToBoard();
             expect($location.path()).toEqual('/board');
-            expect($location.search()).toEqual({boardUri: boardUri});
+            expect($location.search()).toEqual({uri: boardUri});
         }));
     });
 

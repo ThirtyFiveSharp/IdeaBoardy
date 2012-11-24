@@ -37,7 +37,6 @@ class SectionsController < ApplicationController
     until_found do
       board_id = params[:board_id]
       board = Board.find board_id
-      params[:section][:color] ||= Section::Colors[board.sections.count]
       @section = Section.new(params[:section])
       @section.board = board
       if @section.save

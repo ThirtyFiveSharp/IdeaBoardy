@@ -46,15 +46,6 @@ class SectionsControllerTest < ActionController::TestCase
     assert_equal Section::Colors[3], actual_section.color
   end
 
-  test "should set default color when creating section without specifiy color" do
-    expected_name = "New section name"
-    post :create, board_id: @board.id, section: {name: expected_name}
-    created_section = assigns :section
-    actual_section = Section.find created_section.id
-    hash = Hash[@board.sections.map.with_index{|*ki| ki}]
-    assert_equal Section::Colors[hash[actual_section]], actual_section.color
-  end
-
   test "should return unprocessable_entity status when create a section without name" do
     post :create, board_id: @board.id, section: {}
     assert_response :unprocessable_entity

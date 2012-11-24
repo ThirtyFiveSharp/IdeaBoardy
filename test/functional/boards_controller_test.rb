@@ -123,6 +123,7 @@ class BoardsControllerTest < ActionController::TestCase
     expected_board.sections.order('id').each_with_index do |section, section_index|
       actual_section_report = actual_report['sections'][section_index]
       assert_equal section.name, actual_section_report['name']
+      assert_equal section.color, actual_section_report['color']
       section.ideas.order('vote desc').each_with_index do |idea, idea_index|
         actual_idea_report = actual_section_report['ideas'][idea_index]
         assert_equal idea.content, actual_idea_report['content']

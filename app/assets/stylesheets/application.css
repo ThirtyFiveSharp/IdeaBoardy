@@ -72,12 +72,12 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #report .board-info .name { line-height: 2em; font-size: 1.8em; font-weight: bold; padding-left: 1px; }
 #report .board-info .description { font-size: 1.2em; font-style: italic; padding-left: 5px; }
 #report .section {margin-bottom: 1em; padding: 8px 5px; border-radius: 10px;}
-#report .section-0 { background-color: #ddffdd; }
-#report .section-1 { background-color: #fff0f5; }
-#report .section-2 { background-color: #e6e6fa; }
-#report .section-3 { background-color: #ffffe0; }
-#report .section-4 { background-color: #e0ffff; }
-#report .section-5 { background-color: #ffefd5; }
+/*#report .section-0 { background-color: #ddffdd; }*/
+/*#report .section-1 { background-color: #fff0f5; }*/
+/*#report .section-2 { background-color: #e6e6fa; }*/
+/*#report .section-3 { background-color: #ffffe0; }*/
+/*#report .section-4 { background-color: #e0ffff; }*/
+/*#report .section-5 { background-color: #ffefd5; }*/
 #report .section dt {font-size: 1.3em; font-weight: bold; margin-bottom: 0.4em;}
 #report .section dd {padding-left: 5px;}
 #report .section ol {list-style-type: decimal;}

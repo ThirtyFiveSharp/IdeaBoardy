@@ -77,6 +77,7 @@ class BoardsController < ApplicationController
           description: @board.description,
           sections: @board.sections.collect { |section| {
               name: section.name,
+              color: section.color,
               ideas: section.ideas.collect { |idea| {
                   content: idea.content,
                   vote: idea.vote

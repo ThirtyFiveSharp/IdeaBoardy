@@ -3,7 +3,7 @@
         <dd class="name"><a ng-click="goToBoard()">{{report.name}}</a></dd>
         <dd class="description">{{report.description}}</dd>
     </dl>
-    <dl class="section section-{{$index % 6}}" ng-repeat="section in report.sections">
+    <dl style="background-color: #{{section.color}}" class="section" ng-repeat="section in report.sections">
         <dt>{{section.name}}</dt>
         <dd>
             <ol>

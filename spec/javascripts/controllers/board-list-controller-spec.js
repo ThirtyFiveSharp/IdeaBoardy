@@ -33,7 +33,7 @@ describe('BoardListController', function() {
         it('should go to the given board page', inject(function($location) {
             var boardToGo = scope.boards[1];
             scope.goToBoard(boardToGo);
-            expect($location.path()).toEqual('/boards/' + boardToGo.id);
+            expect($location.path()).toEqual('/board');
             expect($location.search()).toEqual({boardUri: boardToGo.links.getLink('board').href});
         }));
     });

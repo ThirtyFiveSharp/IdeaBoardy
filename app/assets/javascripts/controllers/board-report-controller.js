@@ -5,9 +5,8 @@ angular.module('idea-boardy')
             $scope.report = report;
         });
         $scope.goToBoard = function () {
-            var newPath = $location.path().replace('/report', '');
             var boardUri = $scope.report.links.getLink('board').href;
-            $location.path(newPath).search({boardUri: boardUri});
+            $location.path('/board').search({boardUri: boardUri});
         };
     }
 ]);

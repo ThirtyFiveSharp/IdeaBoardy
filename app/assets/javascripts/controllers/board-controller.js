@@ -18,7 +18,7 @@ angular.module('idea-boardy')
             $scope.goToReport = function(board) {
                 var reportLinkUri = board.reportLink.href;
                 params('reportUri', reportLinkUri);
-                $location.path('/boards/' + board.id + '/report').search({reportUri: reportLinkUri});
+                $location.path('report').search({reportUri: reportLinkUri});
             };
 
             $scope.$on(ScopeEvent.editSection, function(event, targetSection) {
@@ -49,7 +49,7 @@ angular.module('idea-boardy')
                     },
                     delete:function() {
                         $http.delete(this.links.getLink('self').href).success(function() {
-                            $location.path("/");
+                            $location.path("/").search({});
                         });
                     },
                     createSection: function(sectionToCreate) {

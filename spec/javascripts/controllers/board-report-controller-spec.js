@@ -37,9 +37,9 @@ describe('BoardReportController', function () {
 
     describe("goToBoard", function () {
         it("should go to board page", inject(function ($location) {
-            $location.path('/boards/1/report');
+            $location.path('/reports');
             scope.goToBoard();
-            expect($location.path()).toEqual('/boards/' + 1);
+            expect($location.path()).toEqual('/board');
             expect($location.search()).toEqual({boardUri: boardUri});
         }));
     });

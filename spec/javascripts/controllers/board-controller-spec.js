@@ -1,5 +1,5 @@
 describe('BoardController', function () {
-    var scope, ctrl, $httpBackend, paramsService, locationService,
+    var scope, ctrl, $httpBackend,
         boardUri = 'http://localhost:3000/boards/1',
         sectionsLinkUri = boardUri + "/sections",
         reportUri = boardUri + "/report",
@@ -12,16 +12,15 @@ describe('BoardController', function () {
 
     beforeEach(module('idea-boardy'));
 
-    beforeEach(inject(function (_$httpBackend_, $rootScope, $controller, params, $location) {
-        paramsService = params;
-        paramsService('boardUri', boardUri);
-        locationService = $location;
+    beforeEach(inject(function (_$httpBackend_, $rootScope, $controller, params) {
+        params('boardUri', boardUri);
         $httpBackend = _$httpBackend_;
         $httpBackend.expectGET(boardUri).respond(board);
         $httpBackend.expectGET(sectionsLinkUri).respond(sections);
         scope = $rootScope.$new();
         scope.idea = board;
         ctrl = $controller('BoardController', {$scope:scope});
+        $httpBackend.flush();
     }));
 
     afterEach((function() {
@@ -31,7 +30,6 @@ describe('BoardController', function () {
 
     describe("initialize", function () {
         it("should enhance board", function () {
-            $httpBackend.flush();
             expect(scope.board).toBe(board);
             expect(scope.board.selfLink).toBe(board.links[0]);
             expect(scope.board.sectionsLink).toBe(board.links[1]);
@@ -44,12 +42,11 @@ describe('BoardController', function () {
     });
 
     describe("goToReport", function () {
-        it("should go to report", function() {
-            $httpBackend.flush();
+        it("should go to report", inject(function(params, $location) {
             scope.goToReport(scope.board);
-            expect(paramsService('reportUri')).toBe(reportUri);
-            expect(locationService.path()).toBe('/boards/' + board.id + '/report');
-            expect(locationService.search().reportUri).toBe(reportUri);
-        });
+            expect(params('reportUri')).toBe(reportUri);
+            expect($location.path()).toBe('/report');
+            expect($location.search().reportUri).toBe(reportUri);
+        }));
     });
 });

@@ -1,5 +1,5 @@
 angular.module('idea-boardy')
-    .directive('colorPicker', ['colors', function (colors) {
+    .directive('colorPicker', ['color', function (color) {
         return {
             restrict:'E',
             templateUrl:'assets/color-picker.html',
@@ -7,11 +7,11 @@ angular.module('idea-boardy')
             link: function(scope, element, attrs) {
                 scope.pickColor = function(index) {
                     var model = scope.$eval(attrs['for']);
-                    model.color = colors[index];
+                    model.color = color(index);
                 };
                 scope.mark = function(index) {
                     var model = scope.$eval(attrs['for']);
-                    return model && model.color && model.color == colors[index % 6]
+                    return model && model.color && model.color == color(index)
                         ? "X"
                         : "";
                 };

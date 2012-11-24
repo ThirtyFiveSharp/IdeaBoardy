@@ -1,6 +1,6 @@
 angular.module('idea-boardy')
-    .controller('BoardController', ['$scope', '$http', '$location', 'params', 'dialog', 'colors',
-        function ($scope, $http, $location, params, dialog, colors) {
+    .controller('BoardController', ['$scope', '$http', '$location', 'params', 'dialog', 'color',
+        function ($scope, $http, $location, params, dialog, color) {
             var deleteBoardDialog = dialog('deleteBoardDialog'),
                 createSectionDialog = dialog('createSectionDialog');
             $http.get(params('boardUri')).success(function (board) {
@@ -13,7 +13,7 @@ angular.module('idea-boardy')
                 deleteBoardDialog.open({boardToDelete: $scope.board});
             };
             $scope.showCreateSectionDialog = function() {
-                createSectionDialog.open({board: $scope.board, sectionToCreate: {color: colors[0]}});
+                createSectionDialog.open({board: $scope.board, sectionToCreate: {color: color(0)}});
             };
             $scope.goToReport = function(board) {
                 var reportLinkUri = board.reportLink.href;

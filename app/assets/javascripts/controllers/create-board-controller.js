@@ -1,6 +1,6 @@
 angular.module('idea-boardy')
-    .controller('CreateBoardController', ['$scope', '$timeout', 'dialog', 'colors',
-        function ($scope, $timeout, dialog, colors) {
+    .controller('CreateBoardController', ['$scope', '$timeout', 'dialog', 'color',
+        function ($scope, $timeout, dialog, color) {
             $scope.dialog = dialog("createBoardDialog");
             $scope.create = function () {
                 if (!$scope.createBoardForm.$valid) return;
@@ -11,8 +11,9 @@ angular.module('idea-boardy')
                 $scope.dialog.close();
             };
             $scope.addSection = function () {
-                var defaultColor = colors[$scope.dialog.context.sectionsToCreate.length % 6];
-                $scope.dialog.context.sectionsToCreate.push({color: defaultColor});
+                var sectionsToCreate = $scope.dialog.context.sectionsToCreate;
+                var defaultColor = color(sectionsToCreate.length);
+                sectionsToCreate.push({color: defaultColor});
             };
             $scope.removeSection = function (index) {
                 $scope.dialog.context.sectionsToCreate[index].name = "(to be removed)";

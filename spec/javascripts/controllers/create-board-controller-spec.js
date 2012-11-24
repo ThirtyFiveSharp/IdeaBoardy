@@ -12,11 +12,11 @@ describe("CreateBoardController", function () {
     }));
 
     describe("addSection", function () {
-        it("should set default color", inject(function (colors) {
+        it("should set default color", inject(function (color) {
             var sections = scope.dialog.context.sectionsToCreate = [];
             for(var i=0; i<12; i++)   {
                 scope.addSection();
-                expect(sections[i].color).toBe(colors[i % 6]);
+                expect(sections[i].color).toBe(color(i));
             }
         }));
     });

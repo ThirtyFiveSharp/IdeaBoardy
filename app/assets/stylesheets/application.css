@@ -132,8 +132,8 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .launchy .tip { position: absolute; top: 0.7em; left: 50%; width: 16em; margin-left: -8em; border: 1px transparent solid; font-size: 1.2em; text-align: center; }
 .launchy .command { position: absolute; top:61.8%; left: 50%; width: 16em; height: 2em; margin: -1em 0 0 -8em; border-top: none; border-right: none; border-left: none; border-bottom: 1px #a9a9a9 solid; background-color: transparent; font-size: 1.5em; }
 
-.handle { display: block; position: absolute; top: 0; right: 0; width: 32px; height: 32px; margin: 0; padding: 0; border:none; background: transparent url(/assets/handle.png) center no-repeat; }
-.handle:hover { background-image: url('/assets/handle-hover.png'); }
+.handle { display: block; position: absolute; top: 0; right: 0; width: 32px; height: 32px; margin: 0; padding: 0; border:none; background: transparent url(/assets/background.png) no-repeat; }
+.handle:hover { background-position: -32px 0; }
 
 .section.droppable-hover { background-color: #d3d3d3; }
 .idea.droppable-hover { border-color: black; }

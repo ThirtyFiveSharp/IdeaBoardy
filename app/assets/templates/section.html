@@ -2,7 +2,7 @@
     <div class="section-title clear-fix" ng-switch on="section.mode">
         <div ng-switch-when="view">
             <dl class="section-info">
-                <dd class="name"><span>{{section.name}}</span></dd>
+                <dd class="name">{{section.name|truncate:28}}</dd>
             </dl>
             <div class="command-bar">
                 <input class="btn-2 btn-delete" type="button" value="Delete" ng-click="showDeleteSectionDialog()"

@@ -40,6 +40,9 @@ angular.module('idea-boardy')
                                 });
                         }
                     });
+                },
+                notifyEmigrated:function () {
+                    $scope.$emit(events.ideaEmigrated);
                 }
             });
         }

@@ -101,19 +101,8 @@ angular.module('idea-boardy')
 
         function refreshIdeas() {
             $http.get($scope.section.links.getLink('ideas').href).success(function (ideas) {
-                $scope.ideas = enhanceIdeas(ideas);
+                $scope.ideas = ideas;
             });
-        }
-
-        function enhanceIdeas(ideas) {
-            _.each(ideas, function (idea) {
-                _.extend(idea, {
-                    notifyEmigrated:function () {
-                        refreshSection();
-                    }
-                });
-            });
-            return ideas;
         }
     }
 ]);

@@ -1,16 +1,12 @@
-<header><a href="#">IdeaBoardy - Let's move!</a></header>
+<header><a href="#">IdeaBoardy - <%= @slogan %></a></header>
 
 <div id="main" class="clear-fix">
   <ng-view></ng-view>
 </div>
 
 <footer>
-  IdeaBoardy v<span id="version-info"></span>
+  IdeaBoardy v<span id="version-info"><%= @version %></span>
 </footer>
-
-<script type="text/javascript">
-    $('#version-info').text(version);
-</script>
 
 <ng-include src="'assets/board-create.html'"></ng-include>
 <ng-include src="'assets/board-delete.html'"></ng-include>

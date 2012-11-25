@@ -14,7 +14,6 @@
 //= require jquery.ui.all
 //= require underscore
 //= require angular
-//= require version
 //= require util
 //= require module
 //= require_tree ./filters

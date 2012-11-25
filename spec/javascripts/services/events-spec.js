@@ -1,7 +1,7 @@
 describe('events', function() {
     var expectEvents = {
             editSection:'editSection',
-            cancelEditSection:'cancelEditSection',
+            sectionEditingFinished:'sectionEditingFinished',
             sectionDeleted:'sectionDeleted',
             ideaDeleted:'ideaDeleted',
             ideaMerged:'ideaMerged',
@@ -12,7 +12,7 @@ describe('events', function() {
 
     it('should return given event', inject(function(events) {
         expect(events.editSection).toBe(expectEvents.editSection);
-        expect(events.cancelEditSection).toBe(expectEvents.cancelEditSection);
+        expect(events.sectionEditingFinished).toBe(expectEvents.sectionEditingFinished);
         expect(events.sectionDeleted).toBe(expectEvents.sectionDeleted);
         expect(events.ideaDeleted).toBe(expectEvents.ideaDeleted);
         expect(events.ideaMerged).toBe(expectEvents.ideaMerged);

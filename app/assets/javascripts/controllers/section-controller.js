@@ -24,7 +24,7 @@ angular.module('idea-boardy')
                 $scope.section.editable = false;
             }
         });
-        $scope.$on(events.cancelEditSection, function (event, targetSection) {
+        $scope.$on(events.sectionEditingFinished, function (event, targetSection) {
             if ($scope.section == targetSection) {
                 $scope.section.mode = "view";
             }
@@ -62,7 +62,11 @@ angular.module('idea-boardy')
                     $scope.$emit(events.editSection, this);
                 },
                 save:function(updatedSection) {
-                    $http.put(this.selfLink.href, updatedSection).success(refreshSection);
+                    $http.put(this.selfLink.href, updatedSection)
+                        .success(function() {
+                            refreshSection();
+                            $scope.$emit(events.sectionEditingFinished);
+                        });
                 },
                 delete:function () {
                     $http.delete(this.selfLink.href).success(function () {
@@ -83,7 +87,7 @@ angular.module('idea-boardy')
                         });
                 },
                 cancel:function () {
-                    $scope.$emit(events.cancelEditSection, this);
+                    $scope.$emit(events.sectionEditingFinished, this);
                 }
             });
         }

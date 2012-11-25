@@ -27,10 +27,10 @@ angular.module('idea-boardy')
                 $scope.$broadcast(events.editSection, targetSection);
             });
 
-            $scope.$on(events.cancelEditSection, function(event, targetSection) {
+            $scope.$on(events.sectionEditingFinished, function(event, targetSection) {
                 if(event.stopPropagation) event.stopPropagation();
                 if(event.targetScope == $scope) return;
-                $scope.$broadcast(events.cancelEditSection, targetSection);
+                $scope.$broadcast(events.sectionEditingFinished, targetSection);
             });
             $scope.$on(events.sectionDeleted, function(event, index) {
                 if(event.stopPropagation) event.stopPropagation();

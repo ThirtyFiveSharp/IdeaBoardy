@@ -1,7 +1,7 @@
 angular.module('idea-boardy')
     .value('events', {
         editSection:'editSection',
-        cancelEditSection:'cancelEditSection',
+        sectionEditingFinished:'sectionEditingFinished',
         sectionDeleted:'sectionDeleted',
         ideaDeleted:'ideaDeleted',
         ideaMerged:'ideaMerged',

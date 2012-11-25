@@ -1,11 +1,13 @@
-<header><a href="#">IdeaBoardy - <%= @slogan %></a></header>
+<header>
+  <a href="#">IdeaBoardy - <%= @slogan %></a>
+</header>
 
 <div id="main" class="clear-fix">
   <ng-view></ng-view>
 </div>
 
 <footer>
-  IdeaBoardy v<span id="version-info"><%= @version %></span>
+  IdeaBoardy v<%= @version %>
 </footer>
 
 <ng-include src="'assets/board-create.html'"></ng-include>

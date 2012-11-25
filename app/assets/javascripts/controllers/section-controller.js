@@ -61,6 +61,9 @@ angular.module('idea-boardy')
                 edit:function () {
                     $scope.$emit(events.editSection, this);
                 },
+                save:function(updatedSection) {
+                    $http.put(this.selfLink.href, updatedSection).success(refreshSection);
+                },
                 delete:function () {
                     $http.delete(this.selfLink.href).success(function () {
                         $scope.$emit(events.sectionDeleted, $scope.$index);

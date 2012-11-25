@@ -4,7 +4,7 @@ angular.module('idea-boardy')
             $scope.editingSection = {};
             angular.copy($scope.section, $scope.editingSection);
             $scope.save = function () {
-                $http.put($scope.editingSection.selfLink.href, $scope.editingSection).success($route.reload);
+                $scope.section.save($scope.editingSection);
             };
             $scope.cancel = function () {
                 $scope.section.cancel();

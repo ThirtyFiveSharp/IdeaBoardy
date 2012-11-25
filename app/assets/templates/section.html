@@ -1,4 +1,4 @@
-<div ng-controller="SectionController">
+<div class="section" ng-controller="SectionController" droppable="section.addImmigrant($draggableModel)">
     <div class="section-title clear-fix" ng-switch on="section.mode">
         <div ng-switch-when="view">
             <dl class="section-info">
@@ -26,7 +26,7 @@
             </form>
         </div>
     </div>
-    <ul class="idea-list clear-fix" droppable="section.addImmigrant($draggableModel)">
+    <ul class="idea-list clear-fix">
         <li ng-repeat="idea in ideas">
             <ng-include src="'assets/idea.html'"></ng-include>
         </li>

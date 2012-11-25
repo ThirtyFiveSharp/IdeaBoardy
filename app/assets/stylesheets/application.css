@@ -135,5 +135,5 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .handle { display: block; position: absolute; top: 0; right: 0; width: 32px; height: 32px; margin: 0; padding: 0; border:none; background: transparent url(/assets/handle.png) center no-repeat; }
 .handle:hover { background-image: url('/assets/handle-hover.png'); }
 
-.idea-list.droppable-hover { background-color: #d3d3d3; }
+.section.droppable-hover { background-color: #d3d3d3; }
 .idea.droppable-hover { border-color: black; }

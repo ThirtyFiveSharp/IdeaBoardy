@@ -91,9 +91,9 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .idea { position: relative; overflow: hidden; margin: 4px; float: left; width: 225px; height: 150px; border:1px #a9a9a9 solid; -moz-border-radius: 10px; border-radius: 10px; text-align: center; }
 .idea.ui-draggable-dragging {background-color: #ffdd57;}
 .idea:hover { border-color: black; }
-.idea .idea-wrapper { width: 225px; height: 95px; overflow: hidden; }
+.idea .idea-wrapper { width: 225px; height: 100px; overflow: hidden; }
 .idea .idea-info { display: table; }
-.idea .idea-content { display: table-cell; vertical-align: middle; width: 225px; height: 95px; overflow: hidden; }
+.idea .idea-content { display: table-cell; vertical-align: middle; width: 225px; height: 100px; overflow: hidden; }
 .idea.blank { display: table; font-size: 1.1em; background-color: white; border-style: dashed; }
 .idea.blank a { display: table-cell; vertical-align: middle; color: #a9a9a9; }
 

@@ -11,7 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require jquery.ui.all
+//= require_tree ./libs
 //= require underscore
 //= require angular
 //= require util

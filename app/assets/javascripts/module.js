@@ -4,7 +4,7 @@ angular.module('idea-boardy', [])
         $routeProvider.when('/report', {templateUrl:'assets/board-report.html'});
         $routeProvider.otherwise({templateUrl:'assets/board-list.html', controller:'BoardListController'});
     }])
-    .run(function($document) {
+    .run(['$document', function($document) {
         $document.tooltip({ position: { my: "left-50 center", at: "right center" } });
-    })
+    }])
 ;

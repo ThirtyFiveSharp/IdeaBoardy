@@ -3,6 +3,8 @@ require 'test_helper'
 class Admin::SettingsControllerTest < ActionController::TestCase
   setup do
     @setting = admin_settings(:one)
+    @user = users(:one)
+    sign_in @user
   end
 
   test "should show admin_setting" do

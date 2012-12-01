@@ -8,4 +8,9 @@ class ApplicationController < ActionController::Base
       head response_when_not_found
     end
   end
+
+  private
+  def after_sign_in_path_for(resource)
+    admin_path
+  end
 end

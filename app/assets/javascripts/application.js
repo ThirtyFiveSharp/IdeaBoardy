@@ -11,7 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require ./libs/jquery-ui-1.9.2.custom.js
+//= require jquery.ui.all
 //= require underscore
 //= require angular
 //= require util

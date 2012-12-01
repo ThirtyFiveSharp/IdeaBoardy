@@ -18,7 +18,7 @@ class Admin::SettingsControllerTest < ActionController::TestCase
   end
 
   test "should update admin_setting" do
-    put :update, setting: { app_version: "new version", slogan: "new slogan" }
+    put :update, admin_setting: { app_version: "new version", slogan: "new slogan" }
     assert_redirected_to admin_settings_path
     setting = Admin::Setting.first
     assert_equal "new slogan", setting.slogan

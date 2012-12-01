@@ -12,7 +12,7 @@ class Admin::SettingsController < ApplicationController
 
   def update
     @setting = Admin::Setting.first
-    if @setting.update_attributes(params[:setting])
+    if @setting.update_attributes(params[:admin_setting])
       redirect_to admin_settings_path
     else
       render action: "edit"

@@ -10,7 +10,6 @@
  *
  *= require jquery-ui-1.9.1.custom
  *= require_self
- *= require bootstrap_and_overrides
  */
 
 /* Eric Meyer's Reset CSS v2.0 - http://cssreset.com */
@@ -87,7 +86,6 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .section-list .section .command-bar input { float: right; vertical-align: top; margin: 0 0.2em; }
 .section-list .section .name  { line-height: 1.6em; padding-left:0.3em; }
 .section-list .section .name span { font-size: 1.2em; float:left; padding-left: 1px; width: 100%; height: 1.6em; white-space: nowrap; word-wrap: normal; overflow:hidden;}
-/*.section-list .section .name { font-size: 1.2em; float:left; padding-left: 1px; width: 100%; height: 1.6em; white-space: nowrap; word-wrap: normal; overflow:hidden;}*/
 .section-list .section .name input { font-size: 1.2em; float: left; width:50%; padding: 0; border-top: none; border-right: none; border-left: none; border-color: #a9a9a9; background-color: #eeeeee; }
 
 .idea-list { display:block; list-style-type: none; }

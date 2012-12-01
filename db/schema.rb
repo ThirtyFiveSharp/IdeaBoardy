@@ -21,29 +21,29 @@ ActiveRecord::Schema.define(:version => 20121201053648) do
   end
 
   create_table "boards", :force => true do |t|
-    t.string    "name"
-    t.string    "description"
-    t.timestamp "created_at",                  :null => false
-    t.timestamp "updated_at",                  :null => false
-    t.integer   "lock_version", :default => 1
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.integer  "lock_version", :default => 1
   end
 
   create_table "ideas", :force => true do |t|
-    t.text      "content"
-    t.integer   "vote"
-    t.integer   "section_id"
-    t.timestamp "created_at",                  :null => false
-    t.timestamp "updated_at",                  :null => false
-    t.integer   "lock_version", :default => 1
+    t.text     "content"
+    t.integer  "vote"
+    t.integer  "section_id"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.integer  "lock_version", :default => 1
   end
 
   create_table "sections", :force => true do |t|
-    t.string    "name"
-    t.integer   "board_id"
-    t.timestamp "created_at",                  :null => false
-    t.timestamp "updated_at",                  :null => false
-    t.integer   "lock_version", :default => 1
-    t.string    "color"
+    t.string   "name"
+    t.integer  "board_id"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.integer  "lock_version", :default => 1
+    t.string   "color"
   end
 
   create_table "users", :force => true do |t|

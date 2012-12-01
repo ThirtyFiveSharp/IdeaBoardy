@@ -24,6 +24,8 @@ Ideaboardy::Application.routes.draw do
     resource :settings
   end
 
+  match 'admin' => 'admin/settings#show'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

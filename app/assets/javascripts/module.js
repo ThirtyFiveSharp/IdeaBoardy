@@ -4,4 +4,7 @@ angular.module('idea-boardy', [])
         $routeProvider.when('/report', {templateUrl:'assets/board-report.html'});
         $routeProvider.otherwise({templateUrl:'assets/board-list.html', controller:'BoardListController'});
     }])
+    .config(['$locationProvider', function($locationProvider) {
+        $locationProvider.html5Mode(true);
+    }])
 ;

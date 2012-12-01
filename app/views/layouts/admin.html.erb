@@ -20,12 +20,12 @@
       <a class="brand" href="#">Ideaboardy Admin</a>
       <div class="nav-collapse collapse">
         <p class="navbar-text pull-right">
-          Logged in as <a href="#" class="navbar-link">Username</a>
+          Logged in as <a href="mailto:<%= current_user.email %>" class="navbar-link"><%= current_user.email %></a>
         </p>
         <ul class="nav">
           <li><%= link_to "Settings", admin_settings_path %></li>
         </ul>
-      </div><!--/.nav-collapse -->
+      </div>
     </div>
   </div>
 </div>
@@ -37,15 +37,17 @@
         <ul class="nav nav-list">
           <li class="nav-header">Settings</li>
           <li><%= link_to "Manage Settings", admin_settings_path %></li>
+          <li class="nav-header">Sign out</li>
+          <li><%= button_to "Sign out", destroy_user_session_path, :method => :delete, :class => 'btn' %></li>
         </ul>
-      </div><!--/.well -->
-    </div><!--/span-->
+      </div>
+    </div>
     <div class="span9">
       <div class="hero-unit">
         <%= yield %>
       </div>
-    </div><!--/span-->
-  </div><!--/row-->
+    </div>
+  </div>
 
   <hr>
 

@@ -10,6 +10,7 @@
  *
  *= require jquery-ui-1.9.1.custom
  *= require_self
+ *= require bootstrap_and_overrides
  */
 
 /* Eric Meyer's Reset CSS v2.0 - http://cssreset.com */

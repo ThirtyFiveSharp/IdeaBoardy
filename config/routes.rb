@@ -1,6 +1,4 @@
 Ideaboardy::Application.routes.draw do
-  devise_for :users
-
   get "home/index"
 
   resources :boards do
@@ -18,6 +16,12 @@ Ideaboardy::Application.routes.draw do
         end
       end
     end
+  end
+
+  devise_for :users
+
+  namespace :admin do
+    resource :settings
   end
 
   # The priority is based upon order of creation:

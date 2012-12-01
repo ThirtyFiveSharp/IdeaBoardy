@@ -11,12 +11,4 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require ./libs/jquery-ui-1.9.2.custom.js
-//= require underscore
-//= require angular
-//= require util
-//= require module
-//= require_tree ./filters
-//= require_tree ./services
-//= require_tree ./directives
-//= require_tree ./controllers
+//= require ./libs/bootstrap.js

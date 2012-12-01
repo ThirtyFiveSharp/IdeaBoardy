@@ -1,7 +1,9 @@
 <header ng-controller="HeaderController">
   <a ng-click="goToHomePage()">IdeaBoardy - <%= @setting.slogan %></a>
   <% if user_signed_in?  %>
-    <div class="admin-link"><%= link_to "admin", admin_path%></div>
+    <div class="admin-container">
+      <%= button_to "admin", admin_path, class: "admin-link" %>
+    </div>
   <%- end %>
 </header>
 

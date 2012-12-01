@@ -137,3 +137,6 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 
 .section.droppable-hover { background-color: #d3d3d3; }
 .idea.droppable-hover { border-color: black; }
+
+.admin-link {float: right; margin-right: 20px; padding: 2px; border: 1px solid #D19405; font-size: 0.7em; background-color: #E0E0E0; color: #4C3000; -moz-border-radius: 5px; border-radius: 5px; }
+.admin-link:hover { background-color: #EFEFEF; border-color: black;}

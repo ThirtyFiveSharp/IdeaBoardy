@@ -1,12 +1,12 @@
 require 'test_helper'
 
-class Admin::SettingTest < ActiveSupport::TestCase
+class SettingTest < ActiveSupport::TestCase
   setup do
-    @setting = admin_settings(:one)
+    @setting = settings(:one)
   end
 
   test "should get default setting" do
-    setting = Admin::Setting.first
+    setting = Setting.first
     assert_not_nil(setting)
     assert_equal @setting.slogan, setting.slogan
     assert_equal @setting.app_version, setting.app_version
@@ -14,7 +14,7 @@ class Admin::SettingTest < ActiveSupport::TestCase
 
   test "should not allow to create more than one settings" do
     assert_raise "not allow to create more than one settings", ActiveRecord::ActiveRecordError do
-      Admin::Setting.create!(slogan: "slogan", app_version: "1.0.0")
+      Setting.create!(slogan: "slogan", app_version: "1.0.0")
     end
   end
 

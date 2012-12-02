@@ -11,39 +11,39 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121201053648) do
+ActiveRecord::Schema.define(:version => 20121202000320) do
 
-  create_table "admin_settings", :force => true do |t|
+  create_table "boards", :force => true do |t|
+    t.string    "name"
+    t.string    "description"
+    t.timestamp "created_at",                  :null => false
+    t.timestamp "updated_at",                  :null => false
+    t.integer   "lock_version", :default => 1
+  end
+
+  create_table "ideas", :force => true do |t|
+    t.text      "content"
+    t.integer   "vote"
+    t.integer   "section_id"
+    t.timestamp "created_at",                  :null => false
+    t.timestamp "updated_at",                  :null => false
+    t.integer   "lock_version", :default => 1
+  end
+
+  create_table "sections", :force => true do |t|
+    t.string    "name"
+    t.integer   "board_id"
+    t.timestamp "created_at",                  :null => false
+    t.timestamp "updated_at",                  :null => false
+    t.integer   "lock_version", :default => 1
+    t.string    "color"
+  end
+
+  create_table "settings", :force => true do |t|
     t.string   "slogan"
     t.string   "app_version"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-  end
-
-  create_table "boards", :force => true do |t|
-    t.string   "name"
-    t.string   "description"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
-    t.integer  "lock_version", :default => 1
-  end
-
-  create_table "ideas", :force => true do |t|
-    t.text     "content"
-    t.integer  "vote"
-    t.integer  "section_id"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
-    t.integer  "lock_version", :default => 1
-  end
-
-  create_table "sections", :force => true do |t|
-    t.string   "name"
-    t.integer  "board_id"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
-    t.integer  "lock_version", :default => 1
-    t.string   "color"
   end
 
   create_table "users", :force => true do |t|

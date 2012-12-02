@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Admin::SettingsControllerTest < ActionController::TestCase
   setup do
-    @setting = admin_settings(:one)
+    @setting = settings(:one)
     @user = users(:one)
     sign_in @user
   end
@@ -20,9 +20,9 @@ class Admin::SettingsControllerTest < ActionController::TestCase
   end
 
   test "should update admin_setting" do
-    put :update, admin_setting: { app_version: "new version", slogan: "new slogan" }
+    put :update, setting: { app_version: "new version", slogan: "new slogan" }
     assert_redirected_to admin_settings_path
-    setting = Admin::Setting.first
+    setting = Setting.first
     assert_equal "new slogan", setting.slogan
     assert_equal "new version", setting.app_version
   end

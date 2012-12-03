@@ -52,11 +52,12 @@ angular.module('idea-boardy')
                 selfLink:rawSection.links.getLink('self'),
                 mode:"view",
                 editable:true,
+                expanded:true,
                 enable:function () {
-                    this.editable = true
+                    this.editable = true;
                 },
                 disable:function () {
-                    this.editable = false
+                    this.editable = false;
                 },
                 edit:function () {
                     $scope.$emit(events.editSection, this);
@@ -88,6 +89,9 @@ angular.module('idea-boardy')
                 },
                 cancel:function () {
                     $scope.$emit(events.sectionEditingFinished, this);
+                },
+                toggleExpand: function() {
+                    this.expanded = !this.expanded;
                 }
             });
         }

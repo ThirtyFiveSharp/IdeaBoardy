@@ -2,7 +2,7 @@
     <div class="section-title clear-fix" ng-switch on="section.mode">
         <div ng-switch-when="view">
             <dl class="section-info">
-                <dd class="name"><span>{{section.name|truncate:27}}</span></dd>
+                <dd class="name"><span><a ng-click="section.toggleExpand()">{{section.name|truncate:27}}</a></span></dd>
             </dl>
             <div class="command-bar">
                 <input class="btn-2 btn-delete" type="button" value="Delete" ng-click="showDeleteSectionDialog()"
@@ -26,7 +26,7 @@
             </form>
         </div>
     </div>
-    <ul class="idea-list clear-fix">
+    <ul class="idea-list clear-fix" ng-show="section.expanded">
         <li ng-repeat="idea in ideas">
             <ng-include src="'assets/idea.html'"></ng-include>
         </li>

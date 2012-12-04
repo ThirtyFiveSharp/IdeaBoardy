@@ -12,8 +12,10 @@
 //
 //= require jquery
 //= require jquery.ui.all
+//= require ./libs/select2
 //= require underscore
 //= require angular
+//= require ./libs/angular-ui
 //= require util
 //= require module
 //= require_tree ./filters

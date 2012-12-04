@@ -11,4 +11,4 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require_tree ./libs
+//= require ./libs/bootstrap

@@ -9,6 +9,8 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require jquery-ui-1.9.1.custom
+ *= require select2
+ *= require angular-ui
  *= require_self
  */
 
@@ -60,7 +62,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #board-title .board-info { display:block; float:left; width: 50%; overflow: hidden;}
 #board-title .command-bar { display:block; float: right; width: 50%; min-width: 8em; }
 #board-title .command-bar input { float: right; vertical-align: top; margin-left: 0.5em; }
-#board-title .select-section { float: right; margin-top: 10px;}
+#board-title .select-section { float: right; margin-top: 10px; line-height: 25px; padding-right: 2px;}
 #board-title dd { display: block; }
 #board-title .name { line-height: 2em; }
 #board-title .name span { font-size: 1.3em; padding-left: 1px; }
@@ -81,7 +83,9 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 
 .section-list { display:block; list-style-type: none; }
 .section-list .ui-button { font-size: 1em; }
-.section-list .section { position: relative; overflow: hidden; margin: 5px; padding-top: 0.2em; float: left; width: 470px; -moz-border-radius: 10px; border-radius: 10px; background-color: #eeeeee; }
+.section-list .section { position: relative; overflow: hidden; margin: 5px; padding-top: 0.2em; float: left; -moz-border-radius: 10px; border-radius: 10px; background-color: #eeeeee; }
+.narrow-rectangle .section {width: 470px;}
+.wide-rectangle .section {width: 940px;}
 .section-list .section .section-info { display:block; float:left; padding: 0; width: 61.8%; }
 .section-list .section .command-bar { display:block; float: right; width: 30%; min-width: 8em; }
 .section-list .section .command-bar input { float: right; vertical-align: top; margin: 0 0.2em; }

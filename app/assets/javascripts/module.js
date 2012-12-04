@@ -1,4 +1,4 @@
-angular.module('idea-boardy', [])
+angular.module('idea-boardy', ['ui'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/board', {templateUrl:'assets/board.html'});
         $routeProvider.when('/report', {templateUrl:'assets/board-report.html'});

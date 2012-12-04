@@ -58,20 +58,33 @@ describe('BoardController', function () {
     });
 
     describe("board.isSectionVisible", function () {
-        it("should return true when selectedSection is undefined", function () {
-            scope.board.selectedSection = undefined;
+        it("should return true when selectedSectionName is empty", function () {
+            scope.board.selectedSectionName = "";
             expect(scope.board.isSectionVisible(sections[0])).toBeTruthy();
             expect(scope.board.isSectionVisible(sections[1])).toBeTruthy();
         });
 
         it("should return false when section is not selected", function () {
-            scope.board.selectedSection = sections[0];
+            scope.board.selectedSectionName = sections[0].name;
             expect(scope.board.isSectionVisible(sections[1])).toBeFalsy();
         });
 
         it("should return true when section is selected", function () {
-            scope.board.selectedSection = sections[0];
+            scope.board.selectedSectionName = sections[0].name;
             expect(scope.board.isSectionVisible(sections[0])).toBeTruthy();
         });
+    });
+
+    describe("board.sectionClass", function() {
+       it("should return 'narrow-rectangle' when selectedSectionName is empty", function() {
+           scope.board.selectedSectionName = "";
+           expect(scope.board.sectionClass()).toBe('narrow-rectangle');
+           expect(scope.board.sectionClass()).toBe('narrow-rectangle');
+       });
+
+        it("should return 'wide-rectangle' when section is selected", function() {
+           scope.board.selectedSectionName = sections[0].name;
+           expect(scope.board.sectionClass()).toBe('wide-rectangle');
+       });
     });
 });

@@ -13,8 +13,9 @@
             </div>
             <div class="select-section">
                 View Section:
-                <select ng-model="board.selectedSection" ng-options="s.name for s in sections">
+                <select ui-select2 ng-model="board.selectedSectionName" >
                     <option value="">All Sections</option>
+                    <option ng-repeat="section in sections" value="{{section.name}}">{{section.name}}</option>
                 </select>
             </div>
         </div>
@@ -37,7 +38,7 @@
         </div>
     </div>
     <ul class="section-list clear-fix">
-        <li ng-repeat="section in sections" ng-show="board.isSectionVisible(section)">
+        <li ng-repeat="section in sections" ng-show="board.isSectionVisible(section)" ng-class="board.sectionClass(section)">
             <ng-include src="'assets/section.html'"></ng-include>
         </li>
     </ul>

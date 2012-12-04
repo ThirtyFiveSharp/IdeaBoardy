@@ -44,7 +44,7 @@ angular.module('idea-boardy')
                     sectionsLink:rawBoard.links.getLink('sections'),
                     reportLink:rawBoard.links.getLink('report'),
                     mode:"view",
-                    selectedSection: undefined,
+                    selectedSectionName: "",
                     edit:function () {
                         this.mode = 'edit'
                     },
@@ -60,7 +60,10 @@ angular.module('idea-boardy')
                         this.mode = 'view'
                     },
                     isSectionVisible: function(section) {
-                        return !this.selectedSection || section == this.selectedSection;
+                        return !this.selectedSectionName || section.name == this.selectedSectionName;
+                    },
+                    sectionClass: function() {
+                        return !this.selectedSectionName ? 'narrow-rectangle' : 'wide-rectangle'
                     }
                 });
             }

@@ -60,6 +60,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #board-title .board-info { display:block; float:left; width: 50%; overflow: hidden;}
 #board-title .command-bar { display:block; float: right; width: 50%; min-width: 8em; }
 #board-title .command-bar input { float: right; vertical-align: top; margin-left: 0.5em; }
+#board-title .select-section { float: right; margin-top: 10px;}
 #board-title dd { display: block; }
 #board-title .name { line-height: 2em; }
 #board-title .name span { font-size: 1.3em; padding-left: 1px; }

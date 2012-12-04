@@ -8,7 +8,14 @@ describe('BoardController', function () {
             {"rel":"sections", "href":sectionsLinkUri},
             {"rel":"report", "href":reportUri}
         ]},
-        sections = [];
+        sections = [
+            {"id":1, "name":"Well", "links":[
+                {"rel":"section", "href":"http://localhost:3000/boards/1/sections/1"}
+            ]},
+            {"id":2, "name":"Less Well", "links":[
+                {"rel":"section", "href":"http://localhost:3000/boards/4/sections/2"}
+            ]}
+        ];
 
     beforeEach(module('idea-boardy'));
 
@@ -23,7 +30,7 @@ describe('BoardController', function () {
         $httpBackend.flush();
     }));
 
-    afterEach((function() {
+    afterEach((function () {
         $httpBackend.verifyNoOutstandingExpectation();
         $httpBackend.verifyNoOutstandingRequest();
     }));
@@ -42,11 +49,29 @@ describe('BoardController', function () {
     });
 
     describe("goToReport", function () {
-        it("should go to report", inject(function(params, $location) {
+        it("should go to report", inject(function (params, $location) {
             scope.goToReport(scope.board);
             expect(params('uri')).toBe(reportUri);
             expect($location.path()).toBe('/report');
             expect($location.search().uri).toBe(reportUri);
         }));
+    });
+
+    describe("board.isSectionVisible", function () {
+        it("should return true when selectedSection is undefined", function () {
+            scope.board.selectedSection = undefined;
+            expect(scope.board.isSectionVisible(sections[0])).toBeTruthy();
+            expect(scope.board.isSectionVisible(sections[1])).toBeTruthy();
+        });
+
+        it("should return false when section is not selected", function () {
+            scope.board.selectedSection = sections[0];
+            expect(scope.board.isSectionVisible(sections[1])).toBeFalsy();
+        });
+
+        it("should return true when section is selected", function () {
+            scope.board.selectedSection = sections[0];
+            expect(scope.board.isSectionVisible(sections[0])).toBeTruthy();
+        });
     });
 });

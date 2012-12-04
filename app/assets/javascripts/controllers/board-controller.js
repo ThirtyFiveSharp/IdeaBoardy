@@ -44,6 +44,7 @@ angular.module('idea-boardy')
                     sectionsLink:rawBoard.links.getLink('sections'),
                     reportLink:rawBoard.links.getLink('report'),
                     mode:"view",
+                    selectedSection: undefined,
                     edit:function () {
                         this.mode = 'edit'
                     },
@@ -57,6 +58,9 @@ angular.module('idea-boardy')
                     },
                     cancel:function () {
                         this.mode = 'view'
+                    },
+                    isSectionVisible: function(section) {
+                        return !this.selectedSection || section == this.selectedSection;
                     }
                 });
             }

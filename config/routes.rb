@@ -1,4 +1,5 @@
 Ideaboardy::Application.routes.draw do
+
   get "home/index"
 
   resources :boards do
@@ -22,6 +23,7 @@ Ideaboardy::Application.routes.draw do
 
   namespace :admin do
     resource :settings
+    match 'boards' => 'boards#index'
   end
 
   match 'admin' => 'admin/settings#show'

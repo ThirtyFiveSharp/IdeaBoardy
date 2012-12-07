@@ -4,7 +4,7 @@ describe('IdeaController', function () {
 
     describe("initialize", function () {
         var scope, ctrl, $httpBackend,
-            ideaUri = 'http://localhost:3000/boards/1/sections/1/ideas/1',
+            ideaUri = 'http://localhost:3000/api/boards/1/sections/1/ideas/1',
             ideaRef = {"id":1, "content":"idea content", "vote":3, "links":[
                 {"rel":"idea", "href":ideaUri}
             ]};

@@ -1,6 +1,6 @@
 describe('SectionController', function () {
     var scope, ctrl, $httpBackend,
-        sectionUri = "http://localhost:3000/boards/1/sections/1",
+        sectionUri = "http://localhost:3000/api/boards/1/sections/1",
         ideasUri = sectionUri + "/ideas",
         section = {"id":1, "name":"section1", "color":"ddffdd", "links":[
             {"rel":"self", "href":sectionUri},

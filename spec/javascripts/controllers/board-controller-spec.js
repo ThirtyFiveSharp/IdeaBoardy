@@ -1,6 +1,6 @@
 describe('BoardController', function () {
     var scope, ctrl, $httpBackend,
-        boardUri = 'http://localhost:3000/boards/1',
+        boardUri = 'http://localhost:3000/api/boards/1',
         sectionsLinkUri = boardUri + "/sections",
         reportUri = boardUri + "/report",
         board = {"id":1, "name":"tiger retro", "description":"tiger retro for iteration 29", "links":[

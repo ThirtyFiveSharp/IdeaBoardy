@@ -1,6 +1,6 @@
 describe('BoardListController', function() {
     var scope,
-        boardsUri = "/boards",
+        boardsUri = "/api/boards",
         boards = [{name: 'board 1'},{name: 'board 2', id: 2, links: [{rel: 'board', href: 'boardUri'}]}];
 
     beforeEach(module('idea-boardy'));

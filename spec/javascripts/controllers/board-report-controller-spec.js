@@ -1,6 +1,6 @@
 describe('BoardReportController', function () {
     var scope, ctrl, $httpBackend,
-        boardUri = 'http://localhost:3000/boards/1',
+        boardUri = 'http://localhost:3000/api/boards/1',
         boardReportUri = boardUri + "/report",
         report = {"name":"board report", "description":"board report description", "sections":[
             {"name":"Well", "ideas":[

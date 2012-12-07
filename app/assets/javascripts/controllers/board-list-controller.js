@@ -1,6 +1,6 @@
 angular.module('idea-boardy')
-    .controller('BoardListController', ['$scope', '$http', '$location', 'params', 'dialog',
-        function ($scope, $http, $location, params, dialog) {
+    .controller('BoardListController', ['$scope', '$http', '$location', 'params', 'dialog', 'config',
+        function ($scope, $http, $location, params, dialog, config) {
             var createBoardDialog = dialog('createBoardDialog');
             refreshBoardList();
 
@@ -11,7 +11,7 @@ angular.module('idea-boardy')
                     createAll: function() {
                         var board = this.boardToCreate,
                             sections = this.sectionsToCreate;
-                        $http.post('/boards', board).success(function (createdBoard, status, headers) {
+                        $http.post(config.apiEntryPoint, board).success(function (createdBoard, status, headers) {
                             var createdBoardUri = headers('location');
                             $http.get(createdBoardUri).success(function (createdBoard) {
                                 var sectionsLink = createdBoard.links.getLink('sections');
@@ -30,7 +30,7 @@ angular.module('idea-boardy')
             };
 
             function refreshBoardList() {
-                $http.get('/boards').success(function (boards) {
+                $http.get(config.apiEntryPoint).success(function (boards) {
                     $scope.boards = boards;
                 });
             }

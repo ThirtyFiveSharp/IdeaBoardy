@@ -2,24 +2,26 @@ Ideaboardy::Application.routes.draw do
 
   get "home/index"
 
-  resources :boards do
-    member do
-      get 'report'
-    end
-    resources :sections do
+  scope "/api" do
+    resources :boards do
       member do
-        post 'immigration'
+        get 'report'
       end
-      resources :ideas do
+      resources :sections do
         member do
-          post 'vote'
-          post 'merging'
+          post 'immigration'
+        end
+        resources :ideas do
+          member do
+            post 'vote'
+            post 'merging'
+          end
         end
       end
     end
   end
 
-  devise_for :users, :controllers => { :sessions => "admin/sessions" }
+  devise_for :users, :controllers => {:sessions => "admin/sessions"}
 
   namespace :admin do
     resource :settings
@@ -84,4 +86,6 @@ Ideaboardy::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
+
+  match ':everything_else' => 'home#index'
 end

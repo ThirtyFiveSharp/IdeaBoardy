@@ -1,4 +1,7 @@
 angular.module('idea-boardy', ['ui'])
+    .value('config', {
+        apiEntryPoint: "/api/boards"
+    })
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/board', {templateUrl:'assets/board.html'});
         $routeProvider.when('/report', {templateUrl:'assets/board-report.html'});

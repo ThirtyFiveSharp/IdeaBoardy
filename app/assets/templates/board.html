@@ -13,7 +13,7 @@
             </div>
             <div class="select-section">
                 View Section:
-                <select ui-select2 ng-model="board.selectedSectionName" >
+                <select ui-select2="{containerCssClass: 'section-select-container'}" ng-model="board.selectedSectionName">
                     <option value="">All Sections</option>
                     <option ng-repeat="section in sections" value="{{section.name}}">{{section.name}}</option>
                 </select>

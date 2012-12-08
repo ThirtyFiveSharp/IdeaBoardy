@@ -9,6 +9,7 @@ angular.module('idea-boardy')
             $http.get(params('uri')).success(function (board) {
                 enhanceBoard(board);
                 $scope.board = board;
+                refreshTags();
                 refreshSections();
             });
 
@@ -19,7 +20,7 @@ angular.module('idea-boardy')
                 createSectionDialog.open({board: $scope.board, sectionToCreate: {color: color(0)}});
             };
             $scope.showCreateTagDialog = function($event) {
-                createTagDialog.open({board: $scope.board, $event: $event});
+                createTagDialog.open({board: $scope.board, tagToCreate:{}, $event: $event});
             };
             $scope.showEditTagDialog = function(tag, $event) {
                 editTagDialog.open({board: $scope.board, tagToEdit:_.clone(tag), $event: $event});
@@ -52,8 +53,8 @@ angular.module('idea-boardy')
 
             function enhanceBoard(rawBoard) {
                 angular.extend(rawBoard, {
-                    tags: ["张桐", "ZT", "Zhang Tong"], //TODO: call api to get tags
                     selfLink:rawBoard.links.getLink('self'),
+                    tagsLink:rawBoard.links.getLink('tags'),
                     sectionsLink:rawBoard.links.getLink('sections'),
                     reportLink:rawBoard.links.getLink('report'),
                     mode:"view",
@@ -79,14 +80,19 @@ angular.module('idea-boardy')
                         return !this.selectedSectionName ? 'narrow-rectangle' : 'wide-rectangle'
                     },
                     createTag: function(tag) {
-                        //TODO: call api to create tag
+                        $http.post($scope.board.tagsLink.href, tag).success(refreshTags);
                     },
                     updateTag: function(tag) {
-                        //TODO: call api to update tag
+                        $http.put(tag.links.getLink('tag').href, tag).success(refreshTags);
                     },
                     deleteTag: function(tag) {
-                        //TODO: call api to delete tag
+                        $http.delete(tag.links.getLink('tag').href).success(refreshTags);
                     }
+                });
+            }
+            function refreshTags() {
+                $http.get($scope.board.tagsLink.href).success(function (tags) {
+                    $scope.tags = tags;
                 });
             }
             function refreshSections() {

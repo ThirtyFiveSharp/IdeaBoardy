@@ -1,7 +1,7 @@
 <div ng-controller="DeleteTagController">
     <div id="delete-tag-dialog" name="deleteTagDialog" title="Delete A Tag"
          jq-ui-dialog='{"width": 400}' ng-cloak>
-        <p>The tag "{{dialog.context.tagToDelete}}" will be deleted.</p>
+        <p>The tag "{{dialog.context.tagToDelete.name}}" will be deleted.</p>
         <p>Is that OK?</p>
         <div class="command-bar">
             <input class="btn-5 btn-ok" type="button" value="Yes, go ahead."

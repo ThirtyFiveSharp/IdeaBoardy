@@ -17,6 +17,19 @@ class BoardTest < ActiveSupport::TestCase
     assert_equal section.id, actual_board.sections.first.id
   end
 
+  test "should show report of a board" do
+    board = Board.create! name: "Board name", description: "Description"
+    section = Section.new name: "Section name"
+    board.sections << section
+    board.save!
+
+    report = board.report
+
+    assert_equal "Board name", report[:name]
+    assert_equal "Description", report[:description]
+    assert_equal [section.report], report[:sections]
+  end
+
   test "board name should be unique" do
     board_name = "Board name"
     Board.create name: board_name

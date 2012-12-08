@@ -34,7 +34,7 @@ class SectionsControllerTest < ActionController::TestCase
   test "should create section for given board" do
     expected_name = "New section name"
     assert_difference('Section.count') do
-      post :create, board_id: @board.id, section: {name: expected_name, color: Section::Colors[3]}
+      post :create, board_id: @board.id, section: {name: expected_name, color: Section::COLORS[3]}
     end
     created_section = assigns :section
     assert_response :created
@@ -43,7 +43,7 @@ class SectionsControllerTest < ActionController::TestCase
     actual_section = Section.find created_section.id
     assert_equal expected_name, actual_section.name
     assert_equal @board.id, actual_section.board.id
-    assert_equal Section::Colors[3], actual_section.color
+    assert_equal Section::COLORS[3], actual_section.color
   end
 
   test "should return unprocessable_entity status when create a section without name" do

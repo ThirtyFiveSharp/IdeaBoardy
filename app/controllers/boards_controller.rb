@@ -18,19 +18,17 @@ class BoardsController < ApplicationController
   # GET /boards/1
   # GET /boards/1.json
   def show
-    until_found do
-      @board = Board.find(params[:id])
-      render json: {
-          id: @board.id,
-          name: @board.name,
-          description: @board.description,
-          links: [
-              {rel: 'self', href: board_url(@board.id)},
-              {rel: 'sections', href: board_sections_url(@board.id)},
-              {rel: 'report', href: "#{board_url(@board.id)}/report"}
-          ]
-      }
-    end
+    @board = Board.find(params[:id])
+    render json: {
+        id: @board.id,
+        name: @board.name,
+        description: @board.description,
+        links: [
+            {rel: 'self', href: board_url(@board.id)},
+            {rel: 'sections', href: board_sections_url(@board.id)},
+            {rel: 'report', href: "#{board_url(@board.id)}/report"}
+        ]
+    }
   end
 
   # POST /boards
@@ -48,46 +46,36 @@ class BoardsController < ApplicationController
   # PUT /boards/1
   # PUT /boards/1.json
   def update
-    until_found do
-      @board = Board.find(params[:id])
-      if @board.update_attributes(params[:board])
-        head :no_content
-      else
-        render json: @board.errors, status: :unprocessable_entity
-      end
+    @board = Board.find(params[:id])
+    if @board.update_attributes(params[:board])
+      head :no_content
+    else
+      render json: @board.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /boards/1
   # DELETE /boards/1.json
   def destroy
-    until_found :no_content do
+    begin
       @board = Board.find(params[:id])
       @board.destroy
-      head :no_content
+    rescue ActiveRecord::RecordNotFound
     end
+    head :no_content
   end
 
   # GET /boards/1/report
   def report
-    until_found do
-      @board = Board.includes(:sections => :ideas).find(params[:id])
-      render json: {
-          name: @board.name,
-          description: @board.description,
-          sections: @board.sections.collect { |section| {
-              name: section.name,
-              color: section.color,
-              ideas: section.ideas.collect { |idea| {
-                  content: idea.content,
-                  vote: idea.vote
-              } }
-          } },
-          links: [
-              {rel: 'self', href: "#{board_url(@board.id)}/report"},
-              {rel: 'board', href: board_url(@board.id)}
-          ]
-      }
-    end
+    @board = Board.includes(:sections => :ideas).find(params[:id])
+    board_report = @board.report
+    render json: board_report.merge(links(@board))
+  end
+
+  private
+  def links(board)
+    report_link = Hash[rel: 'self', href: "#{board_url(board.id)}/report"]
+    board_link = Hash[rel: 'board', href: board_url(board.id)]
+    Hash[links: [report_link, board_link]]
   end
 end

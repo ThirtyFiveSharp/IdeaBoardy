@@ -71,11 +71,8 @@ class IdeasController < ApplicationController
   end
 
   def destroy
-    until_found :no_content do
-      @idea = Idea.find(params[:id])
-      @idea.destroy
-      head :no_content
-    end
+    Idea.delete(params[:id])
+    head :no_content
   end
 
   def vote
@@ -84,14 +81,12 @@ class IdeasController < ApplicationController
     idea_id = params[:id]
     return head(:not_found) unless Section.of_board(board_id).exists?(section_id)
     return head(:not_found) unless Idea.of_section(section_id).exists?(idea_id)
-    until_found do
-      @idea = Idea.find(idea_id)
-      @idea.vote!
-      if @idea.save
-        head status: :no_content
-      else
-        render json: @idea.errors, status: :unprocessable_entity
-      end
+    @idea = Idea.find(idea_id)
+    @idea.vote!
+    if @idea.save
+      head status: :no_content
+    else
+      render json: @idea.errors, status: :unprocessable_entity
     end
   end
 

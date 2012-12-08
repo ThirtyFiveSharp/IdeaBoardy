@@ -3,11 +3,11 @@
 one:
   id: 1
   name: Section 1
-  color: <%= Section::Colors[0] %>
+  color: <%= Section::COLORS[0] %>
   board_id: 1
 
 two:
   id: 2
   name: Section 2
-  color: <%= Section::Colors[1] %>
+  color: <%= Section::COLORS[1] %>
   board_id: 1

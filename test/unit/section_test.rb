@@ -18,6 +18,19 @@ class SectionTest < ActiveSupport::TestCase
     assert_equal idea.id, actual_section.ideas.first.id
   end
 
+  test "should show report of a section" do
+    section = Section.create! name: "Section name", color: Section::COLORS[1]
+    idea = Idea.new content: "Idea content"
+    section.ideas << idea
+    section.save!
+
+    report = section.report
+
+    assert_equal "Section name", report[:name]
+    assert_equal Section::COLORS[1], report[:color]
+    assert_equal [idea.report], report[:ideas]
+  end
+
   test "section name should be unique under the same board" do
     board = Board.create(name: "Board name")
     section_name = "Section name"
@@ -74,6 +87,6 @@ class SectionTest < ActiveSupport::TestCase
 
   test "should set default color when creating new section" do
     section = Section.create!(name: "section_for_color")
-    assert_equal Section::Colors[0], section.color
+    assert_equal Section::COLORS[0], section.color
   end
 end

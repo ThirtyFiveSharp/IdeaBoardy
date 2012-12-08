@@ -1,4 +1,5 @@
-<div class="section" ng-controller="SectionController" droppable="section.addImmigrant($draggableModel)">
+<div class="section" ng-controller="SectionController" droppable>
+    <meta draggable-type="idea" action="section.addImmigrant($draggableModel)" />
     <div class="section-title clear-fix" ng-switch on="section.mode">
         <div ng-switch-when="view">
             <dl class="section-info">

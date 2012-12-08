@@ -1,5 +1,7 @@
 <div class="idea" ng-controller="IdeaController" style="background-color: #{{section.color}}"
-     draggable ng-model="idea" droppable="idea.mergeWith($draggableModel)">
+     draggable="idea" type="idea" droppable>
+    <meta draggable-type="idea" action="idea.mergeWith($draggableModel)" />
+    <meta draggable-type="tag" action="idea.addTag($draggableModel)" />
     <div class="handle"></div>
     <div class="idea-wrapper">
         <div class="idea-info"><a class="idea-content" ng-click="showEditDialog($event)" title="{{idea.content}}">{{idea.content|truncate:90}}</a></div>

@@ -2,7 +2,10 @@ angular.module('idea-boardy')
     .controller('BoardController', ['$scope', '$http', '$location', 'params', 'dialog', 'color', 'events',
         function ($scope, $http, $location, params, dialog, color, events) {
             var deleteBoardDialog = dialog('deleteBoardDialog'),
-                createSectionDialog = dialog('createSectionDialog');
+                createSectionDialog = dialog('createSectionDialog'),
+                createTagDialog = dialog('createTagDialog'),
+                editTagDialog = dialog('editTagDialog'),
+                deleteTagDialog = dialog('deleteTagDialog');
             $http.get(params('uri')).success(function (board) {
                 enhanceBoard(board);
                 $scope.board = board;
@@ -14,6 +17,15 @@ angular.module('idea-boardy')
             };
             $scope.showCreateSectionDialog = function() {
                 createSectionDialog.open({board: $scope.board, sectionToCreate: {color: color(0)}});
+            };
+            $scope.showCreateTagDialog = function($event) {
+                createTagDialog.open({board: $scope.board, $event: $event});
+            };
+            $scope.showEditTagDialog = function(tag, $event) {
+                editTagDialog.open({board: $scope.board, tagToEdit:_.clone(tag), $event: $event});
+            };
+            $scope.showDeleteTagDialog = function(tag) {
+                deleteTagDialog.open({board: $scope.board, tagToDelete: tag});
             };
             $scope.goToReport = function(board) {
                 var reportLinkUri = board.reportLink.href;
@@ -40,6 +52,7 @@ angular.module('idea-boardy')
 
             function enhanceBoard(rawBoard) {
                 angular.extend(rawBoard, {
+                    tags: ["张桐", "ZT", "Zhang Tong"], //TODO: call api to get tags
                     selfLink:rawBoard.links.getLink('self'),
                     sectionsLink:rawBoard.links.getLink('sections'),
                     reportLink:rawBoard.links.getLink('report'),
@@ -64,6 +77,15 @@ angular.module('idea-boardy')
                     },
                     sectionClass: function() {
                         return !this.selectedSectionName ? 'narrow-rectangle' : 'wide-rectangle'
+                    },
+                    createTag: function(tag) {
+                        //TODO: call api to create tag
+                    },
+                    updateTag: function(tag) {
+                        //TODO: call api to update tag
+                    },
+                    deleteTag: function(tag) {
+                        //TODO: call api to delete tag
                     }
                 });
             }

@@ -82,6 +82,19 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #report .section li {margin-left: 30px; margin-bottom: 0.3em;}
 #report .section li .vote {font-weight: bold;}
 
+.tag-list { display:block; list-style-type: none; }
+.tag { display:inline-block; vertical-align: middle; margin: 0.2em; padding: 0.2em; border: 1px #a9a9a9 solid; background-color: #ffdd57; -moz-border-radius: 20px 0 0 20px; border-radius: 20px 0 0 20px; }
+.tag:hover {border-color: black;}
+.tag:before {content: "◉"; padding-right: 0.2em; color:#999999; }
+.tag:hover:before {color:black; }
+.tag.blank { background-color: white; border-style: dashed; }
+.tag.blank a { color: #a9a9a9; }
+.tag.blank:hover { border-color: black; }
+.tag.blank:hover a { color: black; }
+.tag.blank:hover:before {color:black; }
+.tag-trash { display: inline-block; vertical-align: middle; padding: 0 0.2em; width: 32px; height: 32px; background: url(/assets/background.png) -64px 0 no-repeat; }
+.tag-trash.droppable-active { background-position: -96px 0; }
+
 .section-list { display:block; list-style-type: none; }
 .section-list .ui-button { font-size: 1em; }
 .section-list .section { position: relative; overflow: hidden; margin: 5px; padding-top: 0.2em; float: left; -moz-border-radius: 10px; border-radius: 10px; background-color: #eeeeee; }
@@ -104,12 +117,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .idea .idea-content { display: table-cell; vertical-align: middle; width: 225px; height: 100px; overflow: hidden; }
 .idea.blank { display: table; font-size: 1.1em; background-color: white; border-style: dashed; }
 .idea.blank a { display: table-cell; vertical-align: middle; color: #a9a9a9; }
-
-
-#create-board-form dl { margin: 0.5em; }
-#create-board-form dt { margin-bottom: 0.5em; }
-#create-board-form .section { margin-bottom: 0.5em; }
-#create-board { margin-top: 2em; }
+.idea.blank:hover a { color: black; }
 
 .color-picker {display: inline-block;}
 .color-picker .color-box {margin: 3px; line-height: 15px; height: 15px; width: 13px; display: inline-block; border: 2px solid gray;}
@@ -121,12 +129,17 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .color-picker .color-box.color-4 {background-color: #e0ffff;}
 .color-picker .color-box.color-5 {background-color: #ffefd5;}
 
-#delete-board-dialog p, .delete-idea-dialog p { margin-bottom: 1em; font-size: 1.1em;}
-#delete-board-dialog .command-bar { margin-bottom: 0.5em; }
+#create-board-form dl { margin: 0.5em; }
+#create-board-form dt { margin-bottom: 0.5em; }
+#create-board-form .section { margin-bottom: 0.5em; }
+#create-board { margin-top: 2em; }
 
-#create-section-form dl { margin: 0.5em; }
-#create-section-form dt { margin-bottom: 0.5em; }
-#create-section { margin-top: 2em; }
+#delete-board-dialog p, .delete-idea-dialog p, #delete-tag-dialog p { margin-bottom: 1em; font-size: 1.1em;}
+#delete-board-dialog .command-bar, #delete-tag-dialog .command-bar { margin-bottom: 0.5em; }
+
+#create-section-form dl, .create-tag-form dl, .edit-tag-form dl  { margin: 0.5em; }
+#create-section-form dt, .create-tag-form dt, .edit-tag-form dt{ margin-bottom: 0.5em; }
+#create-section, .create-tag-form .command-bar, .edit-tag-form .command-bar { margin-top: 2em; }
 
 #delete-section-dialog p { margin: 0 0 1em; font-size: 1.1em;}
 #delete-section-dialog .command-bar { margin-bottom: 0.5em; }
@@ -134,10 +147,6 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .create-idea-form dl, .edit-idea-form dl { margin-bottom: 0.5em; }
 .create-idea-form .idea-content, .edit-idea-form .idea-content { width: 100%; height: 10em; }
 .create-idea-form .command-bar, .edit-idea-form .command-bar, .delete-idea-dialog .command-bar { margin-bottom: 0.5em; }
-
-.launchy { display:none; position: fixed; top: 38.2%; left:50%; width: 30em; height: 6em; margin:-3em 0 0 -15em; border: 1px #a9a9a9 solid; background-color: #f3f3f3; -moz-border-radius: 15px; border-radius: 15px; }
-.launchy .tip { position: absolute; top: 0.7em; left: 50%; width: 16em; margin-left: -8em; border: 1px transparent solid; font-size: 1.2em; text-align: center; }
-.launchy .command { position: absolute; top:61.8%; left: 50%; width: 16em; height: 2em; margin: -1em 0 0 -8em; border-top: none; border-right: none; border-left: none; border-bottom: 1px #a9a9a9 solid; background-color: transparent; font-size: 1.5em; }
 
 .handle { display: block; position: absolute; top: 0; right: 0; width: 32px; height: 32px; margin: 0; padding: 0; border:none; background: transparent url(/assets/background.png) no-repeat; }
 .handle:hover { background-position: -32px 0; }

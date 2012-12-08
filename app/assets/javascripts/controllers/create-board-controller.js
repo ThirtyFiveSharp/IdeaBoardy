@@ -3,7 +3,7 @@ angular.module('idea-boardy')
         function ($scope, $timeout, dialog, color) {
             $scope.dialog = dialog("createBoardDialog");
             $scope.create = function () {
-                if (!$scope.createBoardForm.$valid) return;
+                if ($scope.createBoardForm.$invalid) return;
                 $scope.dialog.close();
                 $scope.dialog.context.createAll();
             };

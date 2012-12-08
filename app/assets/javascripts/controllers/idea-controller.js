@@ -41,8 +41,11 @@ angular.module('idea-boardy')
                         }
                     });
                 },
-                notifyEmigrated:function () {
+                notifyEmigrated: function () {
                     $scope.$emit(events.ideaEmigrated);
+                },
+                addTag: function(tag) {
+                    //TODO: call api to add tag
                 }
             });
         }

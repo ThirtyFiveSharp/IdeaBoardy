@@ -37,6 +37,15 @@
             </form>
         </div>
     </div>
+    <div>
+        <ul class="tag-list">
+            <li class="tag" ng-repeat="tag in board.tags" draggable="tag" type="tag" ng-click="showEditTagDialog(tag, $event)"><a>{{tag}}</a></li>
+            <li class="tag blank"><a ng-click="showCreateTagDialog($event)">+ 1 tag</a></li>
+            <li class="tag-trash" title="Drag and drop a tag here to delete it." droppable>
+                <meta draggable-type="tag" action="showDeleteTagDialog($draggableModel)" />
+            </li>
+        </ul>
+    </div>
     <ul class="section-list clear-fix">
         <li ng-repeat="section in sections" ng-show="board.isSectionVisible(section)" ng-class="board.sectionClass(section)">
             <ng-include src="'assets/section.html'"></ng-include>

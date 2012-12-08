@@ -3,7 +3,7 @@ angular.module('idea-boardy')
     function ($scope, dialog) {
         $scope.dialog = dialog('createIdeaDialog');
         $scope.create = function () {
-            if(!$scope.createIdeaForm.$valid) return;
+            if($scope.createIdeaForm.$invalid) return;
             $scope.dialog.close();
             $scope.dialog.context.section.createIdea($scope.dialog.context.ideaToCreate);
         };

@@ -56,8 +56,12 @@ class TagsController < ApplicationController
 
   def destroy
     tag_id = params[:id]
-    @section = Tag.find(tag_id)
-    @section.destroy
+    begin
+      @section = Tag.find(tag_id)
+      @section.destroy
+    rescue ActiveRecord::RecordNotFound
+      # ignored
+    end
     head :no_content
   end
 end

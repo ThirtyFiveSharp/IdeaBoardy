@@ -2,7 +2,7 @@ require 'test_helper'
 
 class SettingTest < ActiveSupport::TestCase
   setup do
-    @setting = settings(:one)
+    @setting = settings(:setting_one)
   end
 
   test "should get default setting" do

@@ -60,6 +60,7 @@ class SectionsController < ApplicationController
       @section = Section.find(section_id)
       @section.destroy
     rescue ActiveRecord::RecordNotFound
+      # ignored
     end
     head :no_content
   end

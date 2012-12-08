@@ -1,6 +1,7 @@
 class Idea < ActiveRecord::Base
   attr_accessible :content, :vote
   belongs_to :section
+  has_and_belongs_to_many :tags, order: 'name'
   after_initialize :default_value!
 
   validates :content, presence: true

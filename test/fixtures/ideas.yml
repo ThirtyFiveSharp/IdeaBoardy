@@ -1,19 +1,18 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  id: 1
+idea_one:
   content: One
   vote: 1
-  section_id: 1
+  section: section_one
+  tags: one, two
 
-two:
-  id: 2
+idea_two:
   content: Two
   vote: 2
-  section_id: 1
+  section: section_one
+  tags: one
 
-three:
-  id: 3
+idea_three:
   content: Three
   vote: 2
-  section_id: 2
+  section: section_two

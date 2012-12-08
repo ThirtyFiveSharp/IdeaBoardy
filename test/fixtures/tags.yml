@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+tag_one:
+  name: ZZZ
+  board: board_one
+  ideas: idea_one, idea_two
+
+tag_two:
+  name: AAA
+  board: board_one
+  ideas: idea_one

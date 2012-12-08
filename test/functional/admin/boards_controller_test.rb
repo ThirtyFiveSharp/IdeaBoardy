@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Admin::BoardsControllerTest < ActionController::TestCase
   setup do
-    @user = users(:one)
+    @user = users(:user_one)
     sign_in @user
   end
 

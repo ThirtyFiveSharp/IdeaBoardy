@@ -2,10 +2,10 @@ require 'test_helper'
 
 class BoardsControllerTest < ActionController::TestCase
   setup do
-    @board1 = boards(:one)
-    @board2 = boards(:two)
-    @section1 = sections(:one)
-    @section2 = sections(:two)
+    @board1 = boards(:board_one)
+    @board2 = boards(:board_two)
+    @section1 = sections(:section_one)
+    @section2 = sections(:section_two)
   end
 
   test "should get index" do
@@ -54,11 +54,13 @@ class BoardsControllerTest < ActionController::TestCase
     assert_equal @board1.name, actual_board['name']
     assert_equal @board1.description, actual_board['description']
     links = actual_board['links']
-    assert_equal 3, links.count
+    assert_equal 4, links.count
     self_link = links.select { |l| l['rel']=='self' }.first
     assert_equal board_url(@board1.id), self_link['href']
     sections_link = links.select { |l| l['rel']=='sections' }.first
     assert_equal board_sections_url(@board1.id), sections_link['href']
+    tags_link = links.select { |l| l['rel']=='tags' }.first
+    assert_equal board_tags_url(@board1.id), tags_link['href']
     report_link = links.select { |l| l['rel']=='report' }.first
     assert_equal "#{board_url(@board1.id)}/report", report_link['href']
   end
@@ -93,8 +95,9 @@ class BoardsControllerTest < ActionController::TestCase
     assert_blank @response.body
   end
 
-  test "should destroy board, associated sections and ideas" do
+  test "should destroy board together with associated sections, tag and ideas" do
     section_ids = @board1.sections.collect { |s| s.id }
+    tag_ids = @board1.tags.collect { |t| t.id }
     idea_ids = @board1.sections.collect { |s| s.ideas }.flatten.collect { |i| i.id }
     assert_difference('Board.count', -1) do
       delete :destroy, id: @board1.id
@@ -103,6 +106,7 @@ class BoardsControllerTest < ActionController::TestCase
     assert_blank @response.body
     assert_equal false, Board.exists?(@board1.id), "Board should be deleted."
     section_ids.each { |id| assert_equal false, Section.exists?(id), "Associated sections should be deleted." }
+    tag_ids.each { |id| assert_equal false, Tag.exists?(id), "Associated tags should be deleted." }
     idea_ids.each { |id| assert_equal false, Idea.exists?(id), "Associated ideas should be deleted." }
   end
 

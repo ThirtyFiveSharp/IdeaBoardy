@@ -2,15 +2,15 @@ require 'test_helper'
 
 class SectionsControllerTest < ActionController::TestCase
   setup do
-    @board = boards(:one)
-    @board2 = boards(:two)
-    @section1 = sections(:one)
-    @section2 = sections(:two)
-    @idea1 = ideas(:one)
+    @board = boards(:board_one)
+    @board2 = boards(:board_two)
+    @section1 = sections(:section_one)
+    @section2 = sections(:section_two)
+    @idea1 = ideas(:idea_one)
   end
 
   test "should get index" do
-    expected_sections = [@section1, @section2]
+    expected_sections = [@section1, @section2].sort_by {|section| section.id}
     get :index, board_id: @board.id
     assert_response :success
     actual_sections = ActiveSupport::JSON.decode @response.body

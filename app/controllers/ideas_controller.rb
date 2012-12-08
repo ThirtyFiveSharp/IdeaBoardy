@@ -31,6 +31,7 @@ class IdeasController < ApplicationController
         id: @idea.id,
         content: @idea.content,
         vote: @idea.vote,
+        tags: @idea.tags.collect {|tag| tag.name},
         links: [
             {rel: 'self', href: board_section_idea_url(board_id, section_id, idea_id)},
             {rel: 'vote', href: "#{board_section_idea_url(board_id, section_id, idea_id)}/vote"},

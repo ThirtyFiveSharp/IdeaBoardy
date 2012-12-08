@@ -1,13 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  id: 1
+section_one:
   name: Section 1
   color: <%= Section::COLORS[0] %>
-  board_id: 1
+  board: board_one
 
-two:
-  id: 2
+section_two:
   name: Section 2
   color: <%= Section::COLORS[1] %>
-  board_id: 1
+  board: board_one

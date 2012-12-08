@@ -26,6 +26,7 @@ class BoardsController < ApplicationController
         links: [
             {rel: 'self', href: board_url(@board.id)},
             {rel: 'sections', href: board_sections_url(@board.id)},
+            {rel: 'tags', href: board_tags_url(@board.id)},
             {rel: 'report', href: "#{board_url(@board.id)}/report"}
         ]
     }

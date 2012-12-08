@@ -2,8 +2,8 @@ require 'test_helper'
 
 class Admin::SettingsControllerTest < ActionController::TestCase
   setup do
-    @setting = settings(:one)
-    @user = users(:one)
+    @setting = settings(:setting_one)
+    @user = users(:user_one)
     sign_in @user
   end
 

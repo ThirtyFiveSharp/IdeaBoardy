@@ -1,11 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  id: 1
+board_one:
   name: Board 1
   description: Board 1 Description
 
-two:
-  id: 2
+board_two:
   name: Board 2
   description: Board 2 Description

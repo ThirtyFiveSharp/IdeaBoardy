@@ -85,19 +85,16 @@ class IdeasControllerTest < ActionController::TestCase
     assert_equal @idea1.id, actual_idea['id']
     assert_equal @idea1.content, actual_idea['content']
     assert_equal @idea1.vote, actual_idea['vote']
-    assert_equal expected_tags.count, actual_idea['tags'].count
-    expected_tags.each_with_index do |expected_tag, tag_index|
-      assert_equal expected_tag.name, actual_idea['tags'][tag_index]
-    end
-
     links = actual_idea['links']
-    assert_equal 3, links.count
+    assert_equal 4, links.count
     self_link = links.select { |l| l['rel'] == 'self' }.first
     assert_equal board_section_idea_url(@idea1.section.board.id, @idea1.section.id, @idea1.id), self_link['href']
     vote_link = links.select { |l| l['rel'] == 'vote' }.first
     assert_equal board_section_idea_url(@idea1.section.board.id, @idea1.section.id, @idea1.id)+"/vote", vote_link['href']
     merging_link = links.select { |l| l['rel'] == 'merging' }.first
     assert_equal board_section_idea_url(@idea1.section.board.id, @idea1.section.id, @idea1.id)+"/merging", merging_link['href']
+    tags_link = links.select { |l| l['rel'] == 'tags' }.first
+    assert_equal board_section_idea_url(@idea1.section.board.id, @idea1.section.id, @idea1.id)+"/tags", tags_link['href']
   end
 
   test "should return 404 Not Found when section is not under given board (GET)" do
@@ -213,5 +210,17 @@ class IdeasControllerTest < ActionController::TestCase
     assert_blank @response.body
     assert_equal merged_content, Idea.find(@idea2.id).content
     assert_equal false, Idea.exists?(@idea1.id)
+  end
+
+  test "should update tags of an idea" do
+    expected_tags = [@tag1, @tag2]
+    put :tags, board_id: @board, section_id: @section1, id:@idea2, tags: expected_tags.collect{|tag| tag.id}
+    assert_response :no_content
+    assert_blank @response.body
+    actual_idea = Idea.find(@idea2.id)
+    assert_equal expected_tags.count, actual_idea.tags.count
+    expected_tags.sort_by{|tag| tag.name}.each_with_index {|expected_tag, index|
+      assert_equal expected_tag.id, actual_idea.tags[index].id
+    }
   end
 end

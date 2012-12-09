@@ -15,7 +15,9 @@ Ideaboardy::Application.routes.draw do
           member do
             post 'vote'
             post 'merging'
+            put 'tags'
           end
+          resources :tags, controller: :idea_tags
         end
       end
       resources :tags

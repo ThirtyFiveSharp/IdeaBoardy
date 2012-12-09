@@ -31,11 +31,11 @@ class IdeasController < ApplicationController
         id: @idea.id,
         content: @idea.content,
         vote: @idea.vote,
-        tags: @idea.tags.collect {|tag| tag.name},
         links: [
             {rel: 'self', href: board_section_idea_url(board_id, section_id, idea_id)},
             {rel: 'vote', href: "#{board_section_idea_url(board_id, section_id, idea_id)}/vote"},
-            {rel: 'merging', href: "#{board_section_idea_url(board_id, section_id, idea_id)}/merging"}
+            {rel: 'merging', href: "#{board_section_idea_url(board_id, section_id, idea_id)}/merging"},
+            {rel: 'tags', href: "#{board_section_idea_tags_url(board_id, section_id, idea_id)}"}
         ]
     }
   end
@@ -92,12 +92,40 @@ class IdeasController < ApplicationController
   end
 
   def merging
+    board_id = params[:board_id]
+    section_id = params[:section_id]
+    idea_id = params[:id]
+    return head(:not_found) unless Section.of_board(board_id).exists?(section_id)
+    return head(:not_found) unless Idea.of_section(section_id).exists?(idea_id)
+
     source_idea = Idea.find(params[:source])
-    idea = Idea.find(params[:id])
+    idea = Idea.find(idea_id)
     idea.content = params[:content]
     idea.vote += source_idea.vote
     Idea.transaction do
       source_idea.delete
+      idea.save!
+    end
+    head :no_content
+  end
+
+  def tags
+    board_id = params[:board_id]
+    section_id = params[:section_id]
+    idea_id = params[:id]
+    tag_ids = params[:tags]
+    return head(:not_found) unless Section.of_board(board_id).exists?(section_id)
+    return head(:not_found) unless Idea.of_section(section_id).exists?(idea_id)
+    tag_ids.each { |tag_id|
+      return head(:bad_request) unless Tag.of_board(board_id).exists?(tag_id)
+    }
+
+    idea = Idea.find(idea_id)
+    Idea.transaction do
+      idea.tags.clear
+      tag_ids.each { |tag_id|
+        idea.tags << Tag.find(tag_id)
+      }
       idea.save!
     end
     head :no_content

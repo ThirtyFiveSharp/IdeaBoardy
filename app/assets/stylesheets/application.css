@@ -62,8 +62,6 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #board-title .board-info { display:block; float:left; width: 50%; overflow: hidden;}
 #board-title .command-bar { display:block; float: right; width: 50%; min-width: 8em; }
 #board-title .command-bar input { float: right; vertical-align: top; margin-left: 0.5em; }
-#board-title .select-section { float: right; margin-top: 10px; line-height: 25px; padding-right: 2px;}
-#board-title .section-select-container { min-width: 120px; max-width: 200px;}
 #board-title dd { display: block; }
 #board-title .name { line-height: 2em; }
 #board-title .name span { font-size: 1.3em; padding-left: 1px; }
@@ -82,11 +80,16 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #report .section li {margin-left: 30px; margin-bottom: 0.3em;}
 #report .section li .vote {font-weight: bold;}
 
-.tag-list { display:block; list-style-type: none; }
-.tag { display:inline-block; vertical-align: middle; margin: 0.2em; padding: 0.2em; border: 1px #a9a9a9 solid; background-color: #ffdd57; -moz-border-radius: 20px 0 0 20px; border-radius: 20px 0 0 20px; }
-.tag:hover {border-color: black;}
+.select-section { float: right; margin-top: 10px; line-height: 25px; padding-right: 2px;}
+.section-select-container { min-width: 120px; max-width: 200px;}
+
+.tag-list { display:block; }
+.tag { display:inline-block; vertical-align: middle; margin: 0.2em; padding: 0.2em; border: 1px #a9a9a9 solid; -moz-border-radius: 20px 0 0 20px; border-radius: 20px 0 0 20px; }
+.tag.ui-draggable-dragging { background-color: #ffdd57; border-color: black; color: black; }
+.tag.ui-draggable-dragging:before, tag.ui-draggable-dragging a { color: black }
 .tag:before {content: "◉"; padding-right: 0.2em; color:#999999; }
-.tag:hover:before {color:black; }
+.tag-list .tag:hover {border-color: black;}
+.tag-list .tag:hover:before {color:black; }
 .tag.blank { background-color: white; border-style: dashed; }
 .tag.blank a { color: #a9a9a9; }
 .tag.blank:hover { border-color: black; }
@@ -108,17 +111,6 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .section-list .section .name span a:hover {color: #D19405;}
 .section-list .section .name input { font-size: 1.2em; float: left; width:50%; padding: 0; border-top: none; border-right: none; border-left: none; border-color: #a9a9a9; background-color: #eeeeee; }
 
-.idea-list { display:block; list-style-type: none; }
-.idea { position: relative; overflow: hidden; margin: 4px; float: left; width: 225px; height: 150px; border:1px #a9a9a9 solid; -moz-border-radius: 10px; border-radius: 10px; text-align: center; }
-.idea.ui-draggable-dragging {background-color: #ffdd57;}
-.idea:hover { border-color: black; }
-.idea .idea-wrapper { width: 225px; height: 100px; overflow: hidden; }
-.idea .idea-info { display: table; }
-.idea .idea-content { display: table-cell; vertical-align: middle; width: 225px; height: 100px; overflow: hidden; }
-.idea.blank { display: table; font-size: 1.1em; background-color: white; border-style: dashed; }
-.idea.blank a { display: table-cell; vertical-align: middle; color: #a9a9a9; }
-.idea.blank:hover a { color: black; }
-
 .color-picker {display: inline-block;}
 .color-picker .color-box {margin: 3px; line-height: 15px; height: 15px; width: 13px; display: inline-block; border: 2px solid gray;}
 .color-picker .color-box:hover {border: 2px solid orange; cursor: pointer;}
@@ -128,6 +120,26 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .color-picker .color-box.color-3 {background-color: #ffffe0;}
 .color-picker .color-box.color-4 {background-color: #e0ffff;}
 .color-picker .color-box.color-5 {background-color: #ffefd5;}
+
+.idea-list { display:block; list-style-type: none; }
+.idea { position: relative; overflow: hidden; margin: 4px; float: left; width: 225px; height: 150px; border:1px #a9a9a9 solid; -moz-border-radius: 10px; border-radius: 10px; }
+.idea.ui-draggable-dragging {background-color: #ffdd57;}
+.idea:hover { border-color: black; }
+.idea-tag-list { display:block; float:left; width: 54px; height: 100%; border-right: 1px #d3d3d3 dashed; overflow: hidden; }
+.idea-tag-list:hover { overflow: visible; }
+.idea-tag { margin: 0 0.2em; text-decoration: underline; background-color: inherit;}
+.idea .idea-wrapper { display:block; float:left; width: 160px; height: 100%; padding: 0 5px; overflow: hidden;}
+.idea .idea-info { display: table; text-align: center; overflow: hidden; width: 160px; height: 120px; }
+.idea .idea-content { display: table-cell; vertical-align: middle; width:100%; height: 120px; text-align: center; overflow: hidden;}
+.idea .idea-command { text-align: center; }
+.idea .idea-command a { text-decoration: underline; margin: 0.5em; }
+.idea.blank { display: table; font-size: 1.1em; background-color: white; border-style: dashed; text-align: center; }
+.idea.blank a { display: table-cell; vertical-align: middle; color: #a9a9a9; }
+.idea.blank:hover a { color: black; }
+
+
+.handle { display: block; position: absolute; top: 0; left: 0; width: 32px; height: 32px; margin: 0; padding: 0; border:none; background: transparent url(/assets/background.png) no-repeat; }
+.handle:hover { background-position: -32px 0; }
 
 #create-board-form dl { margin: 0.5em; }
 #create-board-form dt { margin-bottom: 0.5em; }
@@ -147,9 +159,6 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .create-idea-form dl, .edit-idea-form dl { margin-bottom: 0.5em; }
 .create-idea-form .idea-content, .edit-idea-form .idea-content { width: 100%; height: 10em; }
 .create-idea-form .command-bar, .edit-idea-form .command-bar, .delete-idea-dialog .command-bar { margin-bottom: 0.5em; }
-
-.handle { display: block; position: absolute; top: 0; right: 0; width: 32px; height: 32px; margin: 0; padding: 0; border:none; background: transparent url(/assets/background.png) no-repeat; }
-.handle:hover { background-position: -32px 0; }
 
 .section.droppable-hover { background-color: #d3d3d3; }
 .idea.droppable-hover { border-color: black; }

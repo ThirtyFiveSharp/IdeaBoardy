@@ -1,11 +1,17 @@
 <div class="idea" ng-controller="IdeaController" style="background-color: #{{section.color}}"
-     draggable="idea" type="idea" droppable>
+     draggable="idea" type="idea" droppable ng-click="showEditDialog($event)" >
     <meta draggable-type="idea" action="idea.mergeWith($draggableModel)" />
     <meta draggable-type="tag" action="idea.addTag($draggableModel)" />
-    <div class="handle"></div>
+    <ul class="idea-tag-list">
+        <li class="idea-tag" title="click to remove this tag" ng-repeat="tag in idea.getTags()">
+            <a ng-click="$event.stopPropagation(); idea.removeTag(tag)">{{tag.name}}</a>
+        </li>
+    </ul>
     <div class="idea-wrapper">
-        <div class="idea-info"><a class="idea-content" ng-click="showEditDialog($event)" title="{{idea.content}}">{{idea.content|truncate:90}}</a></div>
+        <div class="idea-info"><a class="idea-content" title="{{idea.content}}">{{idea.content|truncate:90}}</a></div>
+        <div class="idea-command">
+            <a ng-click="idea.addVote()">+ {{idea.vote}}</a>
+            <a ng-click="showDeleteDialog()">delete</a>
+        </div>
     </div>
-    <input class="btn-2 btn-trivial" type="button" value="+ {{idea.vote}}" ng-click="idea.addVote()" jq-ui="button"/>
-    <input class="btn-2 btn-trivial" type="button" value="Delete" ng-click="showDeleteDialog()" jq-ui="button"/>
 </div>

@@ -14,9 +14,10 @@ angular.module('idea-boardy')
         };
 
         function enhanceIdea(rawIdea) {
+            refreshTags(rawIdea);
             return _.extend(rawIdea, {
                 addVote: function() {
-                    $http.post(this.links.getLink("vote").href).success(refreshIdea);
+                    $http.post(this.links.getLink('vote').href).success(refreshIdea);
                 },
                 save: function() {
                     $http.put(this.links.getLink('self').href, this).success(refreshIdea);
@@ -45,7 +46,20 @@ angular.module('idea-boardy')
                     $scope.$emit(events.ideaEmigrated);
                 },
                 addTag: function(tag) {
-                    //TODO: call api to add tag
+                    var idea = this,
+                        tags = idea.getTags();
+                    if(_.contains(this.getTags(), tag)) return;
+                    $http.put(idea.links.getLink('tags').href, buildRequestToUpdateTags(tags.concat(tag)))
+                        .success(function() {refreshTags(idea)});
+                },
+                removeTag: function(tag) {
+                    var idea = this,
+                        tags = idea.getTags(),
+                        index = tags.indexOf(tag);
+                    if(index < 0) return;
+                    tags.splice(index, 1);
+                    $http.put(idea.links.getLink('tags').href, buildRequestToUpdateTags(tags))
+                        .success(function() {refreshTags(idea)});
                 }
             });
         }
@@ -53,6 +67,18 @@ angular.module('idea-boardy')
             $http.get($scope.idea.links.getLink('self').href).success(function (idea) {
                 $scope.idea = enhanceIdea(idea);
             });
+        }
+        function buildRequestToUpdateTags(tags) {
+            return {tags: _.map(tags, function(tag) {return tag.id})};
+        }
+        function refreshTags(idea) {
+            $http.get(idea.links.getLink('tags').href)
+                .success(function(tagsOfIdea) {
+                    idea.tagIds = _.map(tagsOfIdea, function(tagOfIdea) {return tagOfIdea.id;});
+                    idea.getTags = function() {
+                        return _.select($scope.tags, function(tag) {return _.contains(idea.tagIds, tag.id);});
+                    };
+                });
         }
     }
 ]);

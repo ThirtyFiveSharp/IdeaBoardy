@@ -10,8 +10,8 @@
     <div class="idea-wrapper">
         <div class="idea-info"><a class="idea-content" title="{{idea.content}}">{{idea.content|truncate:90}}</a></div>
         <div class="idea-command">
-            <a ng-click="idea.addVote()">+ {{idea.vote}}</a>
-            <a ng-click="showDeleteDialog()">delete</a>
+            <a ng-click="$event.stopPropagation(); idea.addVote()">+ {{idea.vote}}</a>
+            <a ng-click="$event.stopPropagation(); showDeleteDialog()">delete</a>
         </div>
     </div>
 </div>

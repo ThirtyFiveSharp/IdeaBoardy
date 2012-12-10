@@ -1,5 +1,5 @@
 <h2>Export Board(s)</h2>
-<%= form_tag({:action => "export"}, :method => "get") do %>
+<%= form_tag({:action => "download"}, :method => "get") do %>
     <table class="table table-striped table-hover table-condensed">
       <thead>
       <tr>
@@ -21,9 +21,4 @@
       </tbody>
     </table>
     <%= submit_tag "Export", :class => "btn btn-primary", :name => 'export' %>
-<% end %>
-<h2>Import Board(s)</h2>
-<%= form_tag({:action => :import}, :multipart => true) do %>
-    <%= file_field_tag 'file' %>  <br/>
-    <%= submit_tag "Import", :class => "btn btn-primary", :name => 'import' %>
 <% end %>

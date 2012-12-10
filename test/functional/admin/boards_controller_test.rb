@@ -9,7 +9,7 @@ class Admin::BoardsControllerTest < ActionController::TestCase
 
   test "should get index" do
     expected_boards = Board.all
-    get :index
+    get :export
     assert_response :success
     actual_boards = assigns(:boards)
     assert_equal expected_boards.count, actual_boards.count
@@ -22,7 +22,7 @@ class Admin::BoardsControllerTest < ActionController::TestCase
   end
 
   test "should export boards to yaml data" do
-    get :export, boards: [@board.id]
+    get :download, boards: [@board.id]
 
     yaml = YAML.load(@response.body)
     assert_equal 1, yaml.count
@@ -44,32 +44,32 @@ class Admin::BoardsControllerTest < ActionController::TestCase
   end
 
   test "should alert 'board(s) not found' and redirect to index when board not found before export" do
-    get :export, boards: [-1]
+    get :download, boards: [-1]
     assert_equal "board(s) not found", flash[:alert]
-    assert_redirected_to :action => "index"
+    assert_redirected_to :action => "export"
   end
 
   test "should alert 'please select a yaml file for import!' and redirect to index when no file is selected for import" do
-    post :import
+    post :upload
     assert_equal "please select a yaml file for import!", flash[:alert]
-    assert_redirected_to :action => "index"
+    assert_redirected_to :action => "import"
   end
 
   test "should alert invalid message when importing board already exist" do
     Board.create!(name: "exported_board", description: "exported_board")
 
-    post :import, file: fixture_file_upload("/files/exported_boards")
+    post :upload, file: fixture_file_upload("/files/exported_boards")
 
     assert_equal "Validation failed: Name has already been taken", flash[:alert]
-    assert_redirected_to :action => "index"
+    assert_redirected_to :action => "import"
   end
 
-  test "should import board not existed" do
+  test "should import board(s) not existed" do
     exported_file = fixture_file_upload("/files/exported_boards")
-    post :import, file: exported_file
+    post :upload, file: exported_file
 
     assert_response 302
-    assert_redirected_to :action => "index"
+    assert_redirected_to :action => "export"
     board_yaml = YAML.load_file(exported_file)[0]
     imported_board = Board.where('name = ?', board_yaml["name"]).first
     assert_equal board_yaml["name"], imported_board.name

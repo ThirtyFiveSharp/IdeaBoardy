@@ -28,9 +28,10 @@ Ideaboardy::Application.routes.draw do
 
   namespace :admin do
     resource :settings
-    match 'boards' => 'boards#index'
-    get 'boards/export'
-    post 'boards/import'
+    match 'boards' => 'boards#export'
+    get 'boards/import'
+    get 'boards/download'
+    post 'boards/upload'
   end
 
   match 'admin' => 'admin/settings#show'

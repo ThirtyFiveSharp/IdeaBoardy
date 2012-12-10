@@ -30,6 +30,7 @@ Ideaboardy::Application.routes.draw do
     resource :settings
     match 'boards' => 'boards#index'
     get 'boards/export'
+    post 'boards/import'
   end
 
   match 'admin' => 'admin/settings#show'

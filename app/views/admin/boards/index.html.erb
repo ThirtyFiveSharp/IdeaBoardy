@@ -22,3 +22,8 @@
     </table>
     <%= submit_tag "Export", :class => "btn btn-primary", :name => 'export' %>
 <% end %>
+<h2>Import Board(s)</h2>
+<%= form_tag({:action => :import}, :multipart => true) do %>
+    <%= file_field_tag 'file' %>  <br/>
+    <%= submit_tag "Import", :class => "btn btn-primary", :name => 'import' %>
+<% end %>

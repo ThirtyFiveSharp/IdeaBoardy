@@ -24,7 +24,13 @@ class TagsController < ApplicationController
     @tag = Tag.new(params[:tag])
     @tag.board = board
     if @tag.save
-      head status: :created, location: board_tag_url(board_id, @tag.id)
+      render status: :created, location: board_tag_url(board_id, @tag.id), json: {
+          id: @tag.id,
+          name: @tag.name,
+          links: [
+              {rel: 'self', href: board_tag_url(board_id, @tag.id)}
+          ]
+      }
     else
       render json: @tag.errors, status: :unprocessable_entity
     end

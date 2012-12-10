@@ -38,7 +38,13 @@ class TagsControllerTest < ActionController::TestCase
     created_tag = assigns :tag
     assert_response :created
     assert_equal board_tag_url(@board.id, created_tag.id), @response.headers['Location']
-    assert_blank @response.body
+    returned_tag = ActiveSupport::JSON.decode @response.body
+    assert_equal created_tag.id, returned_tag['id']
+    assert_equal created_tag.name, returned_tag['name']
+    links = returned_tag['links']
+    assert_equal 1, links.count
+    self_link = links.select {|l| l['rel'] == 'self'}.first
+    assert_equal board_tag_url(@board.id, created_tag.id), self_link['href']
     actual_tag = Tag.find created_tag.id
     assert_equal expected_name, actual_tag.name
     assert_equal @board.id, actual_tag.board.id

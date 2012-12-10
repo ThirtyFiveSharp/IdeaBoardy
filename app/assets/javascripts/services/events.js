@@ -5,5 +5,6 @@ angular.module('idea-boardy')
         sectionDeleted:'sectionDeleted',
         ideaDeleted:'ideaDeleted',
         ideaMerged:'ideaMerged',
-        ideaEmigrated:'ideaEmigrated'
+        ideaEmigrated:'ideaEmigrated',
+        tagCreated:'tagCreated'
     });

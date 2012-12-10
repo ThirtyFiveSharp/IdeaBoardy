@@ -1,8 +1,9 @@
 angular.module('idea-boardy')
-    .controller('IdeaController', ['$scope', '$http', 'dialog', 'events',
-    function ($scope, $http, dialog, events) {
+    .controller('IdeaController', ['$scope', '$http', '$q', 'dialog', 'events',
+    function ($scope, $http, $q, dialog, events) {
         var editIdeaDialog = dialog('editIdeaDialog'),
-            deleteIdeaDialog = dialog('deleteIdeaDialog');
+            deleteIdeaDialog = dialog('deleteIdeaDialog'),
+            addTagDialog = dialog('addTagDialog');
         $http.get($scope.idea.links.getLink('idea').href).success(function (idea) {
             $scope.idea = enhanceIdea(idea);
         });
@@ -11,6 +12,9 @@ angular.module('idea-boardy')
         };
         $scope.showDeleteDialog = function() {
             deleteIdeaDialog.open({ideaToDelete: $scope.idea});
+        };
+        $scope.showAddTagDialog = function($event) {
+            addTagDialog.open({idea: $scope.idea, tagNames: [], $event: $event});
         };
 
         function enhanceIdea(rawIdea) {
@@ -60,6 +64,33 @@ angular.module('idea-boardy')
                     tags.splice(index, 1);
                     $http.put(idea.links.getLink('tags').href, buildRequestToUpdateTags(tags))
                         .success(function() {refreshTags(idea)});
+                },
+                addTagByNames: function(tagNames) {
+                    var idea = this,
+                        tagNamesToAdd = _.filter(tagNames, function(tagName) {return idea.tagNames.indexOf(tagName) < 0});
+                    if(tagNamesToAdd.length == 0) return;
+
+                    var allTagsOfBoard = $scope.getTags(),
+                        allTagNamesOfBoard = _.map(allTagsOfBoard, function(tag) {return tag.name;}),
+                        existingTagsToAdd = _.filter(allTagsOfBoard, function(tag) {return tagNamesToAdd.indexOf(tag.name) >= 0}),
+                        newlyCreatedTagsToAdd = [],
+                        tagNamesToCreate = _.filter(tagNamesToAdd, function(tagName) {return allTagNamesOfBoard.indexOf(tagName) < 0;}),
+                        createNewTagPromises = _.map(tagNamesToCreate, function(tagName) {
+                            return $http.post($scope.board.tagsLink.href, {name: tagName});
+                        });
+                    $q.all(createNewTagPromises).then(function(returns) {
+                        _.each(returns, function(obj) {
+                            newlyCreatedTagsToAdd.push(obj.data);
+                        });
+                        var allTagsOfIdea = idea.getTags().concat(existingTagsToAdd).concat(newlyCreatedTagsToAdd);
+                        $http.put(idea.links.getLink('tags').href, buildRequestToUpdateTags(allTagsOfIdea))
+                            .success(function() {
+                                if(newlyCreatedTagsToAdd.length > 0) {
+                                    $scope.$emit(events.tagCreated);
+                                }
+                                refreshTags(idea);
+                            });
+                    });
                 }
             });
         }
@@ -75,8 +106,9 @@ angular.module('idea-boardy')
             $http.get(idea.links.getLink('tags').href)
                 .success(function(tagsOfIdea) {
                     idea.tagIds = _.map(tagsOfIdea, function(tagOfIdea) {return tagOfIdea.id;});
+                    idea.tagNames = _.map(tagsOfIdea, function(tagOfIdea) {return tagOfIdea.name;});
                     idea.getTags = function() {
-                        return _.select($scope.tags, function(tag) {return _.contains(idea.tagIds, tag.id);});
+                        return _.select($scope.getTags(), function(tag) {return _.contains(idea.tagIds, tag.id);});
                     };
                 });
         }

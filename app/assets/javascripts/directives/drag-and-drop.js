@@ -19,7 +19,6 @@ angular.module('idea-boardy')
                         handle:'.handle',
                         helper:'clone',
                         appendTo: 'body',
-                        cursor:'move',
                         opacity:0.8
                     });
                 };

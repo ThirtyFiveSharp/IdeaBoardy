@@ -1,7 +1,8 @@
 angular.module('idea-boardy')
     .controller('BoardController', ['$scope', '$http', '$location', 'params', 'dialog', 'color', 'events',
         function ($scope, $http, $location, params, dialog, color, events) {
-            var deleteBoardDialog = dialog('deleteBoardDialog'),
+            var tagsInBoard = [],
+                deleteBoardDialog = dialog('deleteBoardDialog'),
                 createSectionDialog = dialog('createSectionDialog'),
                 createTagDialog = dialog('createTagDialog'),
                 editTagDialog = dialog('editTagDialog'),
@@ -33,6 +34,9 @@ angular.module('idea-boardy')
                 params('uri', reportLinkUri);
                 $location.path('report').search({uri: reportLinkUri});
             };
+            $scope.getTags = function() {
+                return tagsInBoard;
+            };
 
             $scope.$on(events.editSection, function(event, targetSection) {
                 if(event.stopPropagation) event.stopPropagation();
@@ -49,6 +53,10 @@ angular.module('idea-boardy')
                 if(event.stopPropagation) event.stopPropagation();
                 $scope.sections.splice(index, 1);
                 refreshSections();
+            });
+            $scope.$on(events.tagCreated, function(event) {
+                if(event.stopPropagation) event.stopPropagation();
+                refreshTags();
             });
 
             function enhanceBoard(rawBoard) {
@@ -92,7 +100,7 @@ angular.module('idea-boardy')
             }
             function refreshTags() {
                 $http.get($scope.board.tagsLink.href).success(function (tags) {
-                    $scope.tags = tags;
+                    tagsInBoard = tags;
                 });
             }
             function refreshSections() {

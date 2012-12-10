@@ -3,6 +3,7 @@
     <meta draggable-type="idea" action="idea.mergeWith($draggableModel)" />
     <meta draggable-type="tag" action="idea.addTag($draggableModel)" />
     <ul class="idea-tag-list">
+        <li><a class="idea-tag blank" ng-click="$event.stopPropagation(); showAddTagDialog($event)"></a></li>
         <li class="idea-tag" title="click to remove this tag" ng-repeat="tag in idea.getTags()">
             <a ng-click="$event.stopPropagation(); idea.removeTag(tag)">{{tag.name}}</a>
         </li>

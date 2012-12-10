@@ -13,4 +13,5 @@
 //= require jquery
 //= require underscore
 //= require ./libs/bootstrap
+//= require ./libs/bootstrap-fileupload
 //= require_tree ./admin

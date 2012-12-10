@@ -8,4 +8,13 @@ class Board < ActiveRecord::Base
     Hash[name: name, description: description,
          sections: sections.collect { |section| section.report }]
   end
+
+  class << self
+    def all_exists?(ids)
+      self.find(ids)
+      true
+    rescue ActiveRecord::RecordNotFound
+      false
+    end
+  end
 end

@@ -11,4 +11,6 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require underscore
 //= require ./libs/bootstrap
+//= require_tree ./admin

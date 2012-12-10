@@ -56,4 +56,15 @@ class BoardTest < ActiveSupport::TestCase
       board2.save!
     end
   end
+
+  test "Board.all_exists?() should return false if not all boards exists" do
+    board = Board.create!(name: "name1")
+    assert_equal false, Board.all_exists?([board.id, -1])
+  end
+
+  test "Board.all_exists?() should return true if all boards exists" do
+    board1 = Board.create!(name: "name1")
+    board2 = Board.create!(name: "name2")
+    assert_equal true, Board.all_exists?([board1.id, board2.id])
+  end
 end

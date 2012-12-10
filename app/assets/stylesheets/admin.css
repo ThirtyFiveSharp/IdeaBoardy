@@ -14,3 +14,11 @@
  */
 
 body {padding-top: 60px;}
+
+.my-alert {
+    color: #ff0000;
+}
+
+.my-notice {
+    color: blue;
+}

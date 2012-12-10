@@ -12,7 +12,7 @@ angular.module('idea-boardy')
                 scope.mark = function(index) {
                     var model = scope.$eval(attrs['for']);
                     return model && model.color && model.color == color(index)
-                        ? "X"
+                        ? "✓"
                         : "";
                 };
             }

@@ -32,6 +32,9 @@ class Admin::BoardsController < ApplicationController
   rescue ActiveRecord::RecordInvalid => e
     flash[:alert] = e.message
     redirect_to action: "import"
+  rescue
+    flash[:alert] = "Invalid yaml file!"
+    redirect_to action: "import"
   end
 
   private

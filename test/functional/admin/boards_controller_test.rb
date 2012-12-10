@@ -43,15 +43,22 @@ class Admin::BoardsControllerTest < ActionController::TestCase
     end
   end
 
-  test "should alert 'board(s) not found' and redirect to index when board not found before export" do
+  test "should alert 'board(s) not found' and redirect to export when board not found before export" do
     get :download, boards: [-1]
     assert_equal "board(s) not found", flash[:alert]
     assert_redirected_to :action => "export"
   end
 
-  test "should alert 'please select a yaml file for import!' and redirect to index when no file is selected for import" do
+  test "should alert 'please select a yaml file for import!' and redirect to import when no file is selected for import" do
     post :upload
     assert_equal "please select a yaml file for import!", flash[:alert]
+    assert_redirected_to :action => "import"
+  end
+
+  test "should alert 'Invalid yaml file!' and redirect to import when no file is selected for import" do
+    post :upload, file: fixture_file_upload("boards.yml")
+
+    assert_equal "Invalid yaml file!", flash[:alert]
     assert_redirected_to :action => "import"
   end
 

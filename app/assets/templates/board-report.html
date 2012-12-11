@@ -9,6 +9,7 @@
             <ol>
                 <li ng-repeat="idea in section.ideas">
                     {{idea.content}} [<span class="vote">{{idea.vote}}</span> votes]
+                    <span ng-repeat="tagName in idea.tags" class="tag tag-report">{{tagName}}</span>
                 </li>
             </ol>
         </dd>

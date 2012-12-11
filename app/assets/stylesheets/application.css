@@ -79,6 +79,10 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #report .section ol {list-style-type: decimal;}
 #report .section li {margin-left: 30px; margin-bottom: 0.3em;}
 #report .section li .vote {font-weight: bold;}
+#report .tag-report {font-weight: bold; font-style: italic; margin-right: 0.2em; padding: 0 0.3em; }
+#report .tag { background-color: white; }
+#report .tag:before { color: #d3d3d3; }
+#report .tag:hover { cursor: default; }
 
 .select-section { float: right; margin-top: 10px; line-height: 25px; padding-right: 2px;}
 .section-select-container { min-width: 120px; max-width: 200px;}

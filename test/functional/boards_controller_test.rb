@@ -116,7 +116,7 @@ class BoardsControllerTest < ActionController::TestCase
     assert_blank @response.body
   end
 
-  test "should get report of first board" do
+  test "should get report of board" do
     expected_board = Board.find(@board1.id)
     get :report, id: @board1.id
     assert_response :success
@@ -132,6 +132,10 @@ class BoardsControllerTest < ActionController::TestCase
         actual_idea_report = actual_section_report['ideas'][idea_index]
         assert_equal idea.content, actual_idea_report['content']
         assert_equal idea.vote, actual_idea_report['vote']
+        assert_equal idea.tags.count, actual_idea_report['tags'].count
+        idea.tags.each_with_index do |tag, tag_index|
+          assert_equal tag.name, actual_idea_report['tags'][tag_index]
+        end
       end
     end
     links = actual_report['links']

@@ -36,10 +36,15 @@ class IdeaTest < ActiveSupport::TestCase
   end
 
   test "should show report of an idea" do
-    idea = Idea.create content: "Idea content", vote: 5
+    tag = Tag.create! name: "t1"
+    idea = Idea.create! content: "Idea content", vote: 5
+    idea.tags << tag
+    idea.save!
     report = idea.report
     assert_equal "Idea content", report[:content]
     assert_equal 5, report[:vote]
+    assert_equal 1, report[:tags].count
+    assert_equal tag.name, report[:tags][0]
   end
 
   test "should raise ActiveRecord::StaleObjectError when update already modified idea" do

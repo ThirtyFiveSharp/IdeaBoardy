@@ -13,7 +13,7 @@ class Idea < ActiveRecord::Base
   end
 
   def report
-    Hash[content: content, vote: vote]
+    Hash[content: content, vote: vote, tags: tags.collect {|t| t.name}]
   end
 
   private

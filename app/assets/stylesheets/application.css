@@ -85,6 +85,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 
 .tag-list { display:block; }
 .tag { display:inline-block; vertical-align: middle; margin: 0.2em; padding: 0.2em; background-color: #d3d3d3; border: 1px #a9a9a9 solid; -moz-border-radius: 20px 0 0 20px; border-radius: 20px 0 0 20px; }
+.tag:hover { cursor: pointer; }
 /*.tag.ui-draggable-dragging { background-color: #ffdd57; border-color: black; color: black; }*/
 /*.tag.ui-draggable-dragging:before, tag.ui-draggable-dragging a { color: black }*/
 .tag:before {content: "◉"; padding-right: 0.2em; color: white; }
@@ -123,7 +124,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .idea-list { display:block; list-style-type: none; }
 .idea { position: relative; overflow: hidden; margin: 4px; float: left; width: 225px; height: 150px; border:1px #a9a9a9 solid; -moz-border-radius: 10px; border-radius: 10px; }
 .idea.ui-draggable-dragging {background-color: #ffdd57;}
-.idea:hover { border-color: black; }
+.idea:hover { border-color: black; cursor: pointer; }
 .idea-tag-list { display:block; float:left; width: 54px; height: 140px; border-right: 1px #d3d3d3 dashed; overflow: hidden; }
 .idea-tag-list:hover { overflow: visible; }
 .idea-tag { display:block; margin: 5px; text-decoration: underline; background-color: inherit; font-size: 80%; white-space:nowrap;}

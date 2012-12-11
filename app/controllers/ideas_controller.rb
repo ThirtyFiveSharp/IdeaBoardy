@@ -98,14 +98,9 @@ class IdeasController < ApplicationController
     return head(:not_found) unless Section.of_board(board_id).exists?(section_id)
     return head(:not_found) unless Idea.of_section(section_id).exists?(idea_id)
 
-    source_idea = Idea.find(params[:source])
     idea = Idea.find(idea_id)
-    idea.content = params[:content]
-    idea.vote += source_idea.vote
-    Idea.transaction do
-      source_idea.delete
-      idea.save!
-    end
+    source_idea = Idea.find(params[:source])
+    idea.merge_with source_idea, params[:content]
     head :no_content
   end
 
@@ -121,13 +116,7 @@ class IdeasController < ApplicationController
     }
 
     idea = Idea.find(idea_id)
-    Idea.transaction do
-      idea.tags.clear
-      tag_ids.each { |tag_id|
-        idea.tags << Tag.find(tag_id)
-      }
-      idea.save!
-    end
+    idea.update_tags tag_ids
     head :no_content
   end
 end

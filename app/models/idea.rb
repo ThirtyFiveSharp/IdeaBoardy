@@ -16,6 +16,25 @@ class Idea < ActiveRecord::Base
     Hash[content: content, vote: vote, tags: tags.collect {|t| t.name}]
   end
 
+  def merge_with(other_idea, merged_content)
+    self.content = merged_content
+    self.vote += other_idea.vote
+    transaction do
+      other_idea.delete
+      self.save!
+    end
+  end
+
+  def update_tags(tag_ids)
+    transaction do
+      self.tags.clear
+      tag_ids.each { |tag_id|
+        self.tags << Tag.find(tag_id)
+      }
+      self.save!
+    end
+  end
+
   private
   def default_value!
     self.vote ||= 0

@@ -1,3 +1,3 @@
 task :heroku => 'db:migrate' do
-  `bundle exec rails server -p $PORT`
+  `bundle exec rails server thin -p $PORT -e $RACK_ENV`
 end

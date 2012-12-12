@@ -23,10 +23,10 @@ def html_to_javascript(html)
 end
 
 task :precompile do
-  template_dir = ::File.expand_path('..\..\app\assets\templates', ::File.dirname(__FILE__))
+  template_dir = ::File.expand_path('../../app/assets/templates', ::File.dirname(__FILE__))
   puts "Precompiling template files in #{template_dir}..."
   templates = precompile_dir template_dir
-  precompiled_templates_dir = ::File.expand_path('..\..\app\assets\javascripts\precompiled-templates', ::File.dirname(__FILE__))
+  precompiled_templates_dir = ::File.expand_path('../../app/assets/javascripts/precompiled-templates', ::File.dirname(__FILE__))
   precompiled_template_file = ::File.join(precompiled_templates_dir, "templates.js")
   begin
     f = ::File.open(precompiled_template_file, "w")

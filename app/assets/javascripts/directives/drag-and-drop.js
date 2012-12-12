@@ -55,7 +55,7 @@ angular.module('idea-boardy')
                         },
                         drop: function (event, ui) {
                             var draggableElem = angular.element(ui.draggable),
-                                draggableCtrl = draggableElem.controller('draggable'),
+                                draggableCtrl = draggableElem.controller('draggable') || {},
                                 draggableType = draggableCtrl.getType(),
                                 handler = droppableCtrl.getHandler(draggableType),
                                 draggableModel = draggableCtrl.getModel();

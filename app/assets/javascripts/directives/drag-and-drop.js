@@ -50,15 +50,15 @@ angular.module('idea-boardy')
                         accept: function(draggable) {
                             var draggableElem = angular.element(draggable),
                                 draggableCtrl = draggableElem.controller('draggable'),
-                                draggableType = draggableCtrl.getType();
+                                draggableType = draggableCtrl ? draggableCtrl.getType() : undefined;
                             return droppableCtrl.canAccept(draggableType);
                         },
                         drop: function (event, ui) {
                             var draggableElem = angular.element(ui.draggable),
-                                draggableCtrl = draggableElem.controller('draggable') || {},
-                                draggableType = draggableCtrl.getType(),
-                                handler = droppableCtrl.getHandler(draggableType),
-                                draggableModel = draggableCtrl.getModel();
+                                draggableCtrl = draggableElem.controller('draggable'),
+                                draggableType = draggableCtrl ? draggableCtrl.getType() : undefined,
+                                draggableModel = draggableCtrl ? draggableCtrl.getModel() : undefined,
+                                handler = droppableCtrl.getHandler(draggableType);
                             scope.$apply(function() {
                                 $parse(handler)(scope, {$draggableModel: draggableModel});
                             });

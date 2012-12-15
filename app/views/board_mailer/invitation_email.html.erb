@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head></head>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
 <body>
 Hi all,
-<p>Board '<%= @board.name %>' is created here: <a href="<%= @url %>"><%= @url %></a>.</p>
+<% url = "#{root_url(host: @hostname)}board?uri=#{url_encode(@uri)}" %>
+<p>Board '<%= @board.name %>' is created here: <a href="<%= url %>"><%= url %></a>.</p>
 
 <p>Please feel free to post your stickies.</p>
 Thanks,<br/>

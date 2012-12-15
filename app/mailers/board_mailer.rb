@@ -3,7 +3,8 @@ class BoardMailer < ActionMailer::Base
 
   def invitation_email(hostname, to, board)
     @board = board
-    @url = "#{root_url(host: hostname)}board?uri=#{board_url board.id, host: hostname}"
+    @hostname = hostname
+    @uri = board_url board.id, host: hostname
     mail to: to, subject: "Board '#{board.name}' is created"
   end
 

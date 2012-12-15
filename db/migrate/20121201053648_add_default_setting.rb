@@ -1,6 +1,6 @@
 class AddDefaultSetting < ActiveRecord::Migration
   def up
-    Setting.set_table_name "admin_settings"
+    Setting.table_name = "admin_settings"
     Setting.create! do |s|
       s.slogan = "Let's move!"
       s.app_version = "0.0.2-Alpha"
@@ -9,7 +9,7 @@ class AddDefaultSetting < ActiveRecord::Migration
   end
 
   def down
-    Setting.set_table_name "admin_settings"
+    Setting.table_name = "admin_settings"
     Setting.delete_all
     puts "Setting is cleared!"
   end

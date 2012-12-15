@@ -51,15 +51,6 @@ Ideaboardy::Application.configure do
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = { :host => 'ideaboardy.herokuapp.com' }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-      :address              => "smtp.gmail.com",
-      :port                 => 587,
-      :domain               => 'baci.lindsaar.net',
-      :user_name            => 'ThirtyFive.Sharp@gmail.com',
-      :password             => 'ThirtyFive++++',
-      :authentication       => 'plain',
-      :enable_starttls_auto => true  }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
 

@@ -7,6 +7,7 @@ gem 'rails', '3.2.8'
 
 group :production do
   gem 'pg'
+  gem 'eventmachine'
   gem 'thin'
 end
 

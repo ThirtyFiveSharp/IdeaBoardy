@@ -9,8 +9,10 @@ angular.module('idea-boardy')
                     boardToCreate: {},
                     sectionsToCreate: [],
                     createAll: function() {
-                        var board = this.boardToCreate,
-                            sections = this.sectionsToCreate;
+                        var me = this,
+                            board = me.boardToCreate,
+                            sections = me.sectionsToCreate,
+                            shouldNotify = me.shouldNotify;
                         $http.post(config.apiEntryPoint, board).success(function (createdBoard, status, headers) {
                             var createdBoardUri = headers('location');
                             $http.get(createdBoardUri).success(function (createdBoard) {
@@ -19,6 +21,9 @@ angular.module('idea-boardy')
                                     $http.post(sectionsLink.href, section);
                                 });
                                 refreshBoardList();
+                                if(shouldNotify) {
+                                    $http.post(createdBoard.links.getLink('invitation').href, {to: me.to, board: createdBoard}).success();
+                                }
                             });
                         });
                     }

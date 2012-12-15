@@ -142,6 +142,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #create-board-form dl { margin: 0.5em; }
 #create-board-form dt { margin-bottom: 0.5em; }
 #create-board-form .section { margin-bottom: 0.5em; }
+#create-board-form #email {width: 80%;}
 #create-board { margin-top: 2em; }
 
 #invitation-dialog dl {margin-bottom: 0.5em;}

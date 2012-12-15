@@ -4,13 +4,13 @@ idea_one:
   content: One
   vote: 1
   section: section_one
-  tags: one, two
+#  tags: one, two
 
 idea_two:
   content: Two
   vote: 2
   section: section_one
-  tags: one
+#  tags: one
 
 idea_three:
   content: Three

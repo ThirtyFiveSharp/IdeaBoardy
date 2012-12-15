@@ -1,6 +1,6 @@
 angular.module('idea-boardy')
-    .controller('BoardListController', ['$scope', '$http', '$location', 'params', 'dialog', 'config',
-        function ($scope, $http, $location, params, dialog, config) {
+    .controller('BoardListController', ['$scope', '$http', '$location', 'params', 'dialog', 'config', 'email',
+        function ($scope, $http, $location, params, dialog, config, email) {
             var createBoardDialog = dialog('createBoardDialog');
             refreshBoardList();
 
@@ -22,7 +22,7 @@ angular.module('idea-boardy')
                                 });
                                 refreshBoardList();
                                 if(shouldNotify) {
-                                    $http.post(createdBoard.links.getLink('invitation').href, {to: me.to, board: createdBoard}).success();
+                                    email.invite(me.to, createdBoard);
                                 }
                             });
                         });

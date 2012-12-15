@@ -78,6 +78,7 @@ class BoardsController < ApplicationController
   def links(board)
     report_link = Hash[rel: 'self', href: "#{board_url(board.id)}/report"]
     board_link = Hash[rel: 'board', href: board_url(board.id)]
-    Hash[links: [report_link, board_link]]
+    share_link = Hash[rel: 'share', href: emails_share_url]
+    Hash[links: [report_link, board_link, share_link]]
   end
 end

@@ -141,11 +141,13 @@ class BoardsControllerTest < ActionController::TestCase
       end
     end
     links = actual_report['links']
-    assert_equal 2, links.count
+    assert_equal 3, links.count
     self_link = links.select { |l| l['rel']=='self' }.first
     assert_equal "#{board_url(@board1.id)}/report", self_link['href']
     board_link = links.select { |l| l['rel']=='board' }.first
     assert_equal board_url(@board1.id), board_link['href']
+    share_link = links.select { |l| l['rel']=='share' }.first
+    assert_equal emails_share_url, share_link['href']
   end
 
   test "should return 404 Not Found when board is not existed (report)" do

@@ -25,6 +25,7 @@ Ideaboardy::Application.routes.draw do
   end
 
   post 'emails/invitation'
+  post 'emails/share'
 
   devise_for :users, :controllers => {:sessions => "admin/sessions"}
 

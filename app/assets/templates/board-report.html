@@ -2,6 +2,9 @@
     <dl class="board-info">
         <dd class="name"><a ng-click="goToBoard()">{{report.name}}</a></dd>
         <dd class="description">{{report.description}}</dd>
+        <div class="share-report">
+            <input class="btn-3" type="button" value="Share" ng-click="showShareDialog()" jq-ui="button"/>
+        </div>
     </dl>
     <dl style="background-color: #{{section.color}}" class="section" ng-repeat="section in report.sections">
         <dt>{{section.name}}</dt>

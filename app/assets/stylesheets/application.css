@@ -73,6 +73,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #report .board-info {margin-bottom: 2em; text-align: center;}
 #report .board-info .name { line-height: 2em; font-size: 1.8em; font-weight: bold; padding-left: 1px; }
 #report .board-info .description { font-size: 1.2em; font-style: italic; padding-left: 5px; }
+#report .share-report {float: right; margin-top: -60px;}
 #report .section {margin-bottom: 1em; padding: 8px 5px; border-radius: 10px;}
 #report .section dt {font-size: 1.3em; font-weight: bold; margin-bottom: 0.4em;}
 #report .section dd {padding-left: 5px;}
@@ -147,6 +148,9 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 
 #invitation-dialog dl {margin-bottom: 0.5em;}
 #invitation-dialog .email {width: 100%;}
+
+#share-dialog dl {margin-bottom: 0.5em;}
+#share-dialog .email {width: 100%;}
 
 #delete-board-dialog p, .delete-idea-dialog p, #delete-tag-dialog p { margin-bottom: 1em; font-size: 1.1em;}
 #delete-board-dialog .command-bar, #delete-tag-dialog .command-bar { margin-bottom: 0.5em; }

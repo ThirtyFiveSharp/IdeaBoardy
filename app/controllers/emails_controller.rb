@@ -6,4 +6,10 @@ class EmailsController < ApplicationController
     email.deliver
     render :json => {result: "success"}
   end
+
+  def share
+    email = BoardMailer.share_email(request.host_with_port, params[:to], params[:report])
+    email.deliver
+    render :json => {result: "success"}
+  end
 end

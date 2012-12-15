@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<div>
+  <dl style="margin-bottom: 2em;text-align: center;">
+    <dd style="line-height: 2em;font-size: 1.8em;font-weight: bold;"><%= @report["name"] %></dd>
+    <dd style="font-size: 1.2em;font-style: italic;"><%= @report["description"] %></dd>
+  </dl>
+  <% @report["sections"].each do |section| %>
+      <dl style="background-color: #<%= section['color'] %>;margin-bottom: 1em;padding: 8px 5px;border-radius: 10px;">
+        <dt style="font-size: 1.3em;font-weight: bold;margin-bottom: 0.4em;"><%= section["name"] %></dt>
+        <dd style="margin: 0px; padding:0 20px;">
+          <ol style="margin: 0px; padding:0 20px;">
+            <% section["ideas"].each do |idea| %>
+                <li style="margin: 0px; padding:0px;">
+                  <%= idea["content"] %> [<span style="font-weight: bold;"><%= idea["vote"] %></span> votes]
+                  <% idea["tags"].each do |tag| %>
+                      <span style="display: inline-block;vertical-align: middle;margin: 0.2em;padding: 0 0.1em;border: 1px darkGray solid;border-radius: 20px 0 0 20px; background-color: #ffffff;">◉ <%= tag %></span>
+                  <% end %>
+                </li>
+            <% end %>
+          </ol>
+        </dd>
+      </dl>
+  <% end %>
+</div>
+</body>
+</html>

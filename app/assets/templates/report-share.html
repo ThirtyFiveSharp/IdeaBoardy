@@ -1,0 +1,19 @@
+<div ng-controller="ReportShareController">
+    <div id="share-dialog" name="shareDialog" title="Share report"
+         jq-ui-dialog='{"width": 350}' ng-cloak>
+        <form class="share-form" name="shareForm" ng-submit="share()">
+            <dl>
+                <dt>Email Address:</dt>
+                <dd>
+                    <input class="email" name="email" type="email" ng-model="dialog.context.to" required autofocus />
+                    <span error-message></span>
+                </dd>
+            </dl>
+            <div class="command-bar">
+                <input id="share-report" class="btn-3 btn-ok" type="submit" value="Share"
+                       ng-disabled="shareForm.$invalid" jq-ui="button" />
+                <input class="btn-3 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button" />
+            </div>
+        </form>
+    </div>
+</div>

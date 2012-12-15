@@ -8,4 +8,9 @@ class BoardMailer < ActionMailer::Base
     mail to: to, subject: "Board '#{board.name}' is created"
   end
 
+  def share_email(hostname, to, report)
+    @report = report
+    mail to: to, subject: "report for '#{report["name"]}'"
+  end
+
 end

@@ -10,4 +10,12 @@ class EmailsControllerTest < ActionController::TestCase
     assert_equal "success", response_body["result"]
   end
 
+  test "should share report" do
+    board = boards(:board_one)
+    post :share, to: "group@abc.com", report: Hash[name: board.name, description: board.description, sections: []]
+    assert_response :success
+    response_body = ActiveSupport::JSON.decode @response.body
+    assert_equal "success", response_body["result"]
+  end
+
 end

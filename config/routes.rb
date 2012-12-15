@@ -24,6 +24,8 @@ Ideaboardy::Application.routes.draw do
     end
   end
 
+  post 'emails/invitation'
+
   devise_for :users, :controllers => {:sessions => "admin/sessions"}
 
   namespace :admin do

@@ -6,7 +6,8 @@ angular.module('idea-boardy')
                 createSectionDialog = dialog('createSectionDialog'),
                 createTagDialog = dialog('createTagDialog'),
                 editTagDialog = dialog('editTagDialog'),
-                deleteTagDialog = dialog('deleteTagDialog');
+                deleteTagDialog = dialog('deleteTagDialog'),
+                invitationDialog = dialog('invitationDialog');
             $http.get(params('uri')).success(function (board) {
                 enhanceBoard(board);
                 $scope.board = board;
@@ -25,6 +26,9 @@ angular.module('idea-boardy')
             };
             $scope.showEditTagDialog = function(tag, $event) {
                 editTagDialog.open({board: $scope.board, tagToEdit:_.clone(tag), $event: $event});
+            };
+            $scope.showInvitationDialog = function() {
+                invitationDialog.open({boardToInvite: $scope.board});
             };
             $scope.showDeleteTagDialog = function(tag) {
                 deleteTagDialog.open({board: $scope.board, tagToDelete: tag});
@@ -62,6 +66,7 @@ angular.module('idea-boardy')
             function enhanceBoard(rawBoard) {
                 angular.extend(rawBoard, {
                     selfLink:rawBoard.links.getLink('self'),
+                    invitationLink:rawBoard.links.getLink('invitation'),
                     tagsLink:rawBoard.links.getLink('tags'),
                     sectionsLink:rawBoard.links.getLink('sections'),
                     reportLink:rawBoard.links.getLink('report'),

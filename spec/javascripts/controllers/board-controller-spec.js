@@ -4,11 +4,13 @@ describe('BoardController', function () {
         sectionsLinkUri = boardUri + "/sections",
         tagsLinkUri = boardUri + "/tags",
         reportUri = boardUri + "/report",
+        invitationUri = "http://localhost:3000/emails/invitation",
         board = {"id":1, "name":"tiger retro", "description":"tiger retro for iteration 29", "links":[
             {"rel":"self", "href":boardUri},
             {"rel":"sections", "href":sectionsLinkUri},
             {"rel":"tags", "href":tagsLinkUri},
-            {"rel":"report", "href":reportUri}
+            {"rel":"report", "href":reportUri},
+            {"rel":"invitation", "href":invitationUri}
         ]},
         sections = [
             {"id":1, "name":"Well", "links":[
@@ -45,6 +47,7 @@ describe('BoardController', function () {
             expect(scope.board.sectionsLink).toBe(board.links[1]);
             expect(scope.board.tagsLink).toBe(board.links[2]);
             expect(scope.board.reportLink).toBe(board.links[3]);
+            expect(scope.board.invitationLink).toBe(board.links[4]);
             expect(scope.board.mode).toBe('view');
             expect(typeof scope.board.edit).toBe('function');
             expect(typeof scope.board.delete).toBe('function');

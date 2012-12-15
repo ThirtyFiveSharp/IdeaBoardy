@@ -59,8 +59,8 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 
 #board { display:block; padding: 1em 0; }
 #board-title { margin-bottom: 2em; }
-#board-title .board-info { display:block; float:left; width: 50%; overflow: hidden;}
-#board-title .command-bar { display:block; float: right; width: 50%; min-width: 8em; }
+#board-title .board-info { display:block; float:left; width: 35%; overflow: hidden;}
+#board-title .command-bar { display:block; float: right; width: 65%; min-width: 8em; }
 #board-title .command-bar input { float: right; vertical-align: top; margin-left: 0.5em; }
 #board-title dd { display: block; }
 #board-title .name { line-height: 2em; }
@@ -143,6 +143,9 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #create-board-form dt { margin-bottom: 0.5em; }
 #create-board-form .section { margin-bottom: 0.5em; }
 #create-board { margin-top: 2em; }
+
+#invitation-dialog dl {margin-bottom: 0.5em;}
+#invitation-dialog .email {width: 100%;}
 
 #delete-board-dialog p, .delete-idea-dialog p, #delete-tag-dialog p { margin-bottom: 1em; font-size: 1.1em;}
 #delete-board-dialog .command-bar, #delete-tag-dialog .command-bar { margin-bottom: 0.5em; }

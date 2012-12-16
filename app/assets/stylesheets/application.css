@@ -74,7 +74,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .trash-bin { display: inline-block; width: 32px; padding: 8px; background-color: #ffffff; border: 1px #a9a9a9 solid; -moz-border-radius: 10px; border-radius: 10px; }
 .trash-bin:hover { cursor: pointer; border-color: #ff6666; }
 .trash-bin:hover .trash-bin-icon { background-position: -96px 0; }
-.trash-bin.ui-scrollfix { position: fixed; top: 10px; left:50%; margin-left: 430px; z-index: 900; background-color: #ffffff; opacity: 0.9;}
+.trash-bin.ui-scrollfix { position: fixed; top: 10px; left:50%; margin-left: 480px; z-index: 900; background-color: #ffffff; opacity: 0.9;}
 .trash-bin-icon { width: 32px; height: 32px; background: url(/assets/background.png) -64px 0 no-repeat; }
 .trash-bin.droppable-active .trash-bin-icon { background-position: -96px 0; }
 

@@ -1,8 +1,8 @@
 module BuildTools
   class TemplatePrecompiler
-    def initialize(dir_name)
-      puts "Precompiling template files in #{dir_name}..."
-      @precompiled_templates = precompile_dir dir_name
+    def initialize(dir)
+      puts "Precompiling template files in #{dir}..."
+      @precompiled_templates = precompile_dir dir
     end
 
     def write_to_file(file_name)
@@ -18,23 +18,23 @@ module BuildTools
     end
 
     private
-    def precompile_dir(dir_name)
-      raise "[#{dir_name}] is not a directory!" unless File.directory?(dir_name)
+    def precompile_dir(dir)
+      raise "[#{dir}] is not a directory!" unless File.directory?(dir)
       templates = []
-      ::Dir.entries(dir_name).each {|entry|
+      ::Dir.entries(dir).each {|entry|
         next if entry == '.' or entry == '..'
-        absolute_path = ::File.join(dir_name, entry)
+        absolute_path = ::File.join(dir, entry)
         templates << precompile_file(absolute_path) if ::File.file?(absolute_path)
         templates += precompile_dir(absolute_path) if ::File.directory?(absolute_path)
       }
       templates
     end
 
-    def precompile_file(file_name)
-      raise "[#{file_name}] is not a file!" unless ::File.file?(file_name)
-      puts "  #{file_name}"
-      key = '"assets/' + ::File.basename(file_name) + '"'
-      javascript_str = html_to_javascript(::IO.read(file_name))
+    def precompile_file(file)
+      raise "[#{file}] is not a file!" unless ::File.file?(file)
+      puts file
+      key = '"assets/' + ::File.basename(file) + '"'
+      javascript_str = html_to_javascript(::IO.read(file))
       {key: key, content: javascript_str}
     end
 
@@ -58,7 +58,7 @@ heredoc
   end
 end
 
-task :precompile_angular do
+task :precompile do
   template_dir = ::File.expand_path('../../app/assets/templates', ::File.dirname(__FILE__))
   precompiled_templates_dir = ::File.expand_path('../../app/assets/javascripts/precompiled-templates', ::File.dirname(__FILE__))
   precompiled_template_file = ::File.join(precompiled_templates_dir, "templates.js")
@@ -66,5 +66,3 @@ task :precompile_angular do
   precompiler = BuildTools::TemplatePrecompiler.new template_dir
   precompiler.write_to_file precompiled_template_file
 end
-
-task :precompile => ['assets:clean', 'precompile_angular', 'assets:precompile']

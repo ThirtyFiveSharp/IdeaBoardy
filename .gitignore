@@ -33,6 +33,3 @@ rerun.txt
 pickle-email-*.html
 push_*.dat
 **.DS_Store
-
-# Exept these files
-!/public/assets/manifest.yml

@@ -1,23 +1,20 @@
-<div id="board" class="clear-fix" ng-controller="BoardController">
-    <div id="board-title" class="clear-fix" ng-switch on="board.mode">
+<div class="clear-fix" ng-controller="BoardController">
+    <div class="board-title clear-fix" ng-switch on="board.mode">
         <div ng-switch-when="view">
             <dl class="board-info">
                 <dd class="name"><span>{{board.name}}</span></dd>
                 <dd class="description"><span>{{board.description}}</span></dd>
             </dl>
             <div class="command-bar">
-                <input class="btn-3" type="button" value="Report" ng-click="goToReport(board)" jq-ui="button"/>
-                <input class="btn-3" type="button" value="Invite" ng-click="showInvitationDialog()" jq-ui="button"/>
-                <input class="btn-3 btn-delete" type="button" value="Delete" ng-click="showDeleteBoardDialog()" jq-ui="button"/>
-                <input class="btn-3" type="button" value="Edit" ng-click="board.edit()" jq-ui="button"/>
-                <input class="btn-3" type="button" value="+ 1 section" ng-click="showCreateSectionDialog()" jq-ui="button"/>
-            </div>
-            <div class="select-section">
-                View Section:
-                <select ui-select2="{containerCssClass: 'section-select-container'}" ng-model="board.selectedSectionName">
-                    <option value="">All Sections</option>
-                    <option ng-repeat="section in sections" value="{{section.name}}">{{section.name}}</option>
-                </select>
+                <input class="btn-3 command" type="button" value="Edit" ng-click="board.edit()" jq-ui="button"/>
+                <input class="btn-3 command" type="button" value="Invite" ng-click="showInvitationDialog()" jq-ui="button"/>
+                <input class="btn-3 command" type="button" value="Report" ng-click="goToReport(board)" jq-ui="button"/>
+                <div class="trash-bin" title="Trash Bin: drag something here to delete it."
+                     ui-scrollfix="+30" droppable ng-click="showDeleteBoardDialog()">
+                    <meta draggable-type="tag" action="showDeleteTagDialog($draggableModel)" />
+                    <meta draggable-type="idea" action="showDeleteIdeaDialog($draggableModel)" />
+                    <div class="trash-bin-icon"></div>
+                </div>
             </div>
         </div>
         <div ng-switch-when="edit">
@@ -32,21 +29,36 @@
                     </dd>
                 </dl>
                 <div class="command-bar">
-                    <input class="btn-3 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button" />
-                    <input class="btn-3 btn-ok" type="submit" value="Save" ng-disabled="!editBoardForm.$valid" jq-ui="button" />
+                    <input class="btn-3 btn-ok command" type="submit" value="Save" ng-disabled="!editBoardForm.$valid" jq-ui="button" />
+                    <input class="btn-3 btn-cancel command" type="button" value="Cancel" ng-click="cancel()" jq-ui="button" />
+                    <div class="trash-bin command" title="Trash Bin: drag something here to delete it."
+                         ui-scrollfix="+30" droppable ng-click="showDeleteBoardDialog()">
+                        <meta draggable-type="tag" action="showDeleteTagDialog($draggableModel)" />
+                        <meta draggable-type="idea" action="showDeleteIdeaDialog($draggableModel)" />
+                        <div class="trash-bin-icon"></div>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
-    <div>
-        <ul class="tag-list">
-            <li class="tag" ng-repeat="tag in getTags()" draggable="tag" type="tag" ng-click="showEditTagDialog(tag, $event)">{{tag.name}}</li>
-            <li class="tag blank"><a ng-click="showCreateTagDialog($event)">+ 1 tag</a></li>
-            <li class="tag-trash" title="Drag and drop a tag here to delete it." droppable>
-                <meta draggable-type="tag" action="showDeleteTagDialog($draggableModel)" />
+
+    <ul class="tag-list">
+        <li class="tag" ng-repeat="tag in getTags()" draggable="tag" type="tag" ng-click="showEditTagDialog(tag, $event)">{{tag.name}}</li>
+        <li class="tag blank"><a ng-click="showCreateTagDialog($event)">+ 1 tag</a></li>
+    </ul>
+
+    <div class="clear-fix">
+        <ul class="section-command-bar">
+            <li class="command create-section" ng-click="showCreateSectionDialog()">+ 1 section</li>
+            <li class="command" ng-show="sections.length > 0">
+                <select ui-select2="{containerCssClass: 'section-select-container'}" ng-model="board.selectedSectionName">
+                    <option value="">All Sections</option>
+                    <option ng-repeat="section in sections" value="{{section.name}}">{{section.name}}</option>
+                </select>
             </li>
         </ul>
     </div>
+
     <ul class="section-list clear-fix">
         <li ng-repeat="section in sections" ng-show="board.isSectionVisible(section)" ng-class="board.sectionClass(section)">
             <ng-include src="'assets/section.html'"></ng-include>

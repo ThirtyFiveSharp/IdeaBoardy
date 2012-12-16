@@ -3,27 +3,29 @@
     <div class="section-title clear-fix" ng-switch on="section.mode">
         <div ng-switch-when="view">
             <dl class="section-info">
-                <dd class="name"><span><a ng-click="section.toggleExpand()">{{section.name|truncate:27}}</a></span></dd>
+                <dd class="section-name">
+                    <span ng-click="section.toggleExpand()">{{section.name|truncate:27}}</span>
+                </dd>
             </dl>
             <div class="command-bar">
-                <input class="btn-2 btn-delete" type="button" value="Delete" ng-click="showDeleteSectionDialog()"
-                       jq-ui="button"/>
                 <input class="btn-2" type="button" value="Edit" ng-click="section.edit()"
                        ng-disabled="!section.editable" jq-ui="button"/>
+                <input class="btn-2 btn-delete" type="button" value="Delete" ng-click="showDeleteSectionDialog()"
+                       jq-ui="button"/>
             </div>
         </div>
         <div ng-switch-when="edit">
             <form name="editSectionForm" ng-controller="EditSectionController" ng-submit="save()">
                 <dl class="section-info">
-                    <dd class="name">
+                    <dd class="section-name">
                         <input class="name" type="text" ng-model="editingSection.name" required autofocus />
                         <color-picker for="editingSection"></color-picker>
                     </dd>
                 </dl>
-                <div class="command-bar">
-                    <input class="btn-2 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button"/>
-                    <input class="btn-2 btn-ok" type="submit" value="Save" ng-disabled="!editSectionForm.$valid" jq-ui="button"/>
-                </div>
+                    <div class="command-bar">
+                        <input class="btn-2 btn-ok" type="submit" value="Save" ng-disabled="!editSectionForm.$valid" jq-ui="button"/>
+                        <input class="btn-2 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button"/>
+                    </div>
             </form>
         </div>
     </div>

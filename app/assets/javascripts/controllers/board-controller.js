@@ -7,6 +7,7 @@ angular.module('idea-boardy')
                 createTagDialog = dialog('createTagDialog'),
                 editTagDialog = dialog('editTagDialog'),
                 deleteTagDialog = dialog('deleteTagDialog'),
+                deleteIdeaDialog = dialog('deleteIdeaDialog'),
                 invitationDialog = dialog('invitationDialog');
             $http.get(params('uri')).success(function (board) {
                 enhanceBoard(board);
@@ -32,6 +33,9 @@ angular.module('idea-boardy')
             };
             $scope.showDeleteTagDialog = function(tag) {
                 deleteTagDialog.open({board: $scope.board, tagToDelete: tag});
+            };
+            $scope.showDeleteIdeaDialog = function(idea) {
+                deleteIdeaDialog.open({ideaToDelete: idea});
             };
             $scope.goToReport = function(board) {
                 var reportLinkUri = board.reportLink.href;

@@ -2,16 +2,12 @@ angular.module('idea-boardy')
     .controller('IdeaController', ['$scope', '$http', '$q', 'dialog', 'events',
     function ($scope, $http, $q, dialog, events) {
         var editIdeaDialog = dialog('editIdeaDialog'),
-            deleteIdeaDialog = dialog('deleteIdeaDialog'),
             addTagDialog = dialog('addTagDialog');
         $http.get($scope.idea.links.getLink('idea').href).success(function (idea) {
             $scope.idea = enhanceIdea(idea);
         });
         $scope.showEditDialog = function($event) {
             editIdeaDialog.open({ideaToEdit: _.clone($scope.idea), $event: $event});
-        };
-        $scope.showDeleteDialog = function() {
-            deleteIdeaDialog.open({ideaToDelete: $scope.idea});
         };
         $scope.showAddTagDialog = function($event) {
             addTagDialog.open({idea: $scope.idea, tagNames: [], $event: $event});

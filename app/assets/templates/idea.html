@@ -12,7 +12,6 @@
         <div class="idea-info"><span class="idea-content" title="{{idea.content}}">{{idea.content|truncate:90}}</span></div>
         <div class="idea-command">
             <a ng-click="$event.stopPropagation(); idea.addVote()">+ {{idea.vote}}</a>
-            <a ng-click="$event.stopPropagation(); showDeleteDialog()">delete</a>
         </div>
     </div>
 </div>

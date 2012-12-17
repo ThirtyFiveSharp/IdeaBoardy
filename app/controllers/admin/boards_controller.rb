@@ -22,7 +22,8 @@ class Admin::BoardsController < ApplicationController
   def download
     boards = Board.includes(:sections => :ideas).where(:id => params[:boards])
     boards_json = boards.to_json(:include => {:sections => {:include => :ideas}})
-    send_data ActiveSupport::JSON.decode(boards_json).to_yaml, :filename => "boards.yml"
+    yaml = ActiveSupport::JSON.decode(boards_json).to_yaml.encode('UTF-8')
+    send_data yaml, :filename => "boards.yml"
   end
 
   def upload

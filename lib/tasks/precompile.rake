@@ -58,11 +58,15 @@ heredoc
   end
 end
 
-task :precompile do
-  template_dir = ::File.expand_path('../../app/assets/templates', ::File.dirname(__FILE__))
-  precompiled_templates_dir = ::File.expand_path('../../app/assets/javascripts/precompiled-templates', ::File.dirname(__FILE__))
-  precompiled_template_file = ::File.join(precompiled_templates_dir, "templates.js")
+namespace :assets do
+  task :precompile_angular_templates do
+    template_dir = ::File.expand_path('../../app/assets/templates', ::File.dirname(__FILE__))
+    precompiled_templates_dir = ::File.expand_path('../../app/assets/javascripts/precompiled-templates', ::File.dirname(__FILE__))
+    precompiled_template_file = ::File.join(precompiled_templates_dir, "templates.js")
 
-  precompiler = BuildTools::TemplatePrecompiler.new template_dir
-  precompiler.write_to_file precompiled_template_file
+    precompiler = BuildTools::TemplatePrecompiler.new template_dir
+    precompiler.write_to_file precompiled_template_file
+  end
+
+  task :precompile => :precompile_angular_templates
 end

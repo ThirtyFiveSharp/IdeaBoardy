@@ -32,7 +32,7 @@ module BuildTools
 
     def precompile_file(file)
       raise "[#{file}] is not a file!" unless ::File.file?(file)
-      puts file
+      puts "  #{file}"
       key = '"assets/' + ::File.basename(file) + '"'
       javascript_str = html_to_javascript(::IO.read(file))
       {key: key, content: javascript_str}
@@ -56,17 +56,24 @@ module BuildTools
 heredoc
     end
   end
+
+  TEMPLATE_DIR = ::File.expand_path('../../app/assets/templates', ::File.dirname(__FILE__))
+  precompiled_templates_dir = ::File.expand_path('../../app/assets/javascripts/precompiled-templates', ::File.dirname(__FILE__))
+  PRECOMPILED_TEMPLATE_FILE = ::File.join(precompiled_templates_dir, "templates.js")
+
 end
 
 namespace :assets do
   task :precompile_angular_templates do
-    template_dir = ::File.expand_path('../../app/assets/templates', ::File.dirname(__FILE__))
-    precompiled_templates_dir = ::File.expand_path('../../app/assets/javascripts/precompiled-templates', ::File.dirname(__FILE__))
-    precompiled_template_file = ::File.join(precompiled_templates_dir, "templates.js")
-
-    precompiler = BuildTools::TemplatePrecompiler.new template_dir
-    precompiler.write_to_file precompiled_template_file
+    precompiler = BuildTools::TemplatePrecompiler.new(BuildTools::TEMPLATE_DIR)
+    precompiler.write_to_file(BuildTools::PRECOMPILED_TEMPLATE_FILE)
   end
 
   task :precompile => :precompile_angular_templates
+
+  task :clean do
+    file_to_delete = BuildTools::PRECOMPILED_TEMPLATE_FILE
+    ::File.delete(file_to_delete) if ::File.exist?(file_to_delete)
+    puts "Precompiled template file #{file_to_delete} has been deleted."
+  end
 end

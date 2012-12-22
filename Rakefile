@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Ideaboardy::Application.load_tasks
+IdeaBoardy::Application.load_tasks

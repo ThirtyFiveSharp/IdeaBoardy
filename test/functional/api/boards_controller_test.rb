@@ -1,11 +1,11 @@
 require 'test_helper'
 
-class BoardsControllerTest < ActionController::TestCase
+class Api::BoardsControllerTest < ActionController::TestCase
+  NON_EXISTED_ID = 99999
+
   setup do
     @board1 = boards(:board_one)
     @board2 = boards(:board_two)
-    @section1 = sections(:section_one)
-    @section2 = sections(:section_two)
   end
 
   test "should get index" do
@@ -20,7 +20,7 @@ class BoardsControllerTest < ActionController::TestCase
       links = actual_boards[index]['links']
       assert_equal 1, links.count
       board_link = links.select { |l| l['rel'] == 'board' }.first
-      assert_equal board_url(expected_board.id), board_link['href']
+      assert_equal api_board_url(expected_board.id), board_link['href']
     end
   end
 
@@ -30,11 +30,11 @@ class BoardsControllerTest < ActionController::TestCase
     assert_difference('Board.count') do
       post :create, board: {name: expected_name, description: expected_description}
     end
-    created_board = assigns :board
+    created_board_id = assigns :board_id
     assert_response :created
-    assert_equal board_url(created_board.id), @response.headers['Location']
+    assert_equal api_board_url(created_board_id), @response.headers['Location']
     assert_blank @response.body
-    actual_board = Board.find created_board.id
+    actual_board = Board.find created_board_id
     assert_equal expected_name, actual_board.name
     assert_equal expected_description, actual_board.description
   end
@@ -56,19 +56,19 @@ class BoardsControllerTest < ActionController::TestCase
     links = actual_board['links']
     assert_equal 5, links.count
     self_link = links.select { |l| l['rel']=='self' }.first
-    assert_equal board_url(@board1.id), self_link['href']
+    assert_equal api_board_url(@board1.id), self_link['href']
     sections_link = links.select { |l| l['rel']=='sections' }.first
-    assert_equal board_sections_url(@board1.id), sections_link['href']
+    assert_equal api_board_sections_url(@board1.id), sections_link['href']
     tags_link = links.select { |l| l['rel']=='tags' }.first
-    assert_equal board_tags_url(@board1.id), tags_link['href']
+    assert_equal api_board_tags_url(@board1.id), tags_link['href']
     report_link = links.select { |l| l['rel']=='report' }.first
-    assert_equal "#{board_url(@board1.id)}/report", report_link['href']
+    assert_equal report_api_board_url(@board1.id), report_link['href']
     invitation_link = links.select { |l| l['rel']=='invitation' }.first
-    assert_equal emails_invitation_url, invitation_link['href']
+    assert_equal api_emails_invitation_url, invitation_link['href']
   end
 
   test "should return 404 Not Found when board is not existed (GET)" do
-    get :show, id: 99999
+    get :show, id: NON_EXISTED_ID
     assert_response :not_found
     assert_blank @response.body
   end
@@ -92,7 +92,7 @@ class BoardsControllerTest < ActionController::TestCase
   end
 
   test "should return 404 Not Found when board is not existed (UPDATE)" do
-    put :update, id: 99999, board: {description: "new board description", name: "new board name"}
+    put :update, id: NON_EXISTED_ID, board: {description: "new board description", name: "new board name"}
     assert_response :not_found
     assert_blank @response.body
   end
@@ -113,7 +113,7 @@ class BoardsControllerTest < ActionController::TestCase
   end
 
   test "should return 204 No Content when board is not existed" do
-    delete :destroy, id: 99999
+    delete :destroy, id: NON_EXISTED_ID
     assert_response :no_content
     assert_blank @response.body
   end
@@ -143,15 +143,15 @@ class BoardsControllerTest < ActionController::TestCase
     links = actual_report['links']
     assert_equal 3, links.count
     self_link = links.select { |l| l['rel']=='self' }.first
-    assert_equal "#{board_url(@board1.id)}/report", self_link['href']
+    assert_equal "#{api_board_url(@board1.id)}/report", self_link['href']
     board_link = links.select { |l| l['rel']=='board' }.first
-    assert_equal board_url(@board1.id), board_link['href']
+    assert_equal api_board_url(@board1.id), board_link['href']
     share_link = links.select { |l| l['rel']=='share' }.first
-    assert_equal emails_share_url, share_link['href']
+    assert_equal api_emails_share_url, share_link['href']
   end
 
   test "should return 404 Not Found when board is not existed (report)" do
-    get :report, id: 99999
+    get :report, id: NON_EXISTED_ID
     assert_response :not_found
     assert_blank @response.body
   end

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class EmailsControllerTest < ActionController::TestCase
+class Api::EmailsControllerTest < ActionController::TestCase
 
   test "should send invitation" do
     board = boards(:board_one)

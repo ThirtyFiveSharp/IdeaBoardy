@@ -5,9 +5,10 @@ class Api::TagsControllerTest < ActionController::TestCase
 
   setup do
     @tag1 = tags(:tag_one)
+    @red = tags(:red)
   end
 
-  test "should show tag" do
+  test "should show tag with no associated concept" do
     get :show, id: @tag1.id
     assert_response :success
     actual_tag = ActiveSupport::JSON.decode @response.body
@@ -17,6 +18,20 @@ class Api::TagsControllerTest < ActionController::TestCase
     assert_equal 1, links.count
     self_link = links.select { |l| l['rel']=='self' }.first
     assert_equal api_tag_url(@tag1.id), self_link['href']
+  end
+
+  test "should show tag with associated concept" do
+    get :show, id: @red.id
+    assert_response :success
+    actual_tag = ActiveSupport::JSON.decode @response.body
+    assert_equal @red.id, actual_tag['id']
+    assert_equal @red.name, actual_tag['name']
+    links = actual_tag['links']
+    assert_equal 2, links.count
+    self_link = links.select { |l| l['rel']=='self' }.first
+    assert_equal api_tag_url(@red.id), self_link['href']
+    concept_link = links.select { |l| l['rel']=='concept' }.first
+    assert_equal api_concept_url(@red.concept.id), concept_link['href']
   end
 
   test "should return 404 Not Found when tag is not existed (GET)" do

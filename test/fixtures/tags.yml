@@ -9,3 +9,23 @@ tag_two:
   name: AAA
   board: board_one
   ideas: idea_one
+
+square:
+  name: Square
+  board: board_two
+  concept: shape
+
+circle:
+  name: Circle
+  board: board_two
+  concept: shape
+
+red:
+  name: Red
+  board: board_two
+  concept: color
+
+green:
+  name: Green
+  board: board_two
+  concept: color

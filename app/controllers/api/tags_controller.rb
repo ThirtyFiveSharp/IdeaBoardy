@@ -5,12 +5,12 @@ module Api
     def show
       tag_id = params[:id]
       tag = Tag.find(tag_id)
+      resource_links = [{rel: :self, href: api_tag_url(tag_id)}]
+      resource_links << {rel: :concept, href: api_concept_url(tag.concept.id)} unless tag.concept.nil?
       render json: {
           id: tag.id,
           name: tag.name,
-          links: [
-              {rel: 'self', href: api_tag_url(tag_id)}
-          ]
+          links: resource_links
       }
     end
 

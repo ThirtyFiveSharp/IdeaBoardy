@@ -7,12 +7,14 @@ def config_api_routes
       resources :sections, only: [:index, :create], controller: :board_sections
       resources :tags, only: [:index, :create], controller: :board_tags
     end
+
     resources :sections, except: [:index, :create] do
       member do
         post :immigration
       end
       resources :ideas, only: [:index, :create], controller: :section_ideas
     end
+
     resources :ideas, except: [:index, :create] do
       member do
         post :vote
@@ -21,7 +23,16 @@ def config_api_routes
       end
       resources :tags, only: :index, controller: :idea_tags
     end
+
     resources :tags, except: [:index, :create]
+
+    resources :concepts, except: :create do
+      member do
+        put :tags
+      end
+      resources :tags, only: :index, controller: :concept_tags
+    end
+
     post 'emails/invitation'
     post 'emails/share'
   end

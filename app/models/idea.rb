@@ -28,9 +28,7 @@ class Idea < ActiveRecord::Base
   def update_tags(tag_ids)
     transaction do
       self.tags.clear
-      tag_ids.each { |tag_id|
-        self.tags << Tag.find(tag_id)
-      }
+      self.tags = Tag.where(id: tag_ids)
       self.save!
     end
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121222141501) do
+ActiveRecord::Schema.define(:version => 20121223115810) do
 
   create_table "boards", :force => true do |t|
     t.string   "name"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20121222141501) do
     t.integer  "lock_version", :default => 1
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
+    t.integer  "board_id"
   end
 
   create_table "ideas", :force => true do |t|

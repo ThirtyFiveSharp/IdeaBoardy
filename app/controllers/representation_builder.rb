@@ -5,11 +5,12 @@ module RepresentationBuilder
         name: board.name,
         description: board.description,
         links: [
-            {rel: 'self', href: api_board_url(board.id)},
-            {rel: 'sections', href: api_board_sections_url(board.id)},
-            {rel: 'tags', href: api_board_tags_url(board.id)},
-            {rel: 'invitation', href: api_emails_invitation_url},
-            {rel: 'report', href: report_api_board_url(board.id)}
+            {rel: :self, href: api_board_url(board.id)},
+            {rel: :sections, href: api_board_sections_url(board.id)},
+            {rel: :concepts, href: api_board_concepts_url(board.id)},
+            {rel: :tags, href: api_board_tags_url(board.id)},
+            {rel: :invitation, href: api_emails_invitation_url},
+            {rel: :report, href: report_api_board_url(board.id)}
         ]
     }
   end
@@ -20,9 +21,9 @@ module RepresentationBuilder
         name: section.name,
         color: section.color,
         links: [
-            {rel: 'self', href: api_section_url(section.id)},
-            {rel: 'ideas', href: api_section_ideas_url(section.id)},
-            {rel: 'immigration', href: immigration_api_section_url(section.id)}
+            {rel: :self, href: api_section_url(section.id)},
+            {rel: :ideas, href: api_section_ideas_url(section.id)},
+            {rel: :immigration, href: immigration_api_section_url(section.id)}
         ]
     }
   end
@@ -33,10 +34,10 @@ module RepresentationBuilder
         content: idea.content,
         vote: idea.vote,
         links: [
-            {rel: 'self', href: api_idea_url(idea.id)},
-            {rel: 'vote', href: vote_api_idea_url(idea.id)},
-            {rel: 'merging', href: merging_api_idea_url(idea.id)},
-            {rel: 'tags', href: api_idea_tags_url(idea.id)}
+            {rel: :self, href: api_idea_url(idea.id)},
+            {rel: :vote, href: vote_api_idea_url(idea.id)},
+            {rel: :merging, href: merging_api_idea_url(idea.id)},
+            {rel: :tags, href: api_idea_tags_url(idea.id)}
         ]
     }
   end

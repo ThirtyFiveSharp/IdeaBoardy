@@ -2,6 +2,8 @@
 
 shape:
   name: Shape
+  board: board_one
 
 color:
   name: Color
+  board: board_one

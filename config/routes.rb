@@ -5,6 +5,7 @@ def config_api_routes
         get :report
       end
       resources :sections, only: [:index, :create], controller: :board_sections
+      resources :concepts, only: [:index, :create], controller: :board_concepts
       resources :tags, only: [:index, :create], controller: :board_tags
     end
 

@@ -54,11 +54,13 @@ class Api::BoardsControllerTest < ActionController::TestCase
     assert_equal @board1.name, actual_board['name']
     assert_equal @board1.description, actual_board['description']
     links = actual_board['links']
-    assert_equal 5, links.count
+    assert_equal 6, links.count
     self_link = links.select { |l| l['rel']=='self' }.first
     assert_equal api_board_url(@board1.id), self_link['href']
     sections_link = links.select { |l| l['rel']=='sections' }.first
     assert_equal api_board_sections_url(@board1.id), sections_link['href']
+    concepts_link = links.select { |l| l['rel']=='concepts' }.first
+    assert_equal api_board_concepts_url(@board1.id), concepts_link['href']
     tags_link = links.select { |l| l['rel']=='tags' }.first
     assert_equal api_board_tags_url(@board1.id), tags_link['href']
     report_link = links.select { |l| l['rel']=='report' }.first

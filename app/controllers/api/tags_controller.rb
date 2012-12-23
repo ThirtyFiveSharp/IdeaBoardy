@@ -1,17 +1,12 @@
 module Api
-  class TagsController < ApplicationController
+  class TagsController < ApiController
     respond_to :json
 
     def show
       tag_id = params[:id]
       tag = Tag.find(tag_id)
-      resource_links = [{rel: :self, href: api_tag_url(tag_id)}]
-      resource_links << {rel: :concept, href: api_concept_url(tag.concept.id)} unless tag.concept.nil?
-      render json: {
-          id: tag.id,
-          name: tag.name,
-          links: resource_links
-      }
+      representation = build_representation(tag)
+      render json: representation
     end
 
     def update

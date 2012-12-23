@@ -1,20 +1,11 @@
 module Api
-  class SectionsController < ApplicationController
+  class SectionsController < ApiController
     respond_to :json
 
     def show
       section_id = params[:id]
       section = Section.find(section_id)
-      render json: {
-          id: section.id,
-          name: section.name,
-          color: section.color,
-          links: [
-              {rel: 'self', href: api_section_url(section_id)},
-              {rel: 'ideas', href: api_section_ideas_url(section_id)},
-              {rel: 'immigration', href: immigration_api_section_url(section_id)}
-          ]
-      }
+      render json: build_representation(section)
     end
 
     def update

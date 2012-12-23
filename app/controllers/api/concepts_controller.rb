@@ -1,5 +1,5 @@
 module Api
-  class ConceptsController < ApplicationController
+  class ConceptsController < ApiController
     respond_to :json
 
     def index
@@ -15,14 +15,7 @@ module Api
     def show
       concept_id = params[:id]
       concept = Concept.find(concept_id)
-      render json: {
-          id: concept.id,
-          name: concept.name,
-          links: [
-              {rel: :self, href: api_concept_url(concept.id)},
-              {rel: :tags, href: api_concept_tags_url(concept.id)}
-          ]
-      }
+      render json: build_representation(concept)
     end
 
     def update

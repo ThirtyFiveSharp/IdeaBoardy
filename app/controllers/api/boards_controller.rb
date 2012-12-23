@@ -1,5 +1,5 @@
 module Api
-  class BoardsController < ApplicationController
+  class BoardsController < ApiController
     respond_to :json
 
     def index
@@ -14,19 +14,9 @@ module Api
 
     def show
       board_id = params[:id]
-      board = Board.find(board_id)
-      render json: {
-          id: board.id,
-          name: board.name,
-          description: board.description,
-          links: [
-              {rel: 'self', href: api_board_url(board.id)},
-              {rel: 'sections', href: api_board_sections_url(board.id)},
-              {rel: 'tags', href: api_board_tags_url(board.id)},
-              {rel: 'invitation', href: api_emails_invitation_url},
-              {rel: 'report', href: report_api_board_url(board.id)}
-          ]
-      }
+      embeddable = get_embeddable(Board)
+      board = Board.includes(embeddable).find(board_id)
+      render json: build_representation(board, embeddable)
     end
 
     def create

@@ -4,8 +4,9 @@ module Api
 
     def show
       idea_id = params[:id]
-      idea = Idea.find(idea_id)
-      render json: build_representation(idea)
+      embeddable = get_embeddable(Idea)
+      idea = Idea.includes(embeddable).find(idea_id)
+      render json: build_representation(idea, embeddable)
     end
 
     def update

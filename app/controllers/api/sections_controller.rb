@@ -4,8 +4,9 @@ module Api
 
     def show
       section_id = params[:id]
-      section = Section.find(section_id)
-      render json: build_representation(section)
+      embeddable = get_embeddable(Section)
+      section = Section.includes(embeddable).find(section_id)
+      render json: build_representation(section, embeddable)
     end
 
     def update

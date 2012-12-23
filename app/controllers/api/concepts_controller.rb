@@ -14,8 +14,9 @@ module Api
 
     def show
       concept_id = params[:id]
-      concept = Concept.find(concept_id)
-      render json: build_representation(concept)
+      embeddable = get_embeddable(Concept)
+      concept = Concept.includes(embeddable).find(concept_id)
+      render json: build_representation(concept, embeddable)
     end
 
     def update

@@ -4,8 +4,9 @@ module Api
 
     def show
       tag_id = params[:id]
-      tag = Tag.find(tag_id)
-      representation = build_representation(tag)
+      embeddable = get_embeddable(Tag)
+      tag = Tag.includes(embeddable).find(tag_id)
+      representation = build_representation(tag, embeddable)
       render json: representation
     end
 

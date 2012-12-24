@@ -1,5 +1,5 @@
 describe('SectionController', function () {
-    var scope, ctrl, $httpBackend,
+    var scope, ctrl,
         sectionUri = "http://localhost:3000/api/boards/1/sections/1",
         ideasUri = sectionUri + "/ideas",
         section = {"id":1, "name":"section1", "color":"ddffdd", "links":[
@@ -10,10 +10,8 @@ describe('SectionController', function () {
 
     beforeEach(module('idea-boardy'));
 
-    beforeEach(inject(function (_$httpBackend_, $rootScope, $controller) {
-        $httpBackend = _$httpBackend_;
-        $httpBackend.expectGET(sectionUri).respond(section);
-        $httpBackend.expectGET(ideasUri).respond([]);
+    beforeEach(inject(function ($httpBackend, $rootScope, $controller) {
+        $httpBackend.expectGET(sectionUri + '?embed=ideas').respond(section);
         scope = $rootScope.$new();
         scope.section = {
             "links":[
@@ -22,6 +20,11 @@ describe('SectionController', function () {
         };
         ctrl = $controller('SectionController', {$scope:scope});
         $httpBackend.flush();
+    }));
+
+    afterEach(inject(function ($httpBackend) {
+        $httpBackend.verifyNoOutstandingExpectation();
+        $httpBackend.verifyNoOutstandingRequest();
     }));
 
     describe("initialize", function () {

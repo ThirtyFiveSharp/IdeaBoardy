@@ -26,8 +26,7 @@ describe('BoardController', function () {
     beforeEach(inject(function (_$httpBackend_, $rootScope, $controller, params) {
         params('uri', boardUri);
         $httpBackend = _$httpBackend_;
-        $httpBackend.expectGET(boardUri).respond(board);
-        $httpBackend.expectGET(tagsLinkUri).respond(sections);
+        $httpBackend.expectGET(boardUri + '?embed=tags%2Cconcepts').respond(board);
         $httpBackend.expectGET(sectionsLinkUri).respond(sections);
         scope = $rootScope.$new();
         scope.idea = board;

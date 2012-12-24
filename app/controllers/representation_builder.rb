@@ -33,6 +33,7 @@ module RepresentationBuilder
         id: idea.id,
         content: idea.content,
         vote: idea.vote,
+        tags: idea.tags.collect { |tag| tag_representation(tag) },
         links: [
             {rel: :self, href: api_idea_url(idea.id)},
             {rel: :vote, href: vote_api_idea_url(idea.id)},

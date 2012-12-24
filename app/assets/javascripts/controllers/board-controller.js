@@ -9,12 +9,13 @@ angular.module('idea-boardy')
                 deleteTagDialog = dialog('deleteTagDialog'),
                 deleteIdeaDialog = dialog('deleteIdeaDialog'),
                 invitationDialog = dialog('invitationDialog');
-            $http.get(params('uri')).success(function (board) {
-                enhanceBoard(board);
-                $scope.board = board;
-                refreshTags();
-                refreshSections();
-            });
+            $http.get(params('uri'), {params: {embed: "tags,concepts"}})
+                .success(function (board) {
+                    enhanceBoard(board);
+                    $scope.board = board;
+                    tagsInBoard = board.tags;
+                    refreshSections();
+                });
 
             $scope.showDeleteBoardDialog = function() {
                 deleteBoardDialog.open({boardToDelete: $scope.board});

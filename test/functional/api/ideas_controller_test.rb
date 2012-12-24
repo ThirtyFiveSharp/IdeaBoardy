@@ -11,13 +11,21 @@ class Api::IdeasControllerTest < ActionController::TestCase
   end
 
   test "should show idea" do
-    expected_tags = [@tag2, @tag1]
     get :show, id: @idea1.id
     assert_response :success
     actual_idea = ActiveSupport::JSON.decode @response.body
     assert_equal @idea1.id, actual_idea['id']
     assert_equal @idea1.content, actual_idea['content']
     assert_equal @idea1.vote, actual_idea['vote']
+    assert_equal @idea1.tags.count, actual_idea['tags'].count
+    @idea1.tags.each_with_index do |tag, index|
+      assert_equal @idea1.tags[index].id, actual_idea['tags'][index]["id"]
+      assert_equal @idea1.tags[index].name, actual_idea['tags'][index]["name"]
+      tag_links = actual_idea['tags'][index]["links"]
+      assert_equal 1, tag_links.count
+      tag_self_link = tag_links.select { |l| l['rel'] == 'self' }.first
+      assert_equal api_tag_url(@idea1.tags[index].id), tag_self_link['href']
+    end
     links = actual_idea['links']
     assert_equal 4, links.count
     self_link = links.select { |l| l['rel'] == 'self' }.first

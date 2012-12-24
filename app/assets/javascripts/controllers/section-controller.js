@@ -3,10 +3,10 @@ angular.module('idea-boardy')
     function ($scope, $http, dialog, events) {
         var deleteSectionDialog = dialog('deleteSectionDialog'),
             createIdeaDialog = dialog('createIdeaDialog');
-        $http.get($scope.section.links.getLink('section').href)
-            .success(function (data) {
-                $scope.section = enhanceSection(data);
-                refreshIdeas();
+        $http.get($scope.section.links.getLink('section').href, {params: {embed: "ideas"}})
+            .success(function (section) {
+                $scope.section = enhanceSection(section);
+                refreshIdeas(section.ideas);
             });
 
         $scope.showDeleteSectionDialog = function () {
@@ -97,16 +97,15 @@ angular.module('idea-boardy')
         }
 
         function refreshSection() {
-            $http.get($scope.section.selfLink.href).success(function (data) {
-                $scope.section = enhanceSection(data);
-                refreshIdeas();
-            });
+            $http.get($scope.section.selfLink.href, {params: {embed: "ideas"}})
+                .success(function (section) {
+                    $scope.section = enhanceSection(section);
+                    refreshIdeas(section.ideas);
+                });
         }
 
-        function refreshIdeas() {
-            $http.get($scope.section.links.getLink('ideas').href).success(function (ideas) {
-                $scope.ideas = ideas;
-            });
+        function refreshIdeas(ideas) {
+            $scope.ideas = ideas;
         }
     }
 ]);

@@ -142,10 +142,10 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #report .section dt {font-size: 1.3em; font-weight: bold; margin-bottom: 0.4em;}
 #report .section dd {padding-left: 5px;}
 #report .section ol {list-style-type: decimal;}
-#report .section li {margin-left: 30px; margin-bottom: 0.3em;}
+#report .section li {margin-left: 30px; margin-bottom: 0.3em; line-height: 20px;}
 #report .section li .vote {font-weight: bold;}
 #report .tag-report { margin-right: 0.2em; padding: 0.1em 0.5em; }
-#report .tag { background-color: white; }
+#report .tag { background-color: white; vertical-align: middle; height: 18px; font-size: 0.9em;}
 #report .tag:before { color: #d3d3d3; font-weight: normal; font-style: normal; }
 #report .tag:hover { cursor: default; }
 

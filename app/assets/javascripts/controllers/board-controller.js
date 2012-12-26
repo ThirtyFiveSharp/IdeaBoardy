@@ -39,9 +39,7 @@ angular.module('idea-boardy')
                 deleteIdeaDialog.open({ideaToDelete: idea});
             };
             $scope.goToReport = function(board) {
-                var reportLinkUri = board.reportLink.href;
-                params('uri', reportLinkUri);
-                $location.path('report').search({uri: reportLinkUri});
+                $location.path('report').search({uri: board.selfLink.href});
             };
             $scope.getTags = function() {
                 return tagsInBoard;
@@ -74,7 +72,6 @@ angular.module('idea-boardy')
                     invitationLink:rawBoard.links.getLink('invitation'),
                     tagsLink:rawBoard.links.getLink('tags'),
                     sectionsLink:rawBoard.links.getLink('sections'),
-                    reportLink:rawBoard.links.getLink('report'),
                     mode:"view",
                     selectedSectionName: "",
                     edit:function () {

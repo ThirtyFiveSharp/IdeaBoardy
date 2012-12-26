@@ -63,10 +63,10 @@ class Api::BoardsControllerTest < ActionController::TestCase
     assert_equal api_board_concepts_url(@board1.id), concepts_link['href']
     tags_link = links.select { |l| l['rel']=='tags' }.first
     assert_equal api_board_tags_url(@board1.id), tags_link['href']
-    report_link = links.select { |l| l['rel']=='report' }.first
-    assert_equal report_api_board_url(@board1.id), report_link['href']
     invitation_link = links.select { |l| l['rel']=='invitation' }.first
     assert_equal api_emails_invitation_url, invitation_link['href']
+    share_link = links.select { |l| l['rel']=='share' }.first
+    assert_equal api_emails_share_url, share_link['href']
   end
 
   test "should return 404 Not Found when board is not existed (GET)" do
@@ -120,41 +120,4 @@ class Api::BoardsControllerTest < ActionController::TestCase
     assert_blank @response.body
   end
 
-  test "should get report of board" do
-    expected_board = Board.find(@board1.id)
-    get :report, id: @board1.id
-    assert_response :success
-    actual_report = ActiveSupport::JSON.decode @response.body
-    assert_equal expected_board.name, actual_report['name']
-    assert_equal expected_board.description, actual_report['description']
-    assert_equal expected_board.sections.count, actual_report['sections'].count
-    expected_board.sections.order('id').each_with_index do |section, section_index|
-      actual_section_report = actual_report['sections'][section_index]
-      assert_equal section.name, actual_section_report['name']
-      assert_equal section.color, actual_section_report['color']
-      section.ideas.order('vote desc').each_with_index do |idea, idea_index|
-        actual_idea_report = actual_section_report['ideas'][idea_index]
-        assert_equal idea.content, actual_idea_report['content']
-        assert_equal idea.vote, actual_idea_report['vote']
-        assert_equal idea.tags.count, actual_idea_report['tags'].count
-        idea.tags.each_with_index do |tag, tag_index|
-          assert_equal tag.name, actual_idea_report['tags'][tag_index]
-        end
-      end
-    end
-    links = actual_report['links']
-    assert_equal 3, links.count
-    self_link = links.select { |l| l['rel']=='self' }.first
-    assert_equal "#{api_board_url(@board1.id)}/report", self_link['href']
-    board_link = links.select { |l| l['rel']=='board' }.first
-    assert_equal api_board_url(@board1.id), board_link['href']
-    share_link = links.select { |l| l['rel']=='share' }.first
-    assert_equal api_emails_share_url, share_link['href']
-  end
-
-  test "should return 404 Not Found when board is not existed (report)" do
-    get :report, id: NON_EXISTED_ID
-    assert_response :not_found
-    assert_blank @response.body
-  end
 end

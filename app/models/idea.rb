@@ -12,10 +12,6 @@ class Idea < ActiveRecord::Base
     self.vote += 1
   end
 
-  def report
-    Hash[content: content, vote: vote, tags: tags.collect {|t| t.name}]
-  end
-
   def merge_with(other_idea, merged_content)
     self.content = merged_content
     self.vote += other_idea.vote

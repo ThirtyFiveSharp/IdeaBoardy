@@ -35,18 +35,6 @@ class IdeaTest < ActiveSupport::TestCase
     assert_equal original_vote_number + 1, actual_idea.vote, "vote! should increase vote number by one"
   end
 
-  test "should show report of an idea" do
-    tag = Tag.create! name: "t1"
-    idea = Idea.create! content: "Idea content", vote: 5
-    idea.tags << tag
-    idea.save!
-    report = idea.report
-    assert_equal "Idea content", report[:content]
-    assert_equal 5, report[:vote]
-    assert_equal 1, report[:tags].count
-    assert_equal tag.name, report[:tags][0]
-  end
-
   test "should raise ActiveRecord::StaleObjectError when update already modified idea" do
     Idea.create!(content: "idea_for_optimistic_lock")
     idea1 = Idea.find_by_content("idea_for_optimistic_lock")

@@ -19,21 +19,11 @@ class BoardMailerTest < ActionMailer::TestCase
     hostname = "ideaboardy.herokuapp.com"
     to = "group@abc.com"
     board = boards(:board_one)
-    report = ActiveSupport::JSON.decode(board.report.merge(report_links(hostname, board)).to_json)
 
-    email = BoardMailer.share_email(hostname, to, report).deliver
+    email = BoardMailer.share_email(hostname, to, board).deliver
 
     assert !ActionMailer::Base.deliveries.empty?
     assert_equal [to], email.to
     assert_equal "report for '#{board.name}'", email.subject
-  end
-
-  private
-  def report_links(hostname, board)
-    board_uri = "#{hostname}/boards/#{board.id}"
-    report_link = Hash[rel: 'self', href: "#{board_uri}/report"]
-    board_link = Hash[rel: 'board', href: board_uri]
-    share_link = Hash[rel: 'share', href: "#{hostname}/emails/share"]
-    Hash[links: [report_link, board_link, share_link]]
   end
 end

@@ -12,11 +12,6 @@ class Section < ActiveRecord::Base
 
   scope :of_board, lambda { |board_id| where("board_id = ?", board_id).order("id") }
 
-  def report
-    Hash[name: name, color: color,
-         ideas: ideas.collect { |idea| idea.report }]
-  end
-
   private
   def default_value!
     self.color ||= COLORS[0]

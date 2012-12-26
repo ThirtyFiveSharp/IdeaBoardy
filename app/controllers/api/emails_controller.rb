@@ -9,7 +9,8 @@ module Api
     end
 
     def share
-      email = BoardMailer.share_email(request.host_with_port, params[:to], params[:report])
+      board = Board.find(params[:board][:id])
+      email = BoardMailer.share_email(request.host_with_port, params[:to], board)
       email.deliver
       render :json => {result: "success"}
     end

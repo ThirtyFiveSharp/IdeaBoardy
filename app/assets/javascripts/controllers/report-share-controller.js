@@ -6,7 +6,7 @@ angular.module('idea-boardy')
             if($scope.shareForm.$invalid) return;
             $scope.dialog.close();
             var context = $scope.dialog.context;
-            email.share(context.to, context.reportToShare);
+            email.share(context.to, context.boardToShare);
         };
         $scope.cancel = function() {
             $scope.dialog.close();

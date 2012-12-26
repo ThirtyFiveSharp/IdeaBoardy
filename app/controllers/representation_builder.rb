@@ -10,7 +10,7 @@ module RepresentationBuilder
             {rel: :concepts, href: api_board_concepts_url(board.id)},
             {rel: :tags, href: api_board_tags_url(board.id)},
             {rel: :invitation, href: api_emails_invitation_url},
-            {rel: :report, href: report_api_board_url(board.id)}
+            {rel: :share, href: api_emails_share_url}
         ]
     }
   end

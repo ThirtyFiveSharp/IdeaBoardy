@@ -1,9 +1,6 @@
 def config_api_routes
   namespace :api do
     resources :boards do
-      member do
-        get :report
-      end
       resources :sections, only: [:index, :create], controller: :board_sections
       resources :concepts, only: [:index, :create], controller: :board_concepts
       resources :tags, only: [:index, :create], controller: :board_tags

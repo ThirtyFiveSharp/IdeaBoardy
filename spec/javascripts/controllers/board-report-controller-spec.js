@@ -1,26 +1,59 @@
 describe('BoardReportController', function () {
     var scope, ctrl, $httpBackend,
         boardUri = 'http://localhost:3000/api/boards/1',
-        boardReportUri = boardUri + "/report",
-        report = {"name":"board report", "description":"board report description", "sections":[
-            {"name":"Well", "ideas":[
-                {"content":"something well 1", "vote":3},
-                {"content":"something well 2", "vote":1}
+        sectionsLinkUri = boardUri + "/sections",
+        tagsLinkUri = boardUri + "/tags",
+        invitationUri = "http://localhost:3000/emails/invitation",
+        section1Uri = "http://localhost:3000/api/sections/1",
+        section2Uri = "http://localhost:3000/api/sections/2",
+        board = {"id":1, "name":"tiger retro", "description":"tiger retro for iteration 29",
+            "sections":[
+                {"id":1, "name":"Well", "color":"ddffdd", "links":[
+                    {"rel":"self", "href":"http://localhost:3000/api/sections/1"},
+                    {"rel":"ideas", "href":"http://localhost:3000/api/sections/1/ideas"},
+                    {"rel":"immigration", "href":"http://localhost:3000/api/sections/1/immigration"}
+                ]},
+                {"id":2, "name":"Less Well", "color":"ddffdd", "links":[
+                    {"rel":"self", "href":"http://localhost:3000/api/sections/2"},
+                    {"rel":"ideas", "href":"http://localhost:3000/api/sections/2/ideas"},
+                    {"rel":"immigration", "href":"http://localhost:3000/api/sections/2/immigration"}
+                ]}
+            ],
+            "links":[
+                {"rel":"self", "href":boardUri},
+                {"rel":"sections", "href":sectionsLinkUri},
+                {"rel":"tags", "href":tagsLinkUri},
+                {"rel":"invitation", "href":invitationUri}
+            ]
+        },
+        sections = [
+            {"id":1, "name":"Well", "color":"ddffdd", "links":[
+                {"rel":"self", "href":section1Uri},
+                {"rel":"ideas", "href":section1Uri + "/ideas"},
+                {"rel":"immigration", "href":section1Uri + "/immigration"}
+            ], "ideas":[
+                {"id":1, "content":"velocity is more stable", "vote":0, "tags":[], "links":[
+                    {"rel":"self", "href":"http://localhost:3000/api/ideas/1"},
+                    {"rel":"vote", "href":"http://localhost:3000/api/ideas/1/vote"},
+                    {"rel":"merging", "href":"http://localhost:3000/api/ideas/1/merging"},
+                    {"rel":"tags", "href":"http://localhost:3000/api/ideas/1/tags"}
+                ]}
             ]},
-            {"name":"Less Well", "ideas":[
-                {"content":"something less well", "vote":2}
-            ]}
-        ], "links":[
-            {"rel":"self", "href":boardReportUri},
-            {"rel":"board", "href":boardUri}
-        ]};
+            {"id":2, "name":"Less Well", "color":"ddffdd", "links":[
+                {"rel":"self", "href":section2Uri},
+                {"rel":"ideas", "href":section2Uri + "/ideas"},
+                {"rel":"immigration", "href":section2Uri + "/immigration"}
+            ], "ideas":[]}
+        ];
 
     beforeEach(module('idea-boardy'));
 
     beforeEach(inject(function (_$httpBackend_, $rootScope, $controller, params) {
-        params('uri', boardReportUri);
+        params('uri', boardUri);
         $httpBackend = _$httpBackend_;
-        $httpBackend.expectGET(boardReportUri).respond(report);
+        $httpBackend.expectGET(boardUri + "?embed=sections").respond(board);
+        $httpBackend.expectGET(section1Uri + "?embed=ideas").respond(sections[0]);
+        $httpBackend.expectGET(section2Uri + "?embed=ideas").respond(sections[1]);
         scope = $rootScope.$new();
         ctrl = $controller('BoardReportController', {$scope:scope});
         $httpBackend.flush();
@@ -28,7 +61,9 @@ describe('BoardReportController', function () {
 
     describe("initialize", function () {
         it("should retrieve report of given board", function () {
-            expect(scope.report).toBe(report);
+            expect(scope.board).toBe(board);
+            expect(scope.sections[0]).toBe(sections[0]);
+            expect(scope.sections[1]).toBe(sections[1]);
         });
         it("should expose function goToBoard() to scope", function () {
             expect(angular.isFunction(scope.goToBoard)).toBeTruthy();
@@ -40,8 +75,9 @@ describe('BoardReportController', function () {
             $location.path('/reports');
             scope.goToBoard();
             expect($location.path()).toEqual('/board');
-            expect($location.search()).toEqual({uri: boardUri});
+            expect($location.search()).toEqual({uri:boardUri});
         }));
     });
 
-});
+})
+;

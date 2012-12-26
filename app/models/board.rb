@@ -5,11 +5,6 @@ class Board < ActiveRecord::Base
   has_many :tags, order: 'name', dependent: :destroy
   validates :name, uniqueness: true, presence: true
 
-  def report
-    Hash[name: name, description: description,
-         sections: sections.collect { |section| section.report }]
-  end
-
   class << self
     def all_exists?(ids)
       self.find(ids)

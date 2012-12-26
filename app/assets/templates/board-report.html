@@ -1,18 +1,18 @@
 <div id="report" ng-controller="BoardReportController">
     <dl class="board-info">
-        <dd class="name"><a ng-click="goToBoard()">{{report.name}}</a></dd>
-        <dd class="description">{{report.description}}</dd>
+        <dd class="name"><a ng-click="goToBoard()">{{board.name}}</a></dd>
+        <dd class="description">{{board.description}}</dd>
         <div class="share-report">
             <input class="btn-3" type="button" value="Share" ng-click="showShareDialog()" jq-ui="button"/>
         </div>
     </dl>
-    <dl style="background-color: #{{section.color}}" class="section" ng-repeat="section in report.sections">
+    <dl style="background-color: #{{section.color}}" class="section" ng-repeat="section in sections">
         <dt>{{section.name}}</dt>
         <dd>
             <ol>
                 <li ng-repeat="idea in section.ideas">
                     {{idea.content}} [<span class="vote">{{idea.vote}}</span> votes]
-                    <span ng-repeat="tagName in idea.tags" class="tag tag-report">{{tagName}}</span>
+                    <span ng-repeat="tag in idea.tags" class="tag tag-report">{{tag.name}}</span>
                 </li>
             </ol>
         </dd>

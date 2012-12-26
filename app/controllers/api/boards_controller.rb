@@ -52,19 +52,5 @@ module Api
       head :no_content
     end
 
-    def report
-      board_id = params[:id]
-      board = Board.includes(:sections => :ideas).find(board_id)
-      board_report = board.report
-      render json: board_report.merge(links(board))
-    end
-
-    private
-    def links(board)
-      report_link = Hash[rel: 'self', href: report_api_board_url(board.id)]
-      board_link = Hash[rel: 'board', href: api_board_url(board.id)]
-      share_link = Hash[rel: 'share', href: api_emails_share_url]
-      Hash[links: [report_link, board_link, share_link]]
-    end
   end
 end

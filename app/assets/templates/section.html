@@ -3,8 +3,9 @@
     <div class="section-title clear-fix" ng-switch on="section.mode">
         <div ng-switch-when="view">
             <dl class="section-info">
-                <dd class="section-name">
-                    <span><a ng-click="section.toggleExpand()">{{section.name|truncate:27}}</a></span>
+                <dd>
+                    <span class="section-name"><a ng-click="section.toggleExpand()">{{section.name|truncate:27}}</a></span>
+                    <span class="ideas-count">({{ideas.length}})</span>
                 </dd>
             </dl>
             <div class="command-bar">

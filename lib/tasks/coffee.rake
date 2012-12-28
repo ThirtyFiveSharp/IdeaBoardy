@@ -68,6 +68,7 @@ namespace :coffee do
 end
 
 #task :jasmine => 'coffee:compile'
-#namespace :jasmine do
-#  task :ci => 'coffee:compile'
-#end
+namespace :jasmine do
+  task :local => ['coffee:compile', :jasmine]
+  task :ci => 'coffee:compile'
+end

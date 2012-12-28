@@ -33,3 +33,4 @@ rerun.txt
 pickle-email-*.html
 push_*.dat
 **.DS_Store
+spec/javascripts/**/*.coffee.spec.js

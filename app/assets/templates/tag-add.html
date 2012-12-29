@@ -5,7 +5,7 @@
             <dl>
                 <dt>Specify one or more tags, e.g. "a, b, c"</dt>
                 <dd>
-                    <input type="text" ng-list ng-model="dialog.context.tagNames" required autofocus />
+                    <input type="text" ng-list ng-model="dialog.context.tagNames" required autocomplete="dialog.context.allTagNames" autofocus />
                     <span error-message></span>
                 </dd>
             </dl>

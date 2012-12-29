@@ -173,6 +173,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #create-section-form dl, .create-tag-form dl, .edit-tag-form dl, .add-tag-form dl { margin: 0.5em; }
 #create-section-form dt, .create-tag-form dt, .edit-tag-form dt, .add-tag-form dt { margin-bottom: 0.5em; }
 #create-section, .create-tag-form .command-bar, .edit-tag-form .command-bar, .add-tag-form .command-bar { margin-top: 2em; }
+.add-tag-form dd input {width: 100%;}
 
 #delete-section-dialog p { margin: 0 0 1em; font-size: 1.1em;}
 #delete-section-dialog .command-bar { margin-bottom: 0.5em; }

@@ -1,12 +1,11 @@
 <div ng-controller="AddTagController">
     <div id="add-tag-dialog" name="addTagDialog" title="Add Tags"
-         jq-ui-dialog='{"width": 350}' ng-cloak>
+         jq-ui-dialog='{"width": 380}' ng-cloak>
         <form class="add-tag-form" name="addTagForm" ng-submit="addTags()">
             <dl>
                 <dt>Specify one or more tags, e.g. "a, b, c"</dt>
                 <dd>
                     <input type="text" ng-list ng-model="dialog.context.tagNames" required autocomplete="dialog.context.allTagNames" autofocus />
-                    <span error-message></span>
                 </dd>
             </dl>
             <div class="command-bar">

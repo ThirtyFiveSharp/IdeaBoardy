@@ -35,6 +35,10 @@ class ShortenUrlTest < ActiveSupport::TestCase
 
   test "should get origin url" do
     assert_equal "/api/boards/1", get_origin_url("/2SH")
+  end
+
+  test "should return nil when shorten url is illegal" do
+    assert_equal nil, get_origin_url("/home/index")
     assert_equal nil, get_origin_url("/")
   end
 

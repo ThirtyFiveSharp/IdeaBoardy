@@ -1,10 +1,13 @@
 module ShortenUrl
 
   def get_origin_url(shorten_url, query_str = nil)
+    shorten_url = shorten_url[1, shorten_url.length] if shorten_url.start_with? "/"
+    return nil if (shorten_url =~ /^[0-9A-z,\.]+$/).nil?
+
+    origin_url = nil
     number = to_id(shorten_url).to_s
     api_code = number[0,4]
     template = get_path_template api_code
-    origin_url = nil
     origin_url = template.gsub(/\{0\}/, number[4, number.length]) unless template.nil?
     origin_url += "?" + query_str unless query_str.nil? || origin_url.nil?
     origin_url
@@ -35,7 +38,6 @@ module ShortenUrl
   end
 
   def to_id(decimal_str)
-    decimal_str = decimal_str[1, decimal_str.length] if decimal_str.start_with? "/"
     number = 0
     power = decimal_str.length - 1
     decimal_str.each_char do |c|

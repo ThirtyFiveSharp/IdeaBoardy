@@ -1,5 +1,6 @@
 class ApiController < ApplicationController
   include RepresentationBuilder
+  include ShortenUrl
 
   def get_embeddable(entity_class)
     (params[:embed] || "").split(',').collect { |s| s.strip.to_sym }.select { |s| embeddable?(entity_class.new, s) }
@@ -24,6 +25,10 @@ class ApiController < ApplicationController
       end if embeddable?(entity, resource)
     end
     representation
+  end
+
+  def api_board_url(id)
+    get_shorten_url("api_board", id)
   end
 
   private

@@ -17,6 +17,8 @@ class Admin::BoardsControllerTest < ActionController::TestCase
       assert_equal board.id, actual_boards[index][:id]
       assert_equal board.name, actual_boards[index][:name]
       assert_equal board.sections.count, actual_boards[index][:total_sections_count]
+      assert_equal board.concepts.count, actual_boards[index][:total_concepts_count]
+      assert_equal board.tags.count, actual_boards[index][:total_tags_count]
       assert_equal board.sections.sum { |section| section.ideas.count }, actual_boards[index][:total_ideas_count]
     end
   end

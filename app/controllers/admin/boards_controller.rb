@@ -5,12 +5,14 @@ class Admin::BoardsController < ApplicationController
   layout 'admin'
 
   def export
-    boards = Board.includes(:sections => :ideas).all
+    boards = Board.includes(:tags, :concepts, :sections => :ideas).all
     @boards = []
     boards.each do |board|
       total_ideas_count = board.sections.collect { |section| section.ideas.length }.sum
       @boards << {:id => board.id,
                   :name => board.name,
+                  :total_tags_count => board.tags.length,
+                  :total_concepts_count => board.concepts.length,
                   :total_sections_count => board.sections.length,
                   :total_ideas_count => total_ideas_count}
     end

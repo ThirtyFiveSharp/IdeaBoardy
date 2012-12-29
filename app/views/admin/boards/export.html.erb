@@ -7,6 +7,8 @@
         <th>name</th>
         <th>total sections</th>
         <th>total ideas</th>
+        <th>total tags</th>
+        <th>total concepts</th>
       </tr>
       </thead>
       <tbody>
@@ -16,6 +18,8 @@
             <td><%= truncate(board[:name]) %></td>
             <td><%= board[:total_sections_count] %></td>
             <td><%= board[:total_ideas_count] %></td>
+            <td><%= board[:total_tags_count] %></td>
+            <td><%= board[:total_concepts_count] %></td>
           </tr>
       <%- end %>
       </tbody>

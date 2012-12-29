@@ -3,7 +3,7 @@ module Api
     respond_to :json
 
     def index
-      render json: Board.all.collect { |board| {
+      render json: Board.order('name').collect { |board| {
           id: board.id,
           name: board.name,
           links: [

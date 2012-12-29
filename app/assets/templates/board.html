@@ -22,8 +22,7 @@
             <form name="editBoardForm" ng-controller="EditBoardController" ng-submit="save()">
                 <dl class="board-info">
                     <dd class="name">
-                        <input type="text" ng-model="editingBoard.name" required autofocus />
-                        <span error-message></span>
+                        <input type="text" ng-model="editingBoard.name" required error-message autofocus />
                     </dd>
                     <dd class="description">
                         <input type="text" ng-model="editingBoard.description"/>

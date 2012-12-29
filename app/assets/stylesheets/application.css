@@ -27,7 +27,7 @@ header { margin-bottom: 0.5em; padding:0.3em 0; background-color: #ffdd57; color
 footer { margin: 3em 0; font-size: 0.9em; text-align: center; }
 
 .guide { margin: 1em 0 0.5em; font-size: 1.2em; font-style: italic; }
-.error-message { color: #dc143c !important; font-style: italic !important; font-size:1em !important; }
+.error-message { position: absolute; color: #dc143c !important; font-style: italic !important; font-size:1em !important; text-align: right; }
 .clear-fix:after { content: ""; display:table; clear: both; }
 .ui-draggable-dragging { z-index: 999;}
 
@@ -112,15 +112,18 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .section-name input { font-size: 1.2em; width: 40%; height: 1.3em; border-top: none; border-right: none; border-left: none; background-color: #eeeeee; }
 .section-name a:hover {color: #D19405;}
 
-.color-picker {display: inline-block;}
-.color-picker .color-box {margin: 3px; line-height: 15px; height: 15px; width: 13px; display: inline-block; border: 2px solid gray;}
-.color-picker .color-box:hover {border: 2px solid orange; cursor: pointer;}
+.color-picker {display: inline-block; position: relative; vertical-align: middle;}
+.color-picker .color-box {margin: 2px; line-height: 16px; height: 16px; width: 16px; display: inline-block; border: 2px solid gray; -moz-border-radius: 16px; border-radius: 16px; }
+.color-picker .color-box:hover {cursor: pointer;}
 .color-picker .color-box.color-0 {background-color: #ddffdd;}
 .color-picker .color-box.color-1 {background-color: #fff0f5;}
 .color-picker .color-box.color-2 {background-color: #e6e6fa;}
 .color-picker .color-box.color-3 {background-color: #ffffe0;}
 .color-picker .color-box.color-4 {background-color: #e0ffff;}
 .color-picker .color-box.color-5 {background-color: #ffefd5;}
+.color-picker .palette {display: inline-block; position: absolute; width: 150px; z-index: 999;}
+.color-picker .palette .color-box {border-color: #d3d3d3;}
+.color-picker .palette .color-box:hover {border-color: orange;}
 
 .idea-list { display:block; list-style-type: none; }
 .idea { position: relative; overflow: hidden; margin: 4px; float: left; width: 225px; height: 150px; border:1px #a9a9a9 solid; -moz-border-radius: 10px; border-radius: 10px; }
@@ -172,8 +175,8 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 
 #create-section-form dl, .create-tag-form dl, .edit-tag-form dl, .add-tag-form dl { margin: 0.5em; }
 #create-section-form dt, .create-tag-form dt, .edit-tag-form dt, .add-tag-form dt { margin-bottom: 0.5em; }
+#create-section-form dd input[type='text'], .create-tag-form dd input[type='text'], .edit-tag-form dd input[type='text'], .add-tag-form dd input[type='text'] { width: 100%; }
 #create-section, .create-tag-form .command-bar, .edit-tag-form .command-bar, .add-tag-form .command-bar { margin-top: 2em; }
-.add-tag-form dd input {width: 100%;}
 
 #delete-section-dialog p { margin: 0 0 1em; font-size: 1.1em;}
 #delete-section-dialog .command-bar { margin-bottom: 0.5em; }

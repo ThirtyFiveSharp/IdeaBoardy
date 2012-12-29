@@ -4,8 +4,8 @@
             <dl>
                 <dt>Name:</dt>
                 <dd>
-                    <input type="text" name="name" ng-model="dialog.context.boardToCreate.name" required autofocus/>
-                    <span error-message></span>
+                    <input type="text" name="name" ng-model="dialog.context.boardToCreate.name"
+                           required error-message autofocus />
                 </dd>
             </dl>
             <dl>
@@ -18,11 +18,10 @@
                     <ul>
                         <li class="add-section" ng-repeat="section in dialog.context.sectionsToCreate">
                             <input id="create-board-section-name-{{$index}}" type="text" name="sectionName{{$index}}"
-                                   ng-model="section.name" required autofocus/>
-                            <span error-message></span>
-                            <color-picker for="section"></color-picker>
+                                   ng-model="section.name" required error-message autofocus/>
                             <input class="btn-1" type="button" value="-" ng-click="removeSection($index)"
                                    jq-ui="button"/>
+                            <color-picker for="section"></color-picker>
                         </li>
                     </ul>
                     <input class="btn-3" type="button" value="+1 section" ng-click="addSection()" jq-ui="button"/>
@@ -35,8 +34,8 @@
                 </dt>
                 <dd ui-if="dialog.context.shouldNotify">
                     <label for="email">Email:</label>
-                    <input id="email" name="email" type="email" ng-model="dialog.context.to" required autofocus/>
-                    <span error-message></span>
+                    <input id="email" name="email" type="email" ng-model="dialog.context.to"
+                           required error-message autofocus/>
                 </dd>
             </dl>
             <dl>

@@ -1,5 +1,6 @@
-<div class="color-picker">
-    <div class="color-box color-{{$index}}" ng-repeat="i in [1,2,3,4,5,6]" ng-click="pickColor($index)">
-        {{mark($index)}}&nbsp;
-    </div>
+<div class="color-picker" ng-mouseenter="showPalette()" ng-mouseleave="hidePalette()" ng-cloak>
+    <span class="color-box color-{{getColorIndex()}}"></span>
+    <ul class="palette" ng-show="isPaletteVisible()">
+        <li class="color-box color-{{$index}}" ng-repeat="i in [1,2,3,4,5,6]" ng-click="pickColor($index)"></li>
+    </ul>
 </div>

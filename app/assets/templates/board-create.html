@@ -33,12 +33,10 @@
                     Invite team members?
                     <input type="checkbox" ng-model="dialog.context.shouldNotify">
                 </dt>
-                <dd ng-switch on="dialog.context.shouldNotify">
-                    <div ng-switch-when="true">
-                        <label for="email">Email:</label>
-                        <input id="email" name="email" type="email" ng-model="dialog.context.to" required autofocus/>
-                        <span error-message></span>
-                    </div>
+                <dd ui-if="dialog.context.shouldNotify">
+                    <label for="email">Email:</label>
+                    <input id="email" name="email" type="email" ng-model="dialog.context.to" required autofocus/>
+                    <span error-message></span>
                 </dd>
             </dl>
             <dl>

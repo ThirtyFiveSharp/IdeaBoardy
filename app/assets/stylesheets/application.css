@@ -31,6 +31,11 @@ footer { margin: 3em 0; font-size: 0.9em; text-align: center; }
 .clear-fix:after { content: ""; display:table; clear: both; }
 .ui-draggable-dragging { z-index: 999;}
 
+.arrow-bottom { display: inline-block; vertical-align: baseline; width: 0; height: 0; border-top: 10px #333333 solid; border-left: 6px transparent solid; border-right: 6px transparent solid; margin: 0; }
+.arrow-bottom:hover { cursor: pointer; border-top-color: #D19405; }
+.arrow-right { display: inline-block; vertical-align: baseline; width: 0; height: 0; border-left: 10px #333333 solid; border-top: 6px transparent solid; border-bottom: 6px transparent solid; margin-left: 2px; }
+.arrow-right:hover { cursor: pointer; border-left-color: #D19405; }
+
 input.ui-button { padding: 0.1em 0; }
 input.btn-1 { width: 2em; }
 input.btn-2 { width: 4em; }
@@ -99,9 +104,9 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .section { position: relative; overflow: hidden; margin: 5px; padding-top: 0.2em; float: left; -moz-border-radius: 10px; border-radius: 10px; background-color: #eeeeee; width: 470px;}
 .narrow-rectangle .section {width: 470px;}
 .wide-rectangle .section {width: 940px;}
-.section-info { display:block; float:left; padding: 0; width: 61.8%; }
+.section-info { display:block; float:left; padding-left: 0.4em; width: 61.8%; }
 
-.section-name  { padding-left:0.3em; height:1.6em; }
+.section-name  { height:1.6em; }
 .section span.section-name { font-size: 1.2em; line-height: 1.3em; white-space: nowrap; word-wrap: normal; overflow:hidden; }
 .section span.ideas-count {font-size: 0.8em; font-weight: bold;}
 .section-name input { font-size: 1.2em; width: 40%; height: 1.3em; border-top: none; border-right: none; border-left: none; background-color: #eeeeee; }

@@ -4,7 +4,11 @@
         <div ng-switch-when="view">
             <dl class="section-info">
                 <dd>
-                    <span class="section-name"><a ng-click="section.toggleExpand()">{{section.name|truncate:27}}</a></span>
+                    <span ng-switch="section.expanded" ng-click="section.toggleExpand()">
+                        <span class="arrow arrow-bottom" ng-switch-when="true"></span>
+                        <span class="arrow arrow-right" ng-switch-when="false"></span>
+                    </span>
+                    <span class="section-name">{{section.name|truncate:27}}</span>
                     <span class="ideas-count">({{ideas.length}})</span>
                 </dd>
             </dl>

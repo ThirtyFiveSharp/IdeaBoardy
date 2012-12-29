@@ -27,7 +27,7 @@ header { margin-bottom: 0.5em; padding:0.3em 0; background-color: #ffdd57; color
 footer { margin: 3em 0; font-size: 0.9em; text-align: center; }
 
 .guide { margin: 1em 0 0.5em; font-size: 1.2em; font-style: italic; }
-.error-message { color: #dc143c; }
+.error-message { color: #dc143c !important; font-style: italic !important; font-size:1em !important; }
 .clear-fix:after { content: ""; display:table; clear: both; }
 .ui-draggable-dragging { z-index: 999;}
 
@@ -60,7 +60,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .board-list .board.blank:hover .board-name { color: black; }
 
 .board-title { margin-bottom: 0.5em; }
-.board-title .board-info { display:block; float:left; width: 35%; overflow: hidden;}
+.board-title .board-info { display:block; float:left; width: 50%; overflow: hidden;}
 .board-title dd { display: block; }
 .board-title .name {height: 2.5em; }
 .board-title .name span { font-size: 1.4em; line-height: 1.4em; }

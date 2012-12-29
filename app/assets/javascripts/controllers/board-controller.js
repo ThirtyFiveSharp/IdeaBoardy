@@ -102,16 +102,16 @@ angular.module('idea-boardy')
                         $http.post($scope.board.tagsLink.href, tag).success(refreshTags);
                     },
                     updateTag: function(tag) {
-                        $http.put(tag.links.getLink('tag').href, tag).success(refreshTags);
+                        $http.put(tag.links.getLink('self').href, tag).success(refreshTags);
                     },
                     deleteTag: function(tag) {
-                        $http.delete(tag.links.getLink('tag').href).success(refreshTags);
+                        $http.delete(tag.links.getLink('self').href).success(refreshTags);
                     }
                 });
             }
             function refreshTags() {
-                $http.get($scope.board.tagsLink.href).success(function (tags) {
-                    tagsInBoard = tags;
+                $http.get($scope.board.selfLink.href, {params: {embed: 'tags'}}).success(function (board) {
+                    tagsInBoard = board.tags;
                 });
             }
             function refreshSections() {

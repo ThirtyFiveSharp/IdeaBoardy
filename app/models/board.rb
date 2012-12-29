@@ -5,6 +5,10 @@ class Board < ActiveRecord::Base
   has_many :tags, order: 'name', dependent: :destroy
   validates :name, uniqueness: true, presence: true
 
+  def tag_named(name)
+    tags.where(name: name).first
+  end
+
   class << self
     def all_exists?(ids)
       self.find(ids)

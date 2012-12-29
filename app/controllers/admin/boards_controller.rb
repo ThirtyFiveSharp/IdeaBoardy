@@ -20,8 +20,10 @@ class Admin::BoardsController < ApplicationController
   end
 
   def download
-    boards = Board.includes(:sections => :ideas).where(:id => params[:boards])
-    boards_json = boards.to_json(:include => {:sections => {:include => :ideas}})
+    boards = Board.includes(:tags, :concepts => :tags, :sections => {:ideas => :tags}).where(:id => params[:boards])
+    boards_json = boards.to_json(:include => [:tags,
+                                              {:concepts => {:include => :tags}},
+                                              {:sections => {:include => {:ideas => {:include => :tags}}}}])
     yaml = ActiveSupport::JSON.decode(boards_json).to_yaml.encode('UTF-8')
     send_data yaml, :filename => "boards.yml"
   end
@@ -64,22 +66,47 @@ class Admin::BoardsController < ApplicationController
 
   def upload_board(board_yaml)
     board = Board.create!(name: board_yaml["name"], description: board_yaml["description"])
+    board_yaml["tags"].each do |tag_yaml|
+      board.tags << upload_tag(tag_yaml)
+    end
+    board_yaml["concepts"].each do |concept_yaml|
+      board.concepts << upload_concept(board, concept_yaml)
+    end
     board_yaml["sections"].each do |section_yaml|
-      board.sections << upload_section(section_yaml)
+      board.sections << upload_section(board, section_yaml)
     end
     board.save!
   end
 
-  def upload_section(section_yaml)
+  def upload_tag(tag_yaml)
+    Tag.create!(name: tag_yaml["name"])
+  end
+
+  def upload_concept(board, concept_yaml)
+    concept = Concept.create!(name: concept_yaml["name"])
+    concept_yaml["tags"].each do |concept_tag_yaml|
+      concept.tags << board.tag_named(concept_tag_yaml["name"])
+    end
+    concept.save!
+    concept
+  end
+
+  def upload_section(board, section_yaml)
     section = Section.create!(name: section_yaml["name"], color: section_yaml["color"])
     section_yaml["ideas"].each do |idea_yaml|
-      section.ideas << upload_idea(idea_yaml)
+      section.ideas << upload_idea(board, idea_yaml)
     end
     section.save!
     section
   end
 
-  def upload_idea(idea_yaml)
-    Idea.create!(content: idea_yaml["content"], vote: idea_yaml["vote"])
+  def upload_idea(board, idea_yaml)
+    idea = Idea.create!(content: idea_yaml["content"], vote: idea_yaml["vote"])
+    idea_yaml["tags"].each do |idea_tag_yaml|
+      idea.tags << board.tag_named(idea_tag_yaml["name"])
+    end
+    idea.save!
+    idea
   end
+
 end

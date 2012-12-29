@@ -29,6 +29,21 @@ class Admin::BoardsControllerTest < ActionController::TestCase
     actual_board = yaml[0]
     assert_equal @board.name, actual_board["name"]
     assert_equal @board.description, actual_board["description"]
+    actual_tags = actual_board["tags"]
+    assert_equal @board.tags.count, actual_tags.count
+    @board.tags.each_with_index do |tag, index|
+      assert_equal tag.name, actual_tags[index]["name"]
+    end
+    actual_concepts = actual_board["concepts"]
+    assert_equal @board.sections.count, actual_concepts.count
+    @board.concepts.each_with_index do |concept, index|
+      assert_equal concept.name, actual_concepts[index]["name"]
+      actual_concept_tags = actual_concepts[index]["tags"]
+      assert_equal concept.tags.count, actual_concept_tags.count
+      concept.tags.each_with_index do |tag, index|
+        assert_equal tag.name, actual_concept_tags[index]["name"]
+      end
+    end
     actual_sections = actual_board["sections"]
     assert_equal @board.sections.count, actual_sections.count
     @board.sections.each_with_index do |section, index|
@@ -39,6 +54,11 @@ class Admin::BoardsControllerTest < ActionController::TestCase
       section.ideas.each_with_index do |idea, index|
         assert_equal idea.content, actual_ideas[index]["content"]
         assert_equal idea.vote, actual_ideas[index]["vote"]
+        actual_idea_tags = actual_ideas[index]["tags"]
+        assert_equal idea.tags.count, actual_idea_tags.count
+        idea.tags.each_with_index do |tag, index|
+          assert_equal tag.name, actual_idea_tags[index]["name"]
+        end
       end
     end
   end
@@ -81,6 +101,23 @@ class Admin::BoardsControllerTest < ActionController::TestCase
     imported_board = Board.where('name = ?', board_yaml["name"]).first
     assert_equal board_yaml["name"], imported_board.name
     assert_equal board_yaml["description"], imported_board.description
+
+    assert_equal board_yaml["tags"].count, imported_board.tags.count
+    board_yaml["tags"].each_with_index do |tag_yaml, tag_index|
+      tag = imported_board.tags[tag_index]
+      assert_equal tag_yaml["name"], tag.name
+    end
+
+    assert_equal board_yaml["concepts"].count, imported_board.concepts.count
+    board_yaml["concepts"].each_with_index do |concept_yaml, concept_index|
+      concept = imported_board.concepts[concept_index]
+      assert_equal concept_yaml["name"], concept.name
+      assert_equal concept_yaml["tags"].count, concept.tags.count
+      concept_yaml["tags"].each_with_index do |tag_yaml, tag_index|
+        assert_equal tag_yaml["name"], concept.tags[tag_index].name
+      end
+    end
+
     assert_equal board_yaml["sections"].count, imported_board.sections.count
     board_yaml["sections"].each_with_index do |section_yaml, section_index|
       section = imported_board.sections[section_index]
@@ -88,8 +125,13 @@ class Admin::BoardsControllerTest < ActionController::TestCase
       assert_equal section_yaml["color"], section.color
       assert_equal section_yaml["ideas"].count, section.ideas.count
       section_yaml["ideas"].each_with_index do |idea_yaml, idea_index|
-        assert_equal idea_yaml["content"], section.ideas[idea_index].content
-        assert_equal idea_yaml["vote"], section.ideas[idea_index].vote
+        idea = section.ideas[idea_index]
+        assert_equal idea_yaml["content"], idea.content
+        assert_equal idea_yaml["vote"], idea.vote
+        assert_equal idea_yaml["tags"].count, idea.tags.count
+        idea_yaml["tags"].each_with_index do |tag_yaml, tag_index|
+          assert_equal tag_yaml["name"], idea.tags[tag_index].name
+        end
       end
     end
   end

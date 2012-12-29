@@ -1,47 +1,110 @@
 ---
-- created_at: '2012-11-14T00:54:09Z'
+- created_at: '2012-12-29T12:44:29Z'
   description: exported_board
-  id: 2
-  lock_version: 3
+  id: 20
+  lock_version: 1
   name: exported_board
-  updated_at: '2012-11-14T05:52:09Z'
+  updated_at: '2012-12-29T12:44:29Z'
+  tags:
+  - board_id: 20
+    concept_id: 
+    created_at: '2012-12-29T12:45:57Z'
+    id: 16
+    name: Done
+    updated_at: '2012-12-29T12:45:57Z'
+  - board_id: 20
+    concept_id: 1
+    created_at: '2012-12-29T12:45:07Z'
+    id: 13
+    name: FuQiang
+    updated_at: '2012-12-29T12:52:20Z'
+  - board_id: 20
+    concept_id: 1
+    created_at: '2012-12-29T12:45:21Z'
+    id: 14
+    name: IM
+    updated_at: '2012-12-29T12:52:34Z'
+  concepts:
+  - board_id: 20
+    created_at: '2012-12-29T12:51:12Z'
+    id: 1
+    lock_version: 1
+    name: Team member
+    updated_at: '2012-12-29T12:51:12Z'
+    tags:
+    - board_id: 20
+      concept_id: 1
+      created_at: '2012-12-29T12:45:07Z'
+      id: 13
+      name: FuQiang
+      updated_at: '2012-12-29T12:52:20Z'
+    - board_id: 20
+      concept_id: 1
+      created_at: '2012-12-29T12:45:21Z'
+      id: 14
+      name: IM
+      updated_at: '2012-12-29T12:52:34Z'
   sections:
-  - board_id: 2
+  - board_id: 20
     color: ddffdd
-    created_at: '2012-11-14T00:54:10Z'
-    id: 12
+    created_at: '2012-12-29T12:44:29Z'
+    id: 48
     lock_version: 2
     name: Well
-    updated_at: '2012-11-21T19:02:24Z'
+    updated_at: '2012-12-29T12:44:29Z'
     ideas:
     - content: new face
-      created_at: '2012-11-14T07:52:55Z'
-      id: 34
-      lock_version: 4
-      section_id: 12
-      updated_at: '2012-11-14T09:07:27Z'
+      created_at: '2012-12-29T12:44:29Z'
+      id: 200
+      lock_version: 2
+      section_id: 48
+      updated_at: '2012-12-29T12:44:29Z'
       vote: 3
-  - board_id: 2
+      tags: []
+  - board_id: 20
     color: e0ffff
-    created_at: '2012-11-14T09:32:31Z'
-    id: 23
+    created_at: '2012-12-29T12:44:29Z'
+    id: 49
     lock_version: 2
     name: Actions
-    updated_at: '2012-11-21T19:02:24Z'
+    updated_at: '2012-12-29T12:44:29Z'
     ideas:
     - content: ! 'Switch pail more frequently
 
         IM and Jia Yang should take the responsibility of switching -IM and Jia Yang'
-      created_at: '2012-11-14T10:11:44Z'
-      id: 68
-      lock_version: 1
-      section_id: 23
-      updated_at: '2012-11-14T10:11:44Z'
+      created_at: '2012-12-29T12:44:29Z'
+      id: 201
+      lock_version: 2
+      section_id: 49
+      updated_at: '2012-12-29T12:44:29Z'
       vote: 2
+      tags:
+      - ar_association_key_name: 201
+        board_id: 20
+        concept_id: 1
+        created_at: '2012-12-29T12:45:07Z'
+        id: 13
+        name: FuQiang
+        updated_at: '2012-12-29T12:52:20Z'
+      - ar_association_key_name: 201
+        board_id: 20
+        concept_id: 1
+        created_at: '2012-12-29T12:45:21Z'
+        id: 14
+        name: IM
+        updated_at: '2012-12-29T12:52:34Z'
     - content: Create release plan for Tiger - Fu Qiang
-      created_at: '2012-11-14T10:14:46Z'
-      id: 69
-      lock_version: 1
-      section_id: 23
-      updated_at: '2012-11-14T10:14:46Z'
+      created_at: '2012-12-29T12:44:29Z'
+      id: 202
+      lock_version: 2
+      section_id: 49
+      updated_at: '2012-12-29T12:44:29Z'
       vote: 1
+      tags:
+      - ar_association_key_name: 201
+        board_id: 20
+        concept_id: 1
+        created_at: '2012-12-29T12:45:07Z'
+        id: 13
+        name: FuQiang
+        updated_at: '2012-12-29T12:52:20Z'

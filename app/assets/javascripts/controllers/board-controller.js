@@ -8,6 +8,7 @@ angular.module('idea-boardy')
                 editTagDialog = dialog('editTagDialog'),
                 deleteTagDialog = dialog('deleteTagDialog'),
                 deleteIdeaDialog = dialog('deleteIdeaDialog'),
+                deleteSectionDialog = dialog('deleteSectionDialog'),
                 invitationDialog = dialog('invitationDialog');
             $http.get(params('uri'), {params: {embed: "tags,concepts"}})
                 .success(function (board) {
@@ -37,6 +38,9 @@ angular.module('idea-boardy')
             };
             $scope.showDeleteIdeaDialog = function(idea) {
                 deleteIdeaDialog.open({ideaToDelete: idea});
+            };
+            $scope.showDeleteSectionDialog = function (section) {
+                deleteSectionDialog.open({sectionToDelete:section});
             };
             $scope.goToReport = function(board) {
                 $location.path('report').search({uri: board.selfLink.href});

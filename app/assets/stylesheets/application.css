@@ -96,7 +96,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 
 .section-list { display:block; list-style-type: none; }
 .section-list .ui-button { font-size: 1em; }
-.section-list .section { position: relative; overflow: hidden; margin: 5px; padding-top: 0.2em; float: left; -moz-border-radius: 10px; border-radius: 10px; background-color: #eeeeee; }
+.section { position: relative; overflow: hidden; margin: 5px; padding-top: 0.2em; float: left; -moz-border-radius: 10px; border-radius: 10px; background-color: #eeeeee; width: 470px;}
 .narrow-rectangle .section {width: 470px;}
 .wide-rectangle .section {width: 940px;}
 .section-info { display:block; float:left; padding: 0; width: 61.8%; }
@@ -139,12 +139,12 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #report .board-info .name { line-height: 2em; font-size: 1.8em; font-weight: bold; padding-left: 1px; }
 #report .board-info .description { font-size: 1.2em; font-style: italic; padding-left: 5px; }
 #report .share-report {float: right; margin-top: -60px;}
-#report .section {margin-bottom: 1em; padding: 8px 5px; border-radius: 10px;}
-#report .section dt {font-size: 1.3em; font-weight: bold; margin-bottom: 0.4em;}
-#report .section dd {padding-left: 5px;}
-#report .section ol {list-style-type: decimal;}
-#report .section li {margin-left: 30px; margin-bottom: 0.3em; line-height: 20px;}
-#report .section li .vote {font-weight: bold;}
+#report .section-report {margin-bottom: 1em; padding: 8px 5px; border-radius: 10px;}
+#report .section-report dt {font-size: 1.3em; font-weight: bold; margin-bottom: 0.4em;}
+#report .section-report dd {padding-left: 5px;}
+#report .section-report ol {list-style-type: decimal;}
+#report .section-report li {margin-left: 30px; margin-bottom: 0.3em; line-height: 20px;}
+#report .section-report li .vote {font-weight: bold;}
 #report .tag-report { margin-right: 0.2em; padding: 0.1em 0.5em; }
 #report .tag { background-color: white; vertical-align: middle; height: 18px; font-size: 0.9em;}
 #report .tag:before { color: #d3d3d3; font-weight: normal; font-style: normal; }
@@ -152,7 +152,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 
 #create-board-form dl { margin: 0.5em; }
 #create-board-form dt { margin-bottom: 0.5em; }
-#create-board-form .section { margin-bottom: 0.5em; }
+#create-board-form .add-section { margin-bottom: 0.5em; }
 #create-board-form #email {width: 80%;}
 #create-board { margin-top: 2em; }
 

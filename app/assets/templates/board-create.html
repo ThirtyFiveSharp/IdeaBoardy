@@ -16,7 +16,7 @@
                 <dt>Sections:</dt>
                 <dd>
                     <ul>
-                        <li class="section" ng-repeat="section in dialog.context.sectionsToCreate">
+                        <li class="add-section" ng-repeat="section in dialog.context.sectionsToCreate">
                             <input id="create-board-section-name-{{$index}}" type="text" name="sectionName{{$index}}"
                                    ng-model="section.name" required autofocus/>
                             <span error-message></span>

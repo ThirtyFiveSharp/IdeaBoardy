@@ -1,17 +1,13 @@
 angular.module('idea-boardy')
     .controller('SectionController', ['$scope', '$http', 'dialog', 'events',
     function ($scope, $http, dialog, events) {
-        var deleteSectionDialog = dialog('deleteSectionDialog'),
-            createIdeaDialog = dialog('createIdeaDialog');
+        var createIdeaDialog = dialog('createIdeaDialog');
         $http.get($scope.section.links.getLink('section').href, {params: {embed: "ideas"}})
             .success(function (section) {
                 $scope.section = enhanceSection(section);
                 refreshIdeas(section.ideas);
             });
 
-        $scope.showDeleteSectionDialog = function () {
-            deleteSectionDialog.open({sectionToDelete:$scope.section});
-        };
         $scope.showCreateIdeaDialog = function ($event) {
             createIdeaDialog.open({section:$scope.section, ideaToCreate:{}, $event:$event});
         };

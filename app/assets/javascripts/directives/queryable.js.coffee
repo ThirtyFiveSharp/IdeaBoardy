@@ -21,12 +21,13 @@ angular.module('idea-boardy')
         match keyWord, target for target of targets
     ]
   ])
-  .directive('querier', [() ->
+  .directive('querier', ['events', (events) ->
     require: '^queryable'
     compile: -> (scope, element, attrs, queryableCtrl) ->
       scope.$watch attrs.ngModel, (keyWord) -> queryableCtrl.query(keyWord)
+      scope.$on events.querableTargetChanged, -> scope[attrs.ngModel] = ""
   ])
-  .directive('queryableTarget', ['$parse', ($parse) ->
+  .directive('queryableTarget', ['$parse', 'events', ($parse, events) ->
     require: '^queryable'
     compile: -> (scope, element, attrs, queryableCtrl) ->
       modelExpr = attrs.queryableTarget
@@ -38,5 +39,8 @@ angular.module('idea-boardy')
       showElement = -> element.parent().show()
       hideElement = -> element.parent().hide()
       queryableCtrl.addTarget(scope.$id, matcher, showElement, hideElement, showElement)
-      scope.$on '$destroy', -> queryableCtrl.removeTarget(scope.$id)
+      scope.$emit(events.querableTargetChanged)
+      scope.$on '$destroy', ->
+        queryableCtrl.removeTarget(scope.$id)
+        scope.$emit(events.querableTargetChanged)
   ])

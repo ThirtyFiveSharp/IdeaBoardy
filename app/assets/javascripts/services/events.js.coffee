@@ -7,3 +7,4 @@ angular.module('idea-boardy')
     ideaMerged: 'ideaMerged'
     ideaEmigrated: 'ideaEmigrated'
     tagCreated: 'tagCreated'
+    querableTargetChanged: 'querableTargetChanged'

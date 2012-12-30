@@ -1,4 +1,4 @@
-<div class="clear-fix" ng-controller="BoardController">
+<div class="clear-fix" ng-controller="BoardController" queryable>
     <div class="board-title clear-fix" ng-switch on="board.mode">
         <div ng-switch-when="view">
             <dl class="board-info">
@@ -50,6 +50,9 @@
 
     <div class="clear-fix">
         <ul class="section-command-bar">
+            <li class="command">
+                <input class="filter-ideas" type="text" querier ng-model="keyWord" placeholder="filter ideas"/>
+            </li>
             <li class="command create-section" title="create a new section" ng-click="showCreateSectionDialog()">+ 1 section</li>
             <li class="command" title="select sections to display" ng-show="sections.length > 0">
                 <select ui-select2="{containerCssClass: 'section-select-container'}" ng-model="board.selectedSectionName">
@@ -59,7 +62,6 @@
             </li>
         </ul>
     </div>
-
     <ul class="section-list clear-fix">
         <li ng-repeat="section in sections" ng-show="board.isSectionVisible(section)" ng-class="board.sectionClass(section)">
             <ng-include src="'assets/section.html'"></ng-include>

@@ -76,6 +76,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 
 .command-bar { float: right; }
 .command { display: inline-block; vertical-align: top; }
+.command .filter-ideas {height: 1.5em; line-height: 1.5em; margin-right: 1em; margin-top: 5px; font-size: 1em; }
 
 .trash-bin { display: inline-block; width: 32px; padding: 8px; background-color: #ffffff; border: 1px #a9a9a9 solid; -moz-border-radius: 10px; border-radius: 10px; }
 .trash-bin:hover { cursor: pointer; border-color: #ff6666; }

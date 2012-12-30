@@ -35,7 +35,9 @@ angular.module('idea-boardy')
       matcher = (keyWord) ->
         model = $parse(modelExpr)(scope)
         regexp = new RegExp(keyWord, 'gi')
-        _.any(lookupKeys, (lookupKey) -> model[lookupKey].match(regexp))
+        _.any lookupKeys, (lookupKey) ->
+          value = if typeof(model[lookupKey]) is "function" then model[lookupKey]() else model[lookupKey].toString()
+          value.match(regexp)
       showElement = -> element.parent().show()
       hideElement = -> element.parent().hide()
       queryableCtrl.addTarget(scope.$id, matcher, showElement, hideElement, showElement)

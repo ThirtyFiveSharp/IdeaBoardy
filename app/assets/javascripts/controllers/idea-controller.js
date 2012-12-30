@@ -44,6 +44,9 @@ angular.module('idea-boardy')
                 notifyEmigrated: function () {
                     $scope.$emit(events.ideaEmigrated);
                 },
+                tagsName: function() {
+                    return _.reduce(this.getTags(), function(memo, tag) {return memo + "," + tag.name}, "");
+                },
                 addTag: function(tag) {
                     var idea = this,
                         tags = idea.getTags();

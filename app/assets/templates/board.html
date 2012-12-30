@@ -50,8 +50,8 @@
 
     <div class="clear-fix">
         <ul class="section-command-bar">
-            <li class="command create-section" ng-click="showCreateSectionDialog()">+ 1 section</li>
-            <li class="command" ng-show="sections.length > 0">
+            <li class="command create-section" title="create a new section" ng-click="showCreateSectionDialog()">+ 1 section</li>
+            <li class="command" title="select sections to display" ng-show="sections.length > 0">
                 <select ui-select2="{containerCssClass: 'section-select-container'}" ng-model="board.selectedSectionName">
                     <option value="">All Sections</option>
                     <option ng-repeat="section in sections" value="{{section.name}}">{{section.name}}</option>

@@ -121,7 +121,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .color-picker .color-box.color-3 {background-color: #ffffe0;}
 .color-picker .color-box.color-4 {background-color: #e0ffff;}
 .color-picker .color-box.color-5 {background-color: #ffefd5;}
-.color-picker .palette {display: inline-block; position: absolute; width: 150px; z-index: 999;}
+.color-picker .palette {display: inline-block; position: absolute; top: 0; left: 24px; width: 144px; z-index: 999;}
 .color-picker .palette .color-box {border-color: #d3d3d3;}
 .color-picker .palette .color-box:hover {border-color: orange;}
 

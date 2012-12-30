@@ -5,7 +5,6 @@ angular.module('idea-boardy')
       return unless ngModelCtrl
       message = $ '<div class="error-message"></div>'
       message.click () ->
-        message.detach()
         element.focus()
       ngModelCtrl.$parsers.push (viewValue) ->
         message.detach()

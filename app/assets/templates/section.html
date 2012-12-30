@@ -1,36 +1,21 @@
 <div class="section" ng-controller="SectionController" droppable draggable="section" type="section">
-    <meta draggable-type="idea" action="section.addImmigrant($draggableModel)" />
-    <div class="section-title clear-fix" ng-switch on="section.mode">
-        <div ng-switch-when="view">
-            <dl class="section-info">
-                <dd>
-                    <span ng-switch="section.expanded" ng-click="section.toggleExpand()">
-                        <span class="arrow arrow-bottom" ng-switch-when="true"></span>
-                        <span class="arrow arrow-right" ng-switch-when="false"></span>
-                    </span>
-                    <span class="section-name">{{section.name|truncate:27}}</span>
-                    <span class="ideas-count">({{ideas.length}})</span>
-                </dd>
-            </dl>
-            <div class="command-bar">
-                <input class="btn-2" type="button" value="Edit" ng-click="section.edit()"
-                       ng-disabled="!section.editable" jq-ui="button"/>
-            </div>
-        </div>
-        <div ng-switch-when="edit">
-            <form name="editSectionForm" ng-controller="EditSectionController" ng-submit="save()">
-                <dl class="section-info">
-                    <dd class="section-name">
-                        <input class="name" type="text" ng-model="editingSection.name" required autofocus />
-                        <color-picker for="editingSection" compact="true"></color-picker>
-                    </dd>
-                </dl>
-                    <div class="command-bar">
-                        <input class="btn-2 btn-ok" type="submit" value="Save" ng-disabled="!editSectionForm.$valid" jq-ui="button"/>
-                        <input class="btn-2 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button"/>
-                    </div>
+    <meta draggable-type="idea" action="section.addImmigrant($draggableModel)"/>
+    <div class="section-title">
+        <span class="section-switch" ng-switch="section.expanded" ng-click="section.toggleExpand()">
+            <span class="arrow arrow-bottom" ng-switch-when="true"></span>
+            <span class="arrow arrow-right" ng-switch-when="false"></span>
+        </span>
+        <span class="section-info" ng-switch="section.mode">
+            <span class="view-section" ng-switch-when="view">
+                <span class="section-name" title="{{section.name}}">{{section.name}}</span>
+                <span class="ideas-count">({{ideas.length}})</span>
+                <span class="command-icon edit-icon" ng-click="section.edit()" ng-show="section.editable"></span>
+            </span>
+            <form name="editSectionForm" class="edit-section" ng-switch-when="edit" ng-controller="EditSectionController" ng-submit="save()">
+                <input class="section-name" type="text" ng-model="editingSection.name" required error-message when-blur="save()" autofocus />
+                <color-picker for="editingSection" compact="true"></color-picker>
             </form>
-        </div>
+        </span>
     </div>
     <ul class="idea-list clear-fix" ng-show="section.expanded">
         <li ng-repeat="idea in ideas">

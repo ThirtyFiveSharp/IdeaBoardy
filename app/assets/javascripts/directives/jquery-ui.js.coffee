@@ -1,7 +1,8 @@
 angular.module('idea-boardy')
-  .directive('jqUi', -> (scope, element, attrs) -> element[attrs.jqUi].apply(element))
+  .directive('jqUi', ->
+    link: (scope, element, attrs) -> element[attrs.jqUi].apply(element))
   .directive('jqUiDialog', ['dialog', (dialog) ->
-    (scope, element, attrs) ->
+    link: (scope, element, attrs) ->
       getRandomDialogName = -> "dialog_" + new Date().getTime()
       name = attrs.name or getRandomDialogName()
       options = JSON.parse(attrs.jqUiDialog or {})

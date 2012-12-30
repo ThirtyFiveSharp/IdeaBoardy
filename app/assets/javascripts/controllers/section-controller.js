@@ -61,7 +61,7 @@ angular.module('idea-boardy')
                 save:function(updatedSection) {
                     $http.put(this.selfLink.href, updatedSection)
                         .success(function() {
-                            refreshSection();
+                            refreshSection(true);
                             $scope.$emit(events.sectionEditingFinished);
                         });
                 },
@@ -92,11 +92,11 @@ angular.module('idea-boardy')
             });
         }
 
-        function refreshSection() {
+        function refreshSection(skipIdeas) {
             $http.get($scope.section.selfLink.href, {params: {embed: "ideas"}})
                 .success(function (section) {
                     $scope.section = enhanceSection(section);
-                    refreshIdeas(section.ideas);
+                    if(!skipIdeas) refreshIdeas(section.ideas);
                 });
         }
 

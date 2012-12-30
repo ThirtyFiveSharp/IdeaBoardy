@@ -75,16 +75,19 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .board-title .description input { font-size: 1em; font-style: italic; width: 80%; height: 1.1em; padding: 0; border-top: none; border-left: none; border-right: none; }
 
 .command-bar { float: right; }
-.command { display: inline-block; vertical-align: top; }
-.command .filter-ideas {height: 1.5em; line-height: 1.5em; margin-right: 1em; margin-top: 4px; font-size: 1em; padding-left: 3px;}
+.command { display: inline-block; }
+.command-icon { display: inline-block; vertical-align: text-bottom; width: 24px; height: 24px; }
+.command-icon:hover { cursor: pointer; }
+.edit-icon { background: url(/assets/background.png) 0 -48px no-repeat ; }
+.edit-icon:hover { background: url(/assets/background.png) -24px -48px no-repeat ; }
 .ui-reset { width: 20px; height: 20px; margin: 10px 12px; line-height: 14px; vertical-align: text-top; background-image: url("glyphicons-halflings.png"); background-repeat: no-repeat; background-position: -48px -96px; }
 
 .trash-bin { display: inline-block; width: 32px; padding: 8px; background-color: #ffffff; border: 1px #a9a9a9 solid; -moz-border-radius: 10px; border-radius: 10px; }
 .trash-bin:hover { cursor: pointer; border-color: #ff6666; }
-.trash-bin:hover .trash-bin-icon { background-position: -96px 0; }
+.trash-bin:hover .trash-bin-icon { background-position: -32px 0; }
 .trash-bin.ui-scrollfix { position: fixed; top: 10px; left:50%; margin-left: 480px; z-index: 900; background-color: #ffffff; opacity: 0.9;}
-.trash-bin-icon { width: 32px; height: 32px; background: url(/assets/background.png) -64px 0 no-repeat; }
-.trash-bin.droppable-active .trash-bin-icon { background-position: -96px 0; }
+.trash-bin-icon { width: 32px; height: 32px; background: url(/assets/background.png) 0 0 no-repeat; }
+.trash-bin.droppable-active .trash-bin-icon { background-position: -32px 0; }
 
 .tag-list { display: block; padding: 0.5em 0; border-top: 1px #d3d3d3 dotted; border-bottom: 1px #d3d3d3 dotted; }
 .tag { display:inline-block; margin: 0.2em; padding: 0.2em; background-color: #d3d3d3; border: 1px #a9a9a9 solid; -moz-border-radius: 20px 0 0 20px; border-radius: 20px 0 0 20px; }
@@ -106,12 +109,15 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .section { position: relative; overflow: hidden; margin: 5px; padding-top: 0.2em; float: left; -moz-border-radius: 10px; border-radius: 10px; background-color: #eeeeee; width: 470px;}
 .narrow-rectangle .section {width: 470px;}
 .wide-rectangle .section {width: 940px;}
-.section-info { display:block; float:left; padding-left: 0.4em; width: 61.8%; }
 
-.section-name  { height:1.6em; }
-.section span.section-name { font-size: 1.2em; line-height: 1.3em; white-space: nowrap; word-wrap: normal; overflow:hidden; }
-.section span.ideas-count {font-size: 0.8em; font-weight: bold;}
-.section-name input { font-size: 1.2em; width: 40%; height: 1.3em; border-top: none; border-right: none; border-left: none; background-color: #eeeeee; }
+.section-title { height: 2em; }
+.section-switch { margin-left: 5px; vertical-align: baseline;}
+.section-info  { display: inline; vertical-align: baseline; }
+.section-info .view-section { display: inline-block; height: 2em; }
+.section span.section-name { display: inline; vertical-align: baseline; font-size: 1.2em; max-width: 375px; line-height: 1.4em; white-space: nowrap; word-wrap: normal; overflow:hidden; text-overflow: ellipsis; }
+.section .ideas-count { font-size: 0.8em; font-weight: bold; vertical-align: baseline; }
+.section-info .edit-section { display: inline-block; height: 2em; }
+.section input.section-name  { font-size: 1.2em; width: 211px; height: 1.4em; border-top: none; border-right: none; border-left: none; background-color: #eeeeee; }
 .section-name a:hover {color: #D19405;}
 
 .color-picker {display: inline-block; position: relative; vertical-align: middle;}

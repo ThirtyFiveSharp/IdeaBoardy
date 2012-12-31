@@ -170,14 +170,14 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #create-board-form dl { margin: 0.5em; }
 #create-board-form dt { margin-bottom: 0.5em; }
 #create-board-form .add-section { margin-bottom: 0.5em; }
-#create-board-form .email {width: 80%; margin-bottom: 10px;}
+#create-board-form .email {width: 80%; margin-bottom: 5px;}
 #create-board { margin-top: 2em; }
 
 #invitation-dialog dl {margin-bottom: 0.5em;}
-#invitation-dialog .email {width: 86%; margin-bottom: 10px;}
+#invitation-dialog .email {width: 86%; margin: 5px 0;}
 
 #share-dialog dl {margin-bottom: 0.5em;}
-#share-dialog .email {width: 86%; margin-bottom: 10px;}
+#share-dialog .email {width: 86%; margin: 5px 0;}
 
 #delete-board-dialog p, .delete-idea-dialog p, #delete-tag-dialog p { margin-bottom: 1em; font-size: 1.1em;}
 #delete-board-dialog .command-bar, #delete-tag-dialog .command-bar { margin-bottom: 0.5em; }

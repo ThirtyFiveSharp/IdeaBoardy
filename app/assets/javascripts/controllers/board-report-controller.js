@@ -10,10 +10,10 @@ angular.module('idea-boardy')
                     .success(function (section) {
                         $scope.sections.push(section);
                     });
-            })
+            });
         });
         $scope.showShareDialog = function () {
-            shareDialog.open({boardToShare:$scope.board});
+            shareDialog.open({boardToShare:$scope.board, recipients:[{}]});
         };
         $scope.goToBoard = function () {
             var boardUri = $scope.board.links.getLink('self').href;

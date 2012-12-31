@@ -177,7 +177,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #invitation-dialog .email {width: 86%; margin-bottom: 10px;}
 
 #share-dialog dl {margin-bottom: 0.5em;}
-#share-dialog .email {width: 100%;}
+#share-dialog .email {width: 86%; margin-bottom: 10px;}
 
 #delete-board-dialog p, .delete-idea-dialog p, #delete-tag-dialog p { margin-bottom: 1em; font-size: 1.1em;}
 #delete-board-dialog .command-bar, #delete-tag-dialog .command-bar { margin-bottom: 0.5em; }

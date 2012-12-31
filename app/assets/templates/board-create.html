@@ -30,12 +30,21 @@
             <dl>
                 <dt>
                     Invite team members?
-                    <input type="checkbox" ng-model="dialog.context.shouldNotify">
+                    <input type="checkbox" ng-model="dialog.context.shouldNotify" ng-change="toggleInvitation()">
                 </dt>
                 <dd ui-if="dialog.context.shouldNotify">
-                    <label for="email">Email:</label>
-                    <input id="email" name="email" type="email" ng-model="dialog.context.to"
-                           required error-message autofocus/>
+                    <dl>
+                        <dt>Email Address:</dt>
+                        <dd>
+                            <ul>
+                                <li class="recipients" ng-repeat="recipient in dialog.context.recipients">
+                                    <input name="email" class="email" type="email" ng-model="recipient.email" required error-message autofocus/>
+                                    <input ui-if="dialog.context.recipients.length > 1" class="btn-1" type="button" value="-" ng-click="removeRecipient($index)" jq-ui="button"/>
+                                </li>
+                            </ul>
+                            <input class="btn-3" type="button" value="+1 recipient" ng-click="addRecipient()" jq-ui="button"/>
+                        </dd>
+                    </dl>
                 </dd>
             </dl>
             <dl>

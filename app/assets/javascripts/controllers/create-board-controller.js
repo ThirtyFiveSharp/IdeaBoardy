@@ -21,5 +21,17 @@ angular.module('idea-boardy')
                     $scope.dialog.context.sectionsToCreate.splice(index, 1);
                 });
             };
+            $scope.toggleInvitation = function() {
+                $scope.dialog.context.recipients = !!($scope.dialog.context.shouldNotify) ? [{}] : undefined;
+            };
+            $scope.addRecipient = function() {
+                var recipients = $scope.dialog.context.recipients;
+                recipients.push({});
+            };
+            $scope.removeRecipient = function (index) {
+                $timeout(function () {
+                    $scope.dialog.context.recipients.splice(index, 1);
+                });
+            };
         }
     ]);

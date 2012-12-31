@@ -170,11 +170,11 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #create-board-form dl { margin: 0.5em; }
 #create-board-form dt { margin-bottom: 0.5em; }
 #create-board-form .add-section { margin-bottom: 0.5em; }
-#create-board-form #email {width: 80%;}
+#create-board-form .email {width: 80%; margin-bottom: 10px;}
 #create-board { margin-top: 2em; }
 
 #invitation-dialog dl {margin-bottom: 0.5em;}
-#invitation-dialog .email {width: 100%;}
+#invitation-dialog .email {width: 86%; margin-bottom: 10px;}
 
 #share-dialog dl {margin-bottom: 0.5em;}
 #share-dialog .email {width: 100%;}

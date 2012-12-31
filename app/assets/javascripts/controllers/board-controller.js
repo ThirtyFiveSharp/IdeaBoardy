@@ -31,7 +31,7 @@ angular.module('idea-boardy')
                 editTagDialog.open({board: $scope.board, tagToEdit:_.clone(tag), $event: $event});
             };
             $scope.showInvitationDialog = function() {
-                invitationDialog.open({boardToInvite: $scope.board});
+                invitationDialog.open({boardToInvite: $scope.board, recipients: [{}]});
             };
             $scope.showDeleteTagDialog = function(tag) {
                 deleteTagDialog.open({board: $scope.board, tagToDelete: tag});

@@ -1,14 +1,16 @@
 angular.module('idea-boardy')
-  .factory('dialog', [() ->
+  .factory('dialog', ['autoUpdater', (autoUpdater) ->
     dialogs = {}
     class Dialog
       constructor: () ->
         @visible = false
         @context = {}
       open: (context) ->
+        autoUpdater.pause()
         @context = context || {}
         @visible = true
       close: () ->
+        autoUpdater.resume()
         @visible = false
     (dialogName) ->
       dialog = dialogs[dialogName]

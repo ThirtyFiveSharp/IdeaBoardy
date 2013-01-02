@@ -18,7 +18,7 @@
         </span>
     </div>
     <ul class="idea-list clear-fix" ng-show="section.expanded">
-        <li ng-repeat="idea in ideas">
+        <li ng-repeat="idea in ideas | filter:filterIdeas">
             <ng-include src="'assets/idea.html'"></ng-include>
         </li>
         <li class="idea blank">

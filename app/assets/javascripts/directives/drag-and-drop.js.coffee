@@ -1,5 +1,5 @@
 angular.module('idea-boardy')
-  .directive('draggable', ->
+  .directive('draggable', ['autoUpdater', (autoUpdater)->
     require: ['draggable']
     controller: ['$scope', '$attrs', '$parse'
       ($scope, $attrs, $parse) ->
@@ -14,9 +14,11 @@ angular.module('idea-boardy')
         handle: '.handle',
         helper: 'clone',
         appendTo: 'body',
-        opacity: 0.8
+        opacity: 0.8,
+        start : () -> autoUpdater.pause()
+        stop : () -> autoUpdater.resume()
       element.draggable(options)
-  )
+  ])
   .directive('droppable', ['$parse', ($parse) ->
     require: 'droppable'
     controller: () ->

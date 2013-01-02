@@ -1,6 +1,6 @@
 angular.module('idea-boardy')
-    .controller('BoardController', ['$scope', '$http', '$location', 'params', 'dialog', 'color', 'events',
-        function ($scope, $http, $location, params, dialog, color, events) {
+    .controller('BoardController', ['$scope', '$http', '$location', 'params', 'dialog', 'color', 'events', 'autoUpdater',
+        function ($scope, $http, $location, params, dialog, color, events, autoUpdater) {
             var tagsInBoard = [],
                 deleteBoardDialog = dialog('deleteBoardDialog'),
                 createSectionDialog = dialog('createSectionDialog'),
@@ -10,12 +10,14 @@ angular.module('idea-boardy')
                 deleteIdeaDialog = dialog('deleteIdeaDialog'),
                 deleteSectionDialog = dialog('deleteSectionDialog'),
                 invitationDialog = dialog('invitationDialog');
+            autoUpdater.clear();
             $http.get(params('uri'), {params: {embed: "tags,concepts"}})
                 .success(function (board) {
                     enhanceBoard(board);
                     $scope.board = board;
                     tagsInBoard = board.tags;
                     refreshSections();
+                    autoUpdater.register($scope.board.selfLink.href, refreshTags);
                 });
 
             $scope.showDeleteBoardDialog = function() {
@@ -60,11 +62,20 @@ angular.module('idea-boardy')
                 if(event.targetScope == $scope) return;
                 $scope.$broadcast(events.sectionEditingFinished, targetSection);
             });
+
             $scope.$on(events.sectionDeleted, function(event, index) {
                 if(event.stopPropagation) event.stopPropagation();
+                clearRegisteredUpdaters();
                 $scope.sections.splice(index, 1);
                 refreshSections();
             });
+
+            function clearRegisteredUpdaters() {
+                _.each($scope.sections, function (section) {
+                    autoUpdater.unregister(section.links.getLink('section').href);
+                });
+            }
+
             $scope.$on(events.tagCreated, function(event) {
                 if(event.stopPropagation) event.stopPropagation();
                 refreshTags();

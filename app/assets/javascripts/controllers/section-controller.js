@@ -1,12 +1,14 @@
 angular.module('idea-boardy')
-    .controller('SectionController', ['$scope', '$http', 'dialog', 'events',
-    function ($scope, $http, dialog, events) {
+    .controller('SectionController', ['$scope', '$http', 'dialog', 'events', 'autoUpdater',
+    function ($scope, $http, dialog, events, autoUpdater) {
         var createIdeaDialog = dialog('createIdeaDialog');
         $http.get($scope.section.links.getLink('section').href, {params: {embed: "ideas"}})
             .success(function (section) {
                 $scope.section = enhanceSection(section);
                 refreshIdeas(section.ideas);
             });
+
+        autoUpdater.register($scope.section.links.getLink('section').href, refreshSection, function(){return $scope.section.editable;});
 
         $scope.showCreateIdeaDialog = function ($event) {
             createIdeaDialog.open({section:$scope.section, ideaToCreate:{}, $event:$event});
@@ -42,6 +44,22 @@ angular.module('idea-boardy')
             if (event.stopPropagation) event.stopPropagation();
             refreshSection();
         });
+        $scope.filterIdeas = function(idea) {
+            var keyword = $scope.keyword;
+            if(keyword == undefined || keyword == "")
+                return idea;
+            var content = idea.content;
+            if(content.indexOf(keyword) >= 0) {
+                return idea;
+            }
+            var isAnyTagMatch = _.any(idea.tags, function(tag){
+                return tag.name.indexOf(keyword) >= 0;
+            });
+            if(isAnyTagMatch) {
+                return idea;
+            }
+            return undefined;
+        }
 
         function enhanceSection(rawSection) {
             return angular.extend(rawSection, {
@@ -96,7 +114,8 @@ angular.module('idea-boardy')
             $http.get($scope.section.selfLink.href, {params: {embed: "ideas"}})
                 .success(function (section) {
                     $scope.section = enhanceSection(section);
-                    if(!skipIdeas) refreshIdeas(section.ideas);
+                    var refresh = true !== skipIdeas
+                    if (refresh) refreshIdeas(section.ideas);
                 });
         }
 

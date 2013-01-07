@@ -8,7 +8,9 @@ angular.module('idea-boardy')
                 refreshIdeas(section.ideas);
             });
 
-        autoUpdater.register($scope.section.links.getLink('section').href, refreshSection, function(){return $scope.section.editable;});
+        autoUpdater.register($scope.section.links.getLink('section').href, refreshSection, function(){
+            return $scope.section.mode === 'view' && $scope.section.expanded;
+        });
 
         $scope.showCreateIdeaDialog = function ($event) {
             createIdeaDialog.open({section:$scope.section, ideaToCreate:{}, $event:$event});
@@ -120,6 +122,15 @@ angular.module('idea-boardy')
         }
 
         function refreshIdeas(ideas) {
+            _.each(ideas, function(idea) {
+                angular.extend(idea, {
+                    $$hashKey: function() {
+                        var hashKey = this.id + '_' + this.content + '_' + this.vote;
+                        hashKey = _.reduce(this.tags, function(key, tag){return key+'_'+tag.id;}, hashKey);
+                        return hashKey;
+                    }
+                });
+            });
             $scope.ideas = ideas;
         }
     }

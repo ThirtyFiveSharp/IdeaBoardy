@@ -3,11 +3,12 @@ angular.module('idea-boardy')
     registedUpdater = {}
     running = true
     unregisterUpdater = (uri) -> delete registedUpdater[uri]
+    intervalMilliSec = 15000
     update = () ->
-      canUpdate = running && _.reduce(registedUpdater, ((can, updater) -> can && updater? && updater.couldUpdate()), true)
-      _.each(registedUpdater, (updater)-> updater.update()) if canUpdate
+      _.each(registedUpdater, (updater) -> updater.update() if updater.couldUpdate()) if running
+      $window.setTimeout(update, intervalMilliSec)
 
-    handler = $window.setInterval(update, 15000)
+    handler = $window.setTimeout(update, intervalMilliSec)
 
     resume: () ->
       running = true

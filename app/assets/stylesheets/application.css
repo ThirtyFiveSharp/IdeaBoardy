@@ -30,6 +30,8 @@ footer { margin: 3em 0; font-size: 0.9em; text-align: center; }
 .error-message { position: absolute; color: #dc143c !important; font-style: italic !important; font-size:1em !important; text-align: right; }
 .clear-fix:after { content: ""; display:table; clear: both; }
 .ui-draggable-dragging { z-index: 999;}
+.ui-autocomplete { max-height: 20em; overflow-y: auto; overflow-x: hidden; }
+.ui-autocomplete .ui-menu-item { font-size: 1em; height: 2em; }
 
 .arrow-bottom { display: inline-block; vertical-align: baseline; width: 0; height: 0; border-top: 10px #333333 solid; border-left: 6px transparent solid; border-right: 6px transparent solid; margin: 0; }
 .arrow-bottom:hover { cursor: pointer; border-top-color: #D19405; }
@@ -56,7 +58,7 @@ input.btn-trivial.ui-state-hover { background: #f0f0f0;}
 input.btn-trivial.ui-state-active { background: #ffffff;}
 
 .board-list { display:block; list-style-type: none; }
-.board-list .board { display: table; position: relative; overflow: hidden; margin: 4px; float: left; width: 230px; height: 150px; background-color: #ffffe0; border:1px #a9a9a9 solid; -moz-border-radius: 10px; border-radius: 10px; text-align: center; }
+.board-list .board { display: table; position: relative; overflow: hidden; margin: 4px; float: left; width: 230px; height: 150px; background-color: #ffffe0; border:1px #a9a9a9 solid; border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; text-align: center; }
 .board-list .board:hover { background-color: #ffdd57; border-color: black; }
 .board-list .board .board-name { display: table-cell; vertical-align: middle; line-height: 1.3em; }
 .board-list .board.blank { font-size: 1.2em; background-color: white; border-style: dashed; }
@@ -83,15 +85,20 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .filter-ideas {height: 1.5em; line-height: 1.5em; margin-right: 1em; margin-top: 4px; font-size: 1em; padding-left: 3px;}
 .ui-reset { width: 20px; height: 20px; margin: 10px 12px; line-height: 14px; vertical-align: text-top; background-image: url("glyphicons-halflings.png"); background-repeat: no-repeat; background-position: -48px -96px; }
 
-.trash-bin { display: inline-block; width: 32px; padding: 8px; background-color: #ffffff; border: 1px #a9a9a9 solid; -moz-border-radius: 10px; border-radius: 10px; }
+.trash-bin { display: inline-block; width: 32px; padding: 8px; background-color: #ffffff; border: 1px #a9a9a9 solid; border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; }
 .trash-bin:hover { cursor: pointer; border-color: #ff6666; }
 .trash-bin:hover .trash-bin-icon { background-position: -32px 0; }
 .trash-bin.ui-scrollfix { position: fixed; top: 10px; left:50%; margin-left: 480px; z-index: 900; background-color: #ffffff; opacity: 0.9;}
 .trash-bin-icon { width: 32px; height: 32px; background: url(/assets/background.png) 0 0 no-repeat; }
 .trash-bin.droppable-active .trash-bin-icon { background-position: -32px 0; }
 
-.tag-list { display: block; padding: 0.5em 0; border-top: 1px #d3d3d3 dotted; border-bottom: 1px #d3d3d3 dotted; }
-.tag { display:inline-block; margin: 0.2em; padding: 0.2em; background-color: #d3d3d3; border: 1px #a9a9a9 solid; -moz-border-radius: 20px 0 0 20px; border-radius: 20px 0 0 20px; }
+.concept-list { display: block; padding: 0.1em; border-top: 1px #d3d3d3 dotted; border-bottom: 1px #d3d3d3 dotted; }
+.concept-list li { display: inline-block; }
+.concept { display:inline-block; margin: 0.2em 0; padding: 0.2em 0.4em; border-right: 1px #d3d3d3 dashed; }
+.concept-info { font-size: 0.9em; font-weight: bold; font-style: italic; }
+.concept:hover, .concept.droppable-hover { background-color:#ffdd99; }
+.tag-list { display: inline-block; }
+.tag { display:inline-block; margin: 0 0.2em; padding: 0.2em; background-color: #d3d3d3; border: 1px #a9a9a9 solid; border-radius: 20px 0 0 20px; -moz-border-radius: 20px 0 0 20px; -webkit-border-radius: 20px 0 0 20px; }
 .tag:hover { cursor: pointer; }
 .tag:before {content: "◉"; padding-right: 0.2em; color: white; }
 .tag.blank { border-style: dashed; }
@@ -107,7 +114,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 
 .section-list { display:block; list-style-type: none; }
 .section-list .ui-button { font-size: 1em; }
-.section { position: relative; overflow: hidden; margin: 5px; padding-top: 0.2em; float: left; -moz-border-radius: 10px; border-radius: 10px; background-color: #eeeeee; width: 470px;}
+.section { position: relative; overflow: hidden; margin: 5px; padding-top: 0.2em; float: left; border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; background-color: #eeeeee; width: 470px;}
 .narrow-rectangle .section {width: 470px;}
 .wide-rectangle .section {width: 940px;}
 
@@ -122,7 +129,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .section-name a:hover {color: #D19405;}
 
 .color-picker {display: inline-block; position: relative; vertical-align: middle;}
-.color-picker .color-box {margin: 2px; line-height: 16px; height: 16px; width: 16px; display: inline-block; border: 2px solid gray; -moz-border-radius: 16px; border-radius: 16px; }
+.color-picker .color-box {margin: 2px; line-height: 16px; height: 16px; width: 16px; display: inline-block; border: 2px solid gray; border-radius: 16px; -moz-border-radius: 16px; -webkit-border-radius: 16px; }
 .color-picker .color-box:hover {cursor: pointer;}
 .color-picker .color-box.color-0 {background-color: #ddffdd;}
 .color-picker .color-box.color-1 {background-color: #fff0f5;}
@@ -135,7 +142,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .color-picker .palette .color-box:hover {border-color: orange;}
 
 .idea-list { display:block; list-style-type: none; }
-.idea { position: relative; overflow: hidden; margin: 4px; float: left; width: 225px; height: 150px; border:1px #a9a9a9 solid; -moz-border-radius: 10px; border-radius: 10px; }
+.idea { position: relative; overflow: hidden; margin: 4px; float: left; width: 225px; height: 150px; border:1px #a9a9a9 solid; border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; }
 .idea.ui-draggable-dragging {background-color: #ffdd57;}
 .idea:hover { border-color: black; cursor: pointer; }
 .idea-tag-list { display:block; float:left; width: 54px; height: 150px; border-right: 1px #d3d3d3 dashed; overflow: hidden; }
@@ -156,7 +163,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #report .board-info .name { line-height: 2em; font-size: 1.8em; font-weight: bold; padding-left: 1px; }
 #report .board-info .description { font-size: 1.2em; font-style: italic; padding-left: 5px; }
 #report .share-report {float: right; margin-top: -60px;}
-#report .section-report {margin-bottom: 1em; padding: 8px 5px; border-radius: 10px;}
+#report .section-report {margin-bottom: 1em; padding: 8px 5px; border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px;}
 #report .section-report dt {font-size: 1.3em; font-weight: bold; margin-bottom: 0.4em;}
 #report .section-report dd {padding-left: 5px;}
 #report .section-report ol {list-style-type: decimal;}
@@ -198,5 +205,5 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .idea.droppable-hover { border-color: black; }
 
 .admin-container {float: right; margin-right: 20px;}
-.admin-link { padding: 2px; border: 1px solid #D19405; font-size: 0.7em; background-color: #E0E0E0; color: #4C3000; -moz-border-radius: 5px; border-radius: 5px; }
+.admin-link { padding: 2px; border: 1px solid #D19405; font-size: 0.7em; background-color: #E0E0E0; color: #4C3000; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
 .admin-link:hover { background-color: #EFEFEF; border-color: black;}

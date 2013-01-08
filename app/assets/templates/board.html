@@ -7,13 +7,15 @@
             </dl>
             <div class="command-bar">
                 <input class="btn-3 command" type="button" value="Edit" ng-click="board.edit()" jq-ui="button"/>
-                <input class="btn-3 command" type="button" value="Invite" ng-click="showInvitationDialog()" jq-ui="button"/>
+                <input class="btn-3 command" type="button" value="Invite" ng-click="showInvitationDialog()"
+                       jq-ui="button"/>
                 <input class="btn-3 command" type="button" value="Report" ng-click="goToReport(board)" jq-ui="button"/>
+
                 <div class="trash-bin" title="Trash Bin: drag something here to delete it."
                      ui-scrollfix="+30" droppable ng-click="showDeleteBoardDialog()">
-                    <meta draggable-type="tag" action="showDeleteTagDialog($draggableModel)" />
-                    <meta draggable-type="idea" action="showDeleteIdeaDialog($draggableModel)" />
-                    <meta draggable-type="section" action="showDeleteSectionDialog($draggableModel)" />
+                    <meta draggable-type="tag" action="showDeleteTagDialog($draggableModel)"/>
+                    <meta draggable-type="idea" action="showDeleteIdeaDialog($draggableModel)"/>
+                    <meta draggable-type="section" action="showDeleteSectionDialog($draggableModel)"/>
                     <div class="trash-bin-icon"></div>
                 </div>
             </div>
@@ -22,20 +24,23 @@
             <form name="editBoardForm" ng-controller="EditBoardController" ng-submit="save()">
                 <dl class="board-info">
                     <dd class="name">
-                        <input type="text" ng-model="editingBoard.name" required error-message autofocus />
+                        <input type="text" ng-model="editingBoard.name" required error-message autofocus/>
                     </dd>
                     <dd class="description">
                         <input type="text" ng-model="editingBoard.description"/>
                     </dd>
                 </dl>
                 <div class="command-bar">
-                    <input class="btn-3 btn-ok command" type="submit" value="Save" ng-disabled="!editBoardForm.$valid" jq-ui="button" />
-                    <input class="btn-3 btn-cancel command" type="button" value="Cancel" ng-click="cancel()" jq-ui="button" />
+                    <input class="btn-3 btn-ok command" type="submit" value="Save" ng-disabled="!editBoardForm.$valid"
+                           jq-ui="button"/>
+                    <input class="btn-3 btn-cancel command" type="button" value="Cancel" ng-click="cancel()"
+                           jq-ui="button"/>
+
                     <div class="trash-bin command" title="Trash Bin: drag something here to delete it."
                          ui-scrollfix="+30" droppable ng-click="showDeleteBoardDialog()">
-                        <meta draggable-type="tag" action="showDeleteTagDialog($draggableModel)" />
-                        <meta draggable-type="idea" action="showDeleteIdeaDialog($draggableModel)" />
-                        <meta draggable-type="section" action="showDeleteSectionDialog($draggableModel)" />
+                        <meta draggable-type="tag" action="showDeleteTagDialog($draggableModel)"/>
+                        <meta draggable-type="idea" action="showDeleteIdeaDialog($draggableModel)"/>
+                        <meta draggable-type="section" action="showDeleteSectionDialog($draggableModel)"/>
                         <div class="trash-bin-icon"></div>
                     </div>
                 </div>
@@ -43,9 +48,21 @@
         </div>
     </div>
 
-    <ul class="tag-list">
-        <li class="tag" ng-repeat="tag in getTags()" draggable="tag" type="tag" ng-click="showEditTagDialog(tag, $event)">{{tag.name}}</li>
-        <li class="tag blank"><a ng-click="showCreateTagDialog($event)">+ 1 tag</a></li>
+    <ul class="concept-list">
+        <li class="concept" ng-repeat="concept in getTagsInConcepts()" title="{{concept.name}}" droppable>
+            <span class="concept-info" ui-if="!concept.isFake">{{concept.name}}</span>
+            <ul class="tag-list">
+                <meta draggable-type="tag" action="showConceptDialog(concept, $draggableModel)"/>
+                <li class="tag" ng-repeat="tag in concept.tags" draggable="tag" type="tag"
+                    ng-click="showEditTagDialog(tag, $event)">{{tag.name}}
+                </li>
+            </ul>
+        </li>
+        <li class="">
+            <ul class="tag-list">
+                <li class="tag blank"><a ng-click="showCreateTagDialog($event)">+ 1 tag</a></li>
+            </ul>
+        </li>
     </ul>
 
     <div class="clear-fix">
@@ -53,9 +70,12 @@
             <li class="command">
                 <input class="filter-ideas" type="text" ng-model="keyword" placeholder="filter ideas" ui-reset/>
             </li>
-            <li class="command create-section" title="create a new section" ng-click="showCreateSectionDialog()">+ 1 section</li>
+            <li class="command create-section" title="create a new section" ng-click="showCreateSectionDialog()">+ 1
+                section
+            </li>
             <li class="command" title="select sections to display" ng-show="sections.length > 0">
-                <select ui-select2="{containerCssClass: 'section-select-container'}" ng-model="board.selectedSectionName">
+                <select ui-select2="{containerCssClass: 'section-select-container'}"
+                        ng-model="board.selectedSectionName">
                     <option value="">All Sections</option>
                     <option ng-repeat="section in sections" value="{{section.name}}">{{section.name}}</option>
                 </select>
@@ -63,7 +83,8 @@
         </ul>
     </div>
     <ul class="section-list clear-fix">
-        <li ng-repeat="section in sections" ng-show="board.isSectionVisible(section)" ng-class="board.sectionClass(section)">
+        <li ng-repeat="section in sections" ng-show="board.isSectionVisible(section)"
+            ng-class="board.sectionClass(section)">
             <ng-include src="'assets/section.html'"></ng-include>
         </li>
     </ul>

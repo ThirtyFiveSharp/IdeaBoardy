@@ -30,7 +30,7 @@ angular.module('idea-boardy')
       _.each(uris, (uri) -> unregisterUpdater(uri))
 
     register: (uri, updateFunc, couldUpdate) ->
-      if !couldUpdate?
+      if not couldUpdate?
         registedUpdater[uri] = {update: updateFunc, couldUpdate: () -> true}
       else
         registedUpdater[uri] = {update: updateFunc, couldUpdate: couldUpdate}

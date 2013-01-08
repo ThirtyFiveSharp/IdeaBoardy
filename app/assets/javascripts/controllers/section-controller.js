@@ -61,7 +61,7 @@ angular.module('idea-boardy')
                 return idea;
             }
             return undefined;
-        }
+        };
 
         function enhanceSection(rawSection) {
             return angular.extend(rawSection, {
@@ -91,7 +91,8 @@ angular.module('idea-boardy')
                     });
                 },
                 createIdea:function (ideaToCreate) {
-                    $http.post(this.links.getLink('ideas').href, ideaToCreate).success(refreshSection);
+                    $http.post(this.links.getLink('ideas').href, ideaToCreate)
+                        .success(function() { refreshSection(); });
                 },
                 addImmigrant:function (sourceIdea) {
                     if (_.any($scope.ideas, function (idea) {
@@ -116,8 +117,7 @@ angular.module('idea-boardy')
             $http.get($scope.section.selfLink.href, {params: {embed: "ideas"}})
                 .success(function (section) {
                     $scope.section = enhanceSection(section);
-                    var refresh = true !== skipIdeas
-                    if (refresh) refreshIdeas(section.ideas);
+                    if (!skipIdeas) refreshIdeas(section.ideas);
                 });
         }
 

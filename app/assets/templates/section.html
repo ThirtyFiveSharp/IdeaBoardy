@@ -8,7 +8,7 @@
         <span class="section-info" ng-switch="section.mode">
             <span class="view-section" ng-switch-when="view">
                 <span class="section-name" title="{{section.name}}">{{section.name}}</span>
-                <span class="ideas-count">({{ideas.length}})</span>
+                <span class="ideas-count">({{(ideas | filter:filterIdeas).length}})</span>
                 <span class="command-icon edit-icon" ng-click="section.edit()" ng-show="section.editable"></span>
             </span>
             <form name="editSectionForm" class="edit-section" ng-switch-when="edit" ng-controller="EditSectionController" ng-submit="save()">

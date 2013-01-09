@@ -17,7 +17,7 @@ module ShortenUrl
     api_code = get_api_code(api)
     return nil if api_code.nil?
     number = (api_code.to_s + id.to_s).to_i
-    to_number_64(number)
+    to_number_62(number)
   end
 
   def get_api_code(api)
@@ -26,13 +26,13 @@ module ShortenUrl
     nil
   end
 
-  def to_number_64(decimal_number)
+  def to_number_62(decimal_number)
     raise "input number must be greater than zero" unless decimal_number > 0
     id = decimal_number
     url = []
     while(id > 0)
-      url << characters[id % 64]
-      id = id / 64
+      url << characters[id % 62]
+      id = id / 62
     end
     url.reverse.join("")
   end
@@ -41,7 +41,7 @@ module ShortenUrl
     number = 0
     power = decimal_str.length - 1
     decimal_str.each_char do |c|
-      number += characters.index(c) * (64**power)
+      number += characters.index(c) * (62**power)
       power -= 1
     end
     number
@@ -49,7 +49,7 @@ module ShortenUrl
 
   private
   def characters
-    ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", ",", "."  ]
+    ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
   end
 
   def get_path_template api_code

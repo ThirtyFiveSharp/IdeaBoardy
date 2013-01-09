@@ -2,6 +2,7 @@
      draggable="idea" type="idea" droppable ng-click="showEditDialog($event)" >
     <meta draggable-type="idea" action="idea.mergeWith($draggableModel)" />
     <meta draggable-type="tag" action="idea.addTag($draggableModel)" />
+    <meta draggable-type="tagInConcept" action="idea.addTag($draggableModel)" />
     <!--<meta queryable="idea" lookup-keys="content,vote,tagsName"/>-->
     <ul class="idea-tag-list">
         <li><a class="idea-tag blank" title="click to specify tags" ng-click="$event.stopPropagation(); showAddTagDialog($event)"></a></li>

@@ -25,7 +25,7 @@ angular.module('idea-boardy')
       handlers = {}
       @addHandler = (type, action) -> handlers[type] = action
       @canAccept = (type) ->  handlers[type]?
-      @getHandler = (type) -> return handlers[type]
+      @getHandler = (type) -> handlers[type]
     link: (scope, element, attrs, droppableCtrl) ->
       options =
         activeClass: 'droppable-active'
@@ -43,7 +43,7 @@ angular.module('idea-boardy')
           draggableType = draggableCtrl.getType() if draggableCtrl?
           draggableModel = draggableCtrl.getModel() if draggableCtrl?
           handler = droppableCtrl.getHandler(draggableType)
-          scope.$apply -> $parse(handler)(scope, {$draggableModel: draggableModel})
+          scope.$apply -> $parse(handler)(scope, {$draggableModel: draggableModel, $event: event})
       element.droppable options
   ])
   .directive('draggableType', () ->

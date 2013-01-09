@@ -94,19 +94,21 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .trash-bin-icon { width: 32px; height: 32px; background: url(/assets/background.png) 0 0 no-repeat; }
 .trash-bin.droppable-active .trash-bin-icon { background-position: -32px 0; }
 
-.concept-list { display: block; padding: 0.1em; border-top: 1px #d3d3d3 dotted; border-bottom: 1px #d3d3d3 dotted; }
-.concept-list li { display: inline-block; }
-.concept { display:inline-block; margin: 0.2em 0; padding: 0.2em 0.4em; border-right: 1px #d3d3d3 dashed; }
+.concept-list { display: block; padding: 0.2em 0; line-height: 2em; border-top: 1px #d3d3d3 dotted; border-bottom: 1px #d3d3d3 dotted; }
+.concept { display:inline; padding: 0 0.4em; }
+.concept:after { content: ""; border-right: 1px #a9a9a9 dashed; }
 .concept-info { font-size: 0.9em; font-weight: bold; font-style: italic; }
-.concept:hover, .concept.droppable-hover { background-color:#ffdd99; }
-.tag-list { display: inline-block; }
-.tag { display:inline-block; margin: 0 0.2em; padding: 0.2em; background-color: #d3d3d3; border: 1px #a9a9a9 solid; border-radius: 20px 0 0 20px; -moz-border-radius: 20px 0 0 20px; -webkit-border-radius: 20px 0 0 20px; }
+.concept-info:hover { cursor: pointer; }
+.tag-list { display: inline; }
+.tag { display:inline-block; line-height: 1em; margin: 0 0.3em; padding: 0.2em; background-color: #d3d3d3; border: 1px #a9a9a9 solid; border-radius: 20px 0 0 20px; -moz-border-radius: 20px 0 0 20px; -webkit-border-radius: 20px 0 0 20px; }
 .tag:hover { cursor: pointer; }
 .tag:before {content: "◉"; padding-right: 0.2em; color: white; }
 .tag.blank { border-style: dashed; }
 .tag.blank:hover { border-color: black; }
 .tag.blank:hover a { color: black; }
 .tag.blank:hover:before {color:black; }
+.concept.droppable-hover .concept-info { color: #ee6633; }
+.concept.droppable-hover .tag { box-shadow: 0 0 5px 0 #ee6633; }
 
 .section-command-bar { display: block; margin: 0.2em; line-height: 32px; height: 32px; float:right; vertical-align: middle; }
 .section-command-bar .command.create-section { margin-right: 1em; text-decoration: underline; }
@@ -191,10 +193,10 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 #delete-board-dialog p, .delete-idea-dialog p, #delete-tag-dialog p { margin-bottom: 1em; font-size: 1.1em;}
 #delete-board-dialog .command-bar, #delete-tag-dialog .command-bar { margin-bottom: 0.5em; }
 
-#create-section-form dl, .create-tag-form dl, .edit-tag-form dl, .add-tag-form dl { margin: 0.5em; }
-#create-section-form dt, .create-tag-form dt, .edit-tag-form dt, .add-tag-form dt { margin-bottom: 0.5em; }
+#create-section-form dl, .create-tag-form dl, .edit-tag-form dl, .add-tag-form dl, .edit-concept-form dl { margin: 0.5em; }
+#create-section-form dt, .create-tag-form dt, .edit-tag-form dt, .add-tag-form dt, .edit-concept-form dt { margin-bottom: 0.5em; }
 #create-section-form dd input[type='text'], .create-tag-form dd input[type='text'], .edit-tag-form dd input[type='text'], .add-tag-form dd input[type='text'] { width: 100%; }
-#create-section, .create-tag-form .command-bar, .edit-tag-form .command-bar, .add-tag-form .command-bar { margin-top: 2em; }
+#create-section, .create-tag-form .command-bar, .edit-tag-form .command-bar, .add-tag-form .command-bar, .edit-concept-form .command-bar { margin-top: 2em; }
 
 #delete-section-dialog p { margin: 0 0 1em; font-size: 1.1em;}
 #delete-section-dialog .command-bar { margin-bottom: 0.5em; }
@@ -202,6 +204,8 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .create-idea-form dl, .edit-idea-form dl { margin-bottom: 0.5em; }
 .create-idea-form .idea-content, .edit-idea-form .idea-content { width: 100%; height: 10em; }
 .create-idea-form .command-bar, .edit-idea-form .command-bar, .delete-idea-dialog .command-bar { margin-bottom: 0.5em; }
+
+.tags-select-container { width: 100%; }
 
 .section.droppable-hover { background-color: #d3d3d3; }
 .idea.droppable-hover { border-color: black; }

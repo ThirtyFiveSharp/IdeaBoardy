@@ -1,8 +1,8 @@
 angular.module('idea-boardy')
-    .controller('BoardController', ['$scope', '$http', '$location', 'params', 'dialog', 'color', 'events', 'autoUpdater',
-    function ($scope, $http, $location, params, dialog, color, events, autoUpdater) {
+    .controller('BoardController', ['$scope', '$http', '$location', '$q', 'params', 'dialog', 'color', 'events', 'autoUpdater',
+    function ($scope, $http, $location, $q, params, dialog, color, events, autoUpdater) {
         var tagsInBoard = [],
-            tagsInConcepts = [],
+            concepts = [],
             deleteBoardDialog = dialog('deleteBoardDialog'),
             createSectionDialog = dialog('createSectionDialog'),
             createTagDialog = dialog('createTagDialog'),
@@ -10,6 +10,7 @@ angular.module('idea-boardy')
             deleteTagDialog = dialog('deleteTagDialog'),
             deleteIdeaDialog = dialog('deleteIdeaDialog'),
             deleteSectionDialog = dialog('deleteSectionDialog'),
+            editConceptDialog = dialog('editConceptDialog'),
             invitationDialog = dialog('invitationDialog');
         autoUpdater.clear();
         $http.get(params('uri'), {params:{embed:"tags,concepts"}})
@@ -17,7 +18,9 @@ angular.module('idea-boardy')
                 enhanceBoard(board);
                 $scope.board = board;
                 tagsInBoard = board.tags;
-                tagsInConcepts = groupTagsWithConcepts(board.concepts, board.tags);
+                _.each(tagsInBoard, enhanceTag);
+                concepts = board.concepts;
+                _.each(concepts, enhanceConcept);
                 refreshSections();
                 autoUpdater.register($scope.board.selfLink.href, refreshTags);
             });
@@ -35,9 +38,7 @@ angular.module('idea-boardy')
             editTagDialog.open({board:$scope.board, tagToEdit:_.clone(tag), $event:$event});
         };
         $scope.showInvitationDialog = function () {
-            invitationDialog.open({boardToInvite:$scope.board, recipients:[
-                {}
-            ]});
+            invitationDialog.open({boardToInvite:$scope.board, recipients:[{}]});
         };
         $scope.showDeleteTagDialog = function (tag) {
             deleteTagDialog.open({board:$scope.board, tagToDelete:tag});
@@ -48,9 +49,16 @@ angular.module('idea-boardy')
         $scope.showDeleteSectionDialog = function (section) {
             deleteSectionDialog.open({sectionToDelete:section});
         };
-        $scope.showConceptDialog = function (concept, tag) {
-            if(_.any(concept.tags, function(tagInConcept) { return tagInConcept.id == tag.id; })) return;
-            console.log('showConceptDialog: ', concept, tag);
+        $scope.showEditConceptDialog = function (concept, tag, $event) {
+            var tagNamesInConcept = _.map(concept.tags, function(tag) {return tag.name;}),
+                tagNames = !!tag ? tagNamesInConcept.concat((tag||{}).name) : tagNamesInConcept,
+                aConcept = _.clone(concept);
+            editConceptDialog.open({
+                concept: aConcept,
+                tagNames: tagNames,
+                allTagNames: $scope.getAllTagNames(),
+                $event: $event
+            });
         };
         $scope.goToReport = function (board) {
             $location.path('report').search({uri:board.selfLink.href});
@@ -58,8 +66,28 @@ angular.module('idea-boardy')
         $scope.getTags = function () {
             return tagsInBoard;
         };
-        $scope.getTagsInConcepts = function () {
-            return tagsInConcepts;
+        $scope.getTagsInConcept = function () {
+            var tagsInConcept = _.filter($scope.getTags(), function (tag) {
+                    return !!tag.links.getLink('concept').href;
+                }),
+                tagsGroupedByConcept = _.groupBy(tagsInConcept, function (tag) {
+                    return tag.links.getLink('concept').href;
+                }),
+                conceptWithTags = _.map(_.keys(tagsGroupedByConcept), function (conceptUri) {
+                    var concept = _.find(concepts, function (c) {
+                        return conceptUri === c.links.getLink('self').href
+                    });
+                    return _.extend(concept, {
+                        tags:tagsGroupedByConcept[conceptUri]
+                    });
+                });
+            return _.sortBy(conceptWithTags, function (concept) { return concept.name; });
+        };
+        $scope.getTagsNotInConcept = function () {
+            return _.filter($scope.getTags(), function(tag) {return !tag.links.getLink('concept').href;});
+        };
+        $scope.getAllTagNames = function() {
+            return _.map($scope.getTags(), function(tag) {return tag.name});
         };
 
         $scope.$on(events.editSection, function (event, targetSection) {
@@ -132,35 +160,30 @@ angular.module('idea-boardy')
             });
         }
 
-        function groupTagsWithConcepts(concepts, tags) {
-            var tagsInConcept = _.filter(tags, function (tag) {
-                    return !!tag.links.getLink('concept').href;
-                }),
-                tagsNotInConcept = _.filter(tags, function (tag) {
-                    return !tag.links.getLink('concept').href;
-                }),
-                tagsGroupedByConcept = _.groupBy(tagsInConcept, function (tag) {
-                    return tag.links.getLink('concept').href;
-                }),
-                conceptWithTags = _.map(_.keys(tagsGroupedByConcept), function (conceptUri) {
-                    var concept = _.find(concepts, function (c) {
-                        return conceptUri === c.links.getLink('self').href
-                    });
-                    return _.extend(concept, {tags:tagsGroupedByConcept[conceptUri]});
-                }),
-                sortedConceptsWithTags = _.sortBy(conceptWithTags, function (mergedConcept) {
-                    return mergedConcept.name;
-                }),
-                fakeConceptsWithTags = _.map(tagsNotInConcept, function (tag) {
-                    return {name:tag.name, tags:[tag], isFake: true};
-                });
-            return sortedConceptsWithTags.concat(fakeConceptsWithTags);
+        function enhanceTag(rawTag) {
+            angular.extend(rawTag, {
+                $$hashKey: function() { return this.id + '_' + this.name; }
+            });
+        }
+
+        function enhanceConcept(rawConcept) {
+            angular.extend(rawConcept, {
+                $$hashKey: function() { return this.id + '_' + this.name; },
+                update: function(tagNames) {
+                    var updateConceptPromise = $http.put(this.links.getLink('self').href, {name: this.name}),
+                        tagIds = _.map(tagNames, function(tagName) {return _.find(tagsInBoard, function(tag) {return tag.name===tagName}).id;}),
+                        updateTagsPromise = $http.put(this.links.getLink('tags').href, {tags: tagIds});
+                    $q.all([updateConceptPromise, updateTagsPromise]).then(refreshTags);
+                }
+            });
         }
 
         function refreshTags() {
             $http.get($scope.board.selfLink.href, {params:{embed:'tags,concepts'}}).success(function (board) {
                 tagsInBoard = board.tags;
-                tagsInConcepts = groupTagsWithConcepts(board.concepts, board.tags);
+                _.each(tagsInBoard, enhanceTag);
+                concepts = board.concepts;
+                _.each(concepts, enhanceConcept);
             });
         }
 

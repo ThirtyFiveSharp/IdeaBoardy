@@ -9,8 +9,7 @@ angular.module('idea-boardy')
             editIdeaDialog.open({ideaToEdit: _.clone($scope.idea), $event: $event});
         };
         $scope.showAddTagDialog = function($event) {
-            var allTagNames = _.map($scope.getTags(), function(tag) {return tag.name});
-            addTagDialog.open({idea: $scope.idea, tagNames: [], allTagNames:allTagNames, $event: $event});
+            addTagDialog.open({idea: $scope.idea, tagNames: [], allTagNames:$scope.getAllTagNames(), $event: $event});
         };
 
         function enhanceIdea(rawIdea) {

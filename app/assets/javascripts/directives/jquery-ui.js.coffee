@@ -19,7 +19,7 @@ angular.module('idea-boardy')
         needToOpen = dialog(name).visible
         if element.dialog('isOpen') isnt needToOpen
           event = dialog(name).context.$event or {}
-          targetElement = event.currentTarget or window
+          targetElement = event.target or window
           element.dialog('option', 'position', {of: targetElement})
             .dialog(if needToOpen then 'open' else 'close')
   ])

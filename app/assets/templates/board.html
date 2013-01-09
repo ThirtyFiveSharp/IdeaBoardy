@@ -14,6 +14,7 @@
                 <div class="trash-bin" title="Trash Bin: drag something here to delete it."
                      ui-scrollfix="+30" droppable ng-click="showDeleteBoardDialog()">
                     <meta draggable-type="tag" action="showDeleteTagDialog($draggableModel)"/>
+                    <meta draggable-type="tagInConcept" action="showDeleteTagDialog($draggableModel)"/>
                     <meta draggable-type="idea" action="showDeleteIdeaDialog($draggableModel)"/>
                     <meta draggable-type="section" action="showDeleteSectionDialog($draggableModel)"/>
                     <div class="trash-bin-icon"></div>
@@ -39,6 +40,7 @@
                     <div class="trash-bin command" title="Trash Bin: drag something here to delete it."
                          ui-scrollfix="+30" droppable ng-click="showDeleteBoardDialog()">
                         <meta draggable-type="tag" action="showDeleteTagDialog($draggableModel)"/>
+                        <meta draggable-type="tagInConcept" action="showDeleteTagDialog($draggableModel)"/>
                         <meta draggable-type="idea" action="showDeleteIdeaDialog($draggableModel)"/>
                         <meta draggable-type="section" action="showDeleteSectionDialog($draggableModel)"/>
                         <div class="trash-bin-icon"></div>
@@ -49,19 +51,19 @@
     </div>
 
     <ul class="concept-list">
-        <li class="concept" ng-repeat="concept in getTagsInConcepts()" title="{{concept.name}}" droppable>
-            <span class="concept-info" ui-if="!concept.isFake">{{concept.name}}</span>
+        <li class="concept" ng-repeat="concept in getTagsInConcept()" title="{{concept.name}}" droppable>
+            <meta draggable-type="tag" action="showEditConceptDialog(concept, $draggableModel, $event)"/>
+            <span class="concept-info" ng-click="showEditConceptDialog(concept, null, $event)">{{concept.name}}</span>
             <ul class="tag-list">
-                <meta draggable-type="tag" action="showConceptDialog(concept, $draggableModel)"/>
-                <li class="tag" ng-repeat="tag in concept.tags" draggable="tag" type="tag"
+                <li class="tag" ng-repeat="tag in concept.tags" draggable="tag" type="tagInConcept"
                     ng-click="showEditTagDialog(tag, $event)">{{tag.name}}
                 </li>
             </ul>
         </li>
-        <li class="">
-            <ul class="tag-list">
-                <li class="tag blank"><a ng-click="showCreateTagDialog($event)">+ 1 tag</a></li>
-            </ul>
+        <li class="tag" ng-repeat="tag in getTagsNotInConcept()" draggable="tag" type="tag"
+            ng-click="showEditTagDialog(tag, $event)">{{tag.name}}
+        </li>
+        <li class="tag blank"><a ng-click="showCreateTagDialog($event)">+ 1 tag</a></li>
         </li>
     </ul>
 

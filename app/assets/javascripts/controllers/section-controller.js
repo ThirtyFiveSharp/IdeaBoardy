@@ -64,6 +64,10 @@ angular.module('idea-boardy')
             if (isAnyTagMatch) {
                 return idea;
             }
+            var isVoteMatch = idea.vote == keyword;
+            if (isVoteMatch) {
+                return idea;
+            }
             return undefined;
         };
 

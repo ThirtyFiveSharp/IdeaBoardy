@@ -37,6 +37,19 @@ angular.module('idea-boardy')
             $location.path('/board').search({uri:boardLink.href});
         };
 
+        $scope.filterBoard = function(board) {
+            var keyword = $scope.keyword;
+            if (!keyword) {
+                return board;
+            }
+            var regexp = new RegExp(keyword, 'gi');
+            var name = board.name;
+            if (name.match(regexp)) {
+                return board;
+            }
+            return undefined;
+        }
+
         function refreshBoardList() {
             $http.get(config.apiEntryPoint).success(function (boards) {
                 $scope.boards = boards;

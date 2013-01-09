@@ -1,8 +1,11 @@
 <div ng-controller="BoardListController">
-    <div class="guide">Select a board</div>
+    <div class="guide">
+        Select a board
+        <input class="filter-boards" type="text" ng-model="keyword" placeholder="filter boards" ui-reset/>
+    </div>
 
     <ul class="board-list">
-        <li class="board" ng-repeat="board in boards">
+        <li class="board" ng-repeat="board in boards | filter:filterBoard">
             <a class="board-name" ng-click="goToBoard(board)">{{board.name}}</a>
         </li>
 

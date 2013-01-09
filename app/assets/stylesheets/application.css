@@ -58,6 +58,8 @@ input.btn-trivial.ui-state-hover { background: #f0f0f0;}
 input.btn-trivial.ui-state-active { background: #ffffff;}
 
 .board-list { display:block; list-style-type: none; }
+.filter-boards {margin-left: 10px; margin-right: 1em; font-size: 1em; padding-left: 3px;}
+.filter-boards + .ui-reset { width: 20px; height: 20px; margin: 5px 15px; line-height: 14px; vertical-align: text-top; background-image: url("glyphicons-halflings.png"); background-repeat: no-repeat; background-position: -48px -96px; }
 .board-list .board { display: table; position: relative; overflow: hidden; margin: 4px; float: left; width: 230px; height: 150px; background-color: #ffffe0; border:1px #a9a9a9 solid; border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; text-align: center; }
 .board-list .board:hover { background-color: #ffdd57; border-color: black; }
 .board-list .board .board-name { display: table-cell; vertical-align: middle; line-height: 1.3em; }
@@ -83,7 +85,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .edit-icon { background: url(/assets/background.png) 0 -48px no-repeat ; }
 .edit-icon:hover { background: url(/assets/background.png) -24px -48px no-repeat ; }
 .filter-ideas {height: 1.5em; line-height: 1.5em; margin-right: 1em; margin-top: 4px; font-size: 1em; padding-left: 3px;}
-.ui-reset { width: 20px; height: 20px; margin: 10px 12px; line-height: 14px; vertical-align: text-top; background-image: url("glyphicons-halflings.png"); background-repeat: no-repeat; background-position: -48px -96px; }
+.filter-ideas + .ui-reset { width: 20px; height: 20px; margin: 10px 12px; line-height: 14px; vertical-align: text-top; background-image: url("glyphicons-halflings.png"); background-repeat: no-repeat; background-position: -48px -96px; }
 
 .trash-bin { display: inline-block; width: 32px; padding: 8px; background-color: #ffffff; border: 1px #a9a9a9 solid; border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; }
 .trash-bin:hover { cursor: pointer; border-color: #ff6666; }

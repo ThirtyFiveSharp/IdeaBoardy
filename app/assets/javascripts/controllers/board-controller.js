@@ -97,6 +97,9 @@ angular.module('idea-boardy')
         $scope.getTagsNotInConcept = function () {
             return _.filter($scope.getTags(), function(tag) {return !tag.links.getLink('concept').href;});
         };
+        $scope.getAllTagNames = function() {
+            return _.map($scope.getTags(), function(tag) {return tag.name});
+        };
 
         $scope.$on(events.editSection, function (event, targetSection) {
             if (event.stopPropagation) event.stopPropagation();

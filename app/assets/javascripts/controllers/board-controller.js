@@ -10,6 +10,7 @@ angular.module('idea-boardy')
             deleteTagDialog = dialog('deleteTagDialog'),
             deleteIdeaDialog = dialog('deleteIdeaDialog'),
             deleteSectionDialog = dialog('deleteSectionDialog'),
+            createConceptDialog = dialog('createConceptDialog'),
             editConceptDialog = dialog('editConceptDialog'),
             invitationDialog = dialog('invitationDialog');
         autoUpdater.clear();
@@ -51,12 +52,22 @@ angular.module('idea-boardy')
         };
         $scope.showEditConceptDialog = function (concept, tag, $event) {
             var tagNamesInConcept = _.map(concept.tags, function(tag) {return tag.name;}),
-                tagNames = !!tag ? tagNamesInConcept.concat((tag||{}).name) : tagNamesInConcept,
-                aConcept = _.clone(concept);
+                tagNames = !!tag ? tagNamesInConcept.concat((tag||{}).name) : tagNamesInConcept;
             editConceptDialog.open({
-                concept: aConcept,
+                concept: _.clone(concept),
+                allConceptNames: getAllConceptNames(),
                 tagNames: tagNames,
-                allTagNames: $scope.getAllTagNames(),
+                allTagNames: getAvailableTagNames().concat(tagNamesInConcept),
+                $event: $event
+            });
+        };
+        $scope.showCreateConceptDialog = function (tag1, tag2, $event) {
+            var tagNames = [tag1.name, tag2.name];
+            createConceptDialog.open({
+                board: $scope.board,
+                allConceptNames: getAllConceptNames(),
+                tagNames: tagNames,
+                allTagNames: getAvailableTagNames().concat(tagNames),
                 $event: $event
             });
         };
@@ -86,39 +97,45 @@ angular.module('idea-boardy')
         $scope.getTagsNotInConcept = function () {
             return _.filter($scope.getTags(), function(tag) {return !tag.links.getLink('concept').href;});
         };
-        $scope.getAllTagNames = function() {
-            return _.map($scope.getTags(), function(tag) {return tag.name});
-        };
 
         $scope.$on(events.editSection, function (event, targetSection) {
             if (event.stopPropagation) event.stopPropagation();
             if (event.targetScope == $scope) return;
             $scope.$broadcast(events.editSection, targetSection);
         });
-
         $scope.$on(events.sectionEditingFinished, function (event, targetSection) {
             if (event.stopPropagation) event.stopPropagation();
             if (event.targetScope == $scope) return;
             $scope.$broadcast(events.sectionEditingFinished, targetSection);
         });
-
         $scope.$on(events.sectionDeleted, function (event, index) {
             if (event.stopPropagation) event.stopPropagation();
             clearRegisteredUpdaters();
             $scope.sections.splice(index, 1);
             refreshSections();
         });
+        $scope.$on(events.tagCreated, function (event) {
+            if (event.stopPropagation) event.stopPropagation();
+            refreshTags();
+        });
+
+        function getAllConceptNames() {
+            return _.map(concepts, function(concept) {return concept.name});
+        }
+
+        function getAvailableTagNames() {
+            return _.map($scope.getTagsNotInConcept(), function(tag) {return tag.name});
+        }
+
+        function getTagIdsByNames(tagNames) {
+            return _.map(tagNames, function(tagName) {return _.find(tagsInBoard, function(tag) {return tag.name===tagName}).id;});
+        }
 
         function clearRegisteredUpdaters() {
             _.each($scope.sections, function (section) {
                 autoUpdater.unregister(section.links.getLink('section').href);
             });
         }
-
-        $scope.$on(events.tagCreated, function (event) {
-            if (event.stopPropagation) event.stopPropagation();
-            refreshTags();
-        });
 
         function enhanceBoard(rawBoard) {
             angular.extend(rawBoard, {
@@ -149,13 +166,19 @@ angular.module('idea-boardy')
                     return !this.selectedSectionName ? 'narrow-rectangle' : 'wide-rectangle'
                 },
                 createTag:function (tag) {
-                    $http.post($scope.board.tagsLink.href, tag).success(refreshTags);
+                    $http.post(this.tagsLink.href, tag).success(refreshTags);
                 },
                 updateTag:function (tag) {
                     $http.put(tag.links.getLink('self').href, tag).success(refreshTags);
                 },
                 deleteTag:function (tag) {
                     $http.delete(tag.links.getLink('self').href).success(refreshTags);
+                },
+                createConcept:function (conceptName, tagNames) {
+                    $http.post(this.links.getLink('concepts').href, {name: conceptName})
+                        .success(function(concept) {
+                            $http.put(concept.links.getLink('tags').href, {tags: getTagIdsByNames(tagNames)}).success(refreshTags);
+                        })
                 }
             });
         }
@@ -170,10 +193,10 @@ angular.module('idea-boardy')
             angular.extend(rawConcept, {
                 $$hashKey: function() { return this.id + '_' + this.name; },
                 update: function(tagNames) {
-                    var updateConceptPromise = $http.put(this.links.getLink('self').href, {name: this.name}),
-                        tagIds = _.map(tagNames, function(tagName) {return _.find(tagsInBoard, function(tag) {return tag.name===tagName}).id;}),
-                        updateTagsPromise = $http.put(this.links.getLink('tags').href, {tags: tagIds});
-                    $q.all([updateConceptPromise, updateTagsPromise]).then(refreshTags);
+                    $q.all([
+                        $http.put(this.links.getLink('self').href, {name: this.name}),
+                        $http.put(this.links.getLink('tags').href, {tags: getTagIdsByNames(tagNames)})
+                    ]).then(refreshTags);
                 }
             });
         }

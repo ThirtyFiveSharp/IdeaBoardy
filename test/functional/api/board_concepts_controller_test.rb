@@ -39,7 +39,17 @@ class Api::BoardConceptsControllerTest < ActionController::TestCase
     created_concept_id = assigns :concept_id
     assert_response :created
     assert_equal api_concept_url(created_concept_id), @response.headers['Location']
-    assert_blank @response.body
+
+    returned_concept = ActiveSupport::JSON.decode @response.body
+    assert_equal created_concept_id, returned_concept['id']
+    assert_equal expected_name, returned_concept['name']
+    links = returned_concept['links']
+    assert_equal 2, links.count
+    self_link = links.select { |l| l['rel'] == 'self' }.first
+    assert_equal api_concept_url(created_concept_id), self_link['href']
+    tags_link = links.select { |l| l['rel'] == 'tags' }.first
+    assert_equal api_concept_tags_url(created_concept_id), tags_link['href']
+
     actual_concept = Concept.find created_concept_id
     assert_equal expected_name, actual_concept.name
     assert_equal @board.id, actual_concept.board.id

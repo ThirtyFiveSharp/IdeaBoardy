@@ -1,5 +1,5 @@
 module Api
-  class BoardConceptsController < ApplicationController
+  class BoardConceptsController < ApiController
     respond_to :json
 
     def index
@@ -22,7 +22,7 @@ module Api
       concept.board = board
       if concept.save
         @concept_id = concept.id
-        head status: :created, location: api_concept_url(concept.id)
+        render json: build_representation(concept), status: :created, location: api_concept_url(concept.id)
       else
         @concept_id = nil
         render json: concept.errors, status: :unprocessable_entity

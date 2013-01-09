@@ -1,8 +1,8 @@
 angular.module('idea-boardy')
   .directive 'errorMessage', () ->
-    require: '?ngModel'
+    require: 'ngModel'
+    priority: -1
     link: (scope, element, attrs, ngModelCtrl) ->
-      return unless ngModelCtrl
       message = $ '<div class="error-message"></div>'
       message.click () ->
         element.focus()

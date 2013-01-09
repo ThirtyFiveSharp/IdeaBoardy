@@ -51,9 +51,11 @@
     </div>
 
     <ul class="concept-list">
-        <li class="concept" ng-repeat="concept in getTagsInConcept()" title="{{concept.name}}" droppable>
-            <meta draggable-type="tag" action="showEditConceptDialog(concept, $draggableModel, $event)"/>
-            <span class="concept-info" ng-click="showEditConceptDialog(concept, null, $event)">{{concept.name}}</span>
+        <li class="concept" ng-repeat="concept in getTagsInConcept()" title="{{concept.name}}">
+            <span class="concept-info" ng-click="showEditConceptDialog(concept, null, $event)" droppable>
+                <meta draggable-type="tag" action="showEditConceptDialog(concept, $draggableModel, $event)"/>
+                    {{concept.name}}
+            </span>
             <ul class="tag-list">
                 <li class="tag" ng-repeat="tag in concept.tags" draggable="tag" type="tagInConcept"
                     ng-click="showEditTagDialog(tag, $event)">{{tag.name}}
@@ -61,7 +63,9 @@
             </ul>
         </li>
         <li class="tag" ng-repeat="tag in getTagsNotInConcept()" draggable="tag" type="tag"
-            ng-click="showEditTagDialog(tag, $event)">{{tag.name}}
+            droppable ng-click="showEditTagDialog(tag, $event)">
+            <meta draggable-type="tag" action="showCreateConceptDialog(tag, $draggableModel, $event)"/>
+            {{tag.name}}
         </li>
         <li class="tag blank"><a ng-click="showCreateTagDialog($event)">+ 1 tag</a></li>
         </li>

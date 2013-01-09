@@ -54,12 +54,13 @@ angular.module('idea-boardy')
             if (!keyword) {
                 return idea;
             }
+            var regexp = new RegExp(keyword, 'gi');
             var content = idea.content;
-            if (content.indexOf(keyword) >= 0) {
+            if (content.match(regexp)) {
                 return idea;
             }
             var isAnyTagMatch = _.any(idea.tags, function (tag) {
-                return tag.name.indexOf(keyword) >= 0;
+                return tag.name.match(regexp);
             });
             if (isAnyTagMatch) {
                 return idea;

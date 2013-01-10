@@ -52,22 +52,24 @@ angular.module('idea-boardy')
         };
         $scope.showEditConceptDialog = function (concept, tag, $event) {
             var tagNamesInConcept = _.map(concept.tags, function(tag) {return tag.name;}),
-                tagNames = !!tag ? tagNamesInConcept.concat((tag||{}).name) : tagNamesInConcept;
+                tagNames = !!tag ? tagNamesInConcept.concat((tag||{}).name) : tagNamesInConcept,
+                allTagNames = _.sortBy(getAvailableTagNames().concat(tagNamesInConcept), function(tag) {return tag.name;});
             editConceptDialog.open({
                 concept: _.clone(concept),
                 allConceptNames: getAllConceptNames(),
                 tagNames: tagNames,
-                allTagNames: getAvailableTagNames().concat(tagNamesInConcept),
+                allTagNames: allTagNames,
                 $event: $event
             });
         };
         $scope.showCreateConceptDialog = function (tag1, tag2, $event) {
-            var tagNames = [tag1.name, tag2.name];
+            var tagNames = [tag1.name, tag2.name],
+                allTagNames = _.sortBy(getAvailableTagNames().concat(tagNames), function(tag) {return tag.name;});
             createConceptDialog.open({
                 board: $scope.board,
                 allConceptNames: getAllConceptNames(),
                 tagNames: tagNames,
-                allTagNames: getAvailableTagNames().concat(tagNames),
+                allTagNames: allTagNames,
                 $event: $event
             });
         };

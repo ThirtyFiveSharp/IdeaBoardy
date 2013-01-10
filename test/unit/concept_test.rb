@@ -31,4 +31,19 @@ class ConceptTest < ActiveSupport::TestCase
       concept2.save!
     end
   end
+
+  test "should destroy concept but not associated tags" do
+    tag = Tag.new name: "Tag Name"
+    tag.save
+    concept = Concept.new name: "Concept Name"
+    concept.tags << tag
+    concept.save
+
+    concept.destroy
+
+    assert_equal false, Concept.exists?(concept.id)
+    assert_equal true, Tag.exists?(tag.id)
+    actual_tag = Tag.find(tag.id)
+    assert_nil actual_tag.concept
+  end
 end

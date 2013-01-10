@@ -202,6 +202,9 @@ angular.module('idea-boardy')
                         $http.put(this.links.getLink('self').href, {name: this.name}),
                         $http.put(this.links.getLink('tags').href, {tags: getTagIdsByNames(tagNames)})
                     ]).then(refreshTags);
+                },
+                delete: function() {
+                    $http.delete(this.links.getLink('self').href).success(refreshTags);
                 }
             });
         }

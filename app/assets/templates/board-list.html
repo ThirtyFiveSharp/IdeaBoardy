@@ -1,14 +1,12 @@
 <div ng-controller="BoardListController">
     <div class="guide">
         Select a board
-        <input class="filter-boards" type="text" ng-model="keyword" placeholder="filter boards" ui-reset/>
+        <input class="filter-boards" type="text" ng-model="keyword" placeholder="filter boards" ui-reset autofocus/>
     </div>
-
     <ul class="board-list">
         <li class="board" ng-repeat="board in boards | filter:filterBoard">
             <a class="board-name" ng-click="goToBoard(board)">{{board.name}}</a>
         </li>
-
         <li class="board blank">
             <a class="board-name" ng-click="showCreateBoardDialog()">+ 1 board</a>
         </li>

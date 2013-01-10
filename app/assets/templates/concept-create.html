@@ -1,24 +1,24 @@
-<div ng-controller="CreateConceptController">
-    <div id="create-concept-dialog" name="createConceptDialog" title="Create A Concept"
-         jq-ui-dialog='{"width": 400}' ng-cloak>
-        <form class="create-concept-form" name="createConceptForm" ng-submit="create()">
-            <dl>
-                <dt>Concept Name:</dt>
-                <dd><input type="text" ng-model="dialog.context.conceptName" required not-in="dialog.context.allConceptNames" error-message /></dd>
-            </dl>
-            <dl>
-                <dt>Tags in this concept:</dt>
-                <dd>
-                    <select multiple ui-select2="{containerCssClass: 'tags-select-container'}" ng-model="dialog.context.tagNames" required>
-                        <option ng-repeat="tagName in dialog.context.allTagNames">{{tagName}}</option>
-                    </select>
-                </dd>
-            </dl>
-            <div class="command-bar">
-                <input class="btn-3 btn-ok" type="submit" value="OK"
-                       ng-disabled="createConceptForm.$invalid" jq-ui="button" />
-                <input class="btn-3 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button" />
-            </div>
-        </form>
-    </div>
+<div id="create-concept-dialog" name="createConceptDialog" title="Create A Concept"
+     ng-controller="CreateConceptController" jq-ui-dialog='{"width": 400}' ng-cloak>
+    <form class="create-concept-form" name="createConceptForm" ng-submit="create()">
+        <dl>
+            <dt>Concept Name:</dt>
+            <dd><input type="text" ng-model="dialog.context.conceptName"
+                       required not-in="dialog.context.allConceptNames" error-message/></dd>
+        </dl>
+        <dl>
+            <dt>Tags in this concept:</dt>
+            <dd>
+                <select multiple ui-select2="{containerCssClass: 'tags-select-container'}"
+                        ng-model="dialog.context.tagNames" required>
+                    <option ng-repeat="tagName in dialog.context.allTagNames">{{tagName}}</option>
+                </select>
+            </dd>
+        </dl>
+        <div class="command-bar">
+            <input class="btn-3 btn-ok" type="submit" value="OK"
+                   ng-disabled="createConceptForm.$invalid" jq-ui="button"/>
+            <input class="btn-3 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button"/>
+        </div>
+    </form>
 </div>

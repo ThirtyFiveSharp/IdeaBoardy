@@ -1,3 +1,4 @@
 angular.module('idea-boardy')
   .directive 'autofocus', ->
-    (scope, element, attrs) -> element.focus()
+    priority: -1
+    link: (scope, element, attrs) -> element.focus()

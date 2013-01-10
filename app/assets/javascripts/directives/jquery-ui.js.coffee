@@ -1,25 +1,41 @@
 angular.module('idea-boardy')
   .directive('jqUi', ->
-    link: (scope, element, attrs) -> element[attrs.jqUi].apply(element))
+    link: (scope, element, attrs) -> element[attrs.jqUi].apply(element)
+  )
   .directive('jqUiDialog', ['dialog', (dialog) ->
-    link: (scope, element, attrs) ->
-      getRandomDialogName = -> "dialog_" + new Date().getTime()
-      name = attrs.name or getRandomDialogName()
-      options = JSON.parse(attrs.jqUiDialog or {})
-      extendOptions =
-        title: attrs.title
-        autoOpen: false
-        modal: true
-        resizable: false
-        show: 'fade'
-        hide: 'fade'
-        close: -> dialog(name).close()
-      element.dialog(_.extend(options, extendOptions))
-      scope.$watch ->
-        needToOpen = dialog(name).visible
-        if element.dialog('isOpen') isnt needToOpen
-          event = dialog(name).context.$event or {}
-          targetElement = event.target or window
-          element.dialog('option', 'position', {of: targetElement})
-            .dialog(if needToOpen then 'open' else 'close')
+    transclude: "element"
+    priority: 1000
+    terminal: true
+    compile: (element, attr, transclude) ->
+      (scope, iElement, iAttr) ->
+        dialogScope = null
+        dialogElement = null
+        getRandomDialogName = () -> "dialog_" + new Date().getTime()
+        name = iAttr.name or getRandomDialogName()
+        options = JSON.parse(iAttr.jqUiDialog or {})
+        defaultOptions =
+          title: iAttr.title
+          autoOpen: false
+          modal: true
+          resizable: false
+          show: 'fade'
+          hide: 'fade'
+          close: () -> scope.$apply () -> dialog(name).close()
+        watcher = () -> dialog(name).isOpen()
+        listener = (visible) ->
+          if visible
+            dialogScope = scope.$new();
+            event = dialog(name).context.$event or {}
+            positionOption = {position: {of: event.target or window}}
+            transclude dialogScope, (cloned) ->
+              dialogElement = cloned.dialog(angular.extend({}, defaultOptions, options, positionOption)).dialog('open')
+          else
+            if(dialogElement?)
+              dialogElement.dialog('close')
+              dialogElement.remove()
+              dialogElement = null
+            if(dialogScope?)
+              dialogScope.$destroy()
+              dialogScope = null
+        scope.$watch watcher, listener
   ])

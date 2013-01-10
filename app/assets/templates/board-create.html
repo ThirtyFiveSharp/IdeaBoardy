@@ -1,57 +1,59 @@
-<div ng-controller="CreateBoardController">
-    <div title="Create A New Board" name="createBoardDialog" jq-ui-dialog='{"width": 510}' ng-cloak>
-        <form id="create-board-form" name="createBoardForm" ng-submit="create()">
-            <dl>
-                <dt>Name:</dt>
-                <dd>
-                    <input type="text" name="name" ng-model="dialog.context.boardToCreate.name"
-                           required error-message autofocus />
-                </dd>
-            </dl>
-            <dl>
-                <dt>Description:</dt>
-                <dd><input type="text" name="description" ng-model="dialog.context.boardToCreate.description"/></dd>
-            </dl>
-            <dl>
-                <dt>Sections:</dt>
-                <dd>
-                    <ul>
-                        <li class="add-section" ng-repeat="section in dialog.context.sectionsToCreate">
-                            <input id="create-board-section-name-{{$index}}" type="text" name="sectionName{{$index}}"
-                                   ng-model="section.name" required error-message autofocus/>
-                            <input class="btn-1" type="button" value="-" ng-click="removeSection($index)"
-                                   jq-ui="button"/>
-                            <color-picker for="section"></color-picker>
-                        </li>
-                    </ul>
-                    <input class="btn-3" type="button" value="+1 section" ng-click="addSection()" jq-ui="button"/>
-                </dd>
-            </dl>
-            <dl>
-                <dt>
-                    Invite team members?
-                    <input type="checkbox" ng-model="dialog.context.shouldNotify" ng-change="toggleInvitation()">
-                </dt>
-                <dd ui-if="dialog.context.shouldNotify">
-                    <dl>
-                        <dt>Email Address:</dt>
-                        <dd>
-                            <ul>
-                                <li class="recipients" ng-repeat="recipient in dialog.context.recipients">
-                                    <input name="email" class="email" type="email" ng-model="recipient.email" required error-message autofocus/>
-                                    <input ui-if="dialog.context.recipients.length > 1" class="btn-1" type="button" value="-" ng-click="removeRecipient($index)" jq-ui="button"/>
-                                </li>
-                            </ul>
-                            <input class="btn-3" type="button" value="+1 recipient" ng-click="addRecipient()" jq-ui="button"/>
-                        </dd>
-                    </dl>
-                </dd>
-            </dl>
-            <dl>
-                <input id="create-board" class="btn-3 btn-ok" type="submit" value="Create"
-                       ng-disabled="createBoardForm.$invalid" jq-ui="button"/>
-                <input class="btn-3 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button"/>
-            </dl>
-        </form>
-    </div>
+<div title="Create A New Board" name="createBoardDialog"
+     ng-controller="CreateBoardController" jq-ui-dialog='{"width": 510}' ng-cloak>
+    <form id="create-board-form" name="createBoardForm" ng-submit="create()">
+        <dl>
+            <dt>Name:</dt>
+            <dd>
+                <input type="text" name="name" ng-model="dialog.context.boardToCreate.name"
+                       required error-message autofocus/>
+            </dd>
+        </dl>
+        <dl>
+            <dt>Description:</dt>
+            <dd><input type="text" name="description" ng-model="dialog.context.boardToCreate.description"/></dd>
+        </dl>
+        <dl>
+            <dt>Sections:</dt>
+            <dd>
+                <ul>
+                    <li class="add-section" ng-repeat="section in dialog.context.sectionsToCreate">
+                        <input id="create-board-section-name-{{$index}}" type="text" name="sectionName{{$index}}"
+                               ng-model="section.name" required error-message autofocus/>
+                        <input class="btn-1" type="button" value="-" ng-click="removeSection($index)"
+                               jq-ui="button"/>
+                        <color-picker for="section"></color-picker>
+                    </li>
+                </ul>
+                <input class="btn-3" type="button" value="+1 section" ng-click="addSection()" jq-ui="button"/>
+            </dd>
+        </dl>
+        <dl>
+            <dt>
+                Invite team members?
+                <input type="checkbox" ng-model="dialog.context.shouldNotify" ng-change="toggleInvitation()">
+            </dt>
+            <dd ui-if="dialog.context.shouldNotify">
+                <dl>
+                    <dt>Email Address:</dt>
+                    <dd>
+                        <ul>
+                            <li class="recipients" ng-repeat="recipient in dialog.context.recipients">
+                                <input name="email" class="email" type="email" ng-model="recipient.email" required
+                                       error-message autofocus/>
+                                <input ui-if="dialog.context.recipients.length > 1" class="btn-1" type="button"
+                                       value="-" ng-click="removeRecipient($index)" jq-ui="button"/>
+                            </li>
+                        </ul>
+                        <input class="btn-3" type="button" value="+1 recipient" ng-click="addRecipient()"
+                               jq-ui="button"/>
+                    </dd>
+                </dl>
+            </dd>
+        </dl>
+        <dl>
+            <input id="create-board" class="btn-3 btn-ok" type="submit" value="Create"
+                   ng-disabled="createBoardForm.$invalid" jq-ui="button"/>
+            <input class="btn-3 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button"/>
+        </dl>
+    </form>
 </div>

@@ -1,19 +1,17 @@
-<div ng-controller="CreateTagController">
-    <div id="create-tag-dialog" name="createTagDialog" title="Create A Tag"
-         jq-ui-dialog='{"width": 350}' ng-cloak>
-        <form class="create-tag-form" name="createTagForm" ng-submit="create()">
-            <dl>
-                <dt>Tag Name</dt>
-                <dd>
-                    <input type="text" ng-model="dialog.context.tagToCreate.name"
-                           required error-message autofocus />
-                </dd>
-            </dl>
-            <div class="command-bar">
-                <input id="create-tag" class="btn-3 btn-ok" type="submit" value="Create"
-                       ng-disabled="createTagForm.$invalid" jq-ui="button" />
-                <input class="btn-3 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button" />
-            </div>
-        </form>
-    </div>
+<div id="create-tag-dialog" name="createTagDialog" title="Create A Tag"
+     ng-controller="CreateTagController" jq-ui-dialog='{"width": 350}' ng-cloak>
+    <form class="create-tag-form" name="createTagForm" ng-submit="create()">
+        <dl>
+            <dt>Tag Name</dt>
+            <dd>
+                <input type="text" ng-model="dialog.context.tagToCreate.name"
+                       required error-message autofocus/>
+            </dd>
+        </dl>
+        <div class="command-bar">
+            <input id="create-tag" class="btn-3 btn-ok" type="submit" value="Create"
+                   ng-disabled="createTagForm.$invalid" jq-ui="button"/>
+            <input class="btn-3 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button"/>
+        </div>
+    </form>
 </div>

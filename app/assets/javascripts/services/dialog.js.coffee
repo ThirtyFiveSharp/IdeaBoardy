@@ -12,6 +12,7 @@ angular.module('idea-boardy')
       close: () ->
         autoUpdater.resume()
         @visible = false
+      isOpen: () -> @visible
     (dialogName) ->
       dialog = dialogs[dialogName]
       dialogs[dialogName] = dialog = new Dialog if !dialog

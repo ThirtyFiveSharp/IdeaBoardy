@@ -1,13 +1,11 @@
-<div ng-controller="DeleteBoardController">
-    <div id="delete-board-dialog" name="deleteBoardDialog" title="Delete A Board"
-         jq-ui-dialog='{"width": 400}' ng-cloak>
-        <p>All sections and ideas under this board will be deleted as well.</p>
-        <p>Is that OK?</p>
-        <div class="command-bar">
-            <input class="btn-5 btn-ok" type="button" value="Yes, go ahead."
-                   ng-click="delete()" jq-ui="button" />
-            <input class="btn-5 btn-cancel" type="button" value="No, take me back."
-                   ng-click="cancel()" jq-ui="button" />
-        </div>
+<div id="delete-board-dialog" name="deleteBoardDialog" title="Delete A Board"
+     ng-controller="DeleteBoardController" jq-ui-dialog='{"width": 400}' ng-cloak>
+    <p>All sections and ideas under this board will be deleted as well.</p>
+    <p>Is that OK?</p>
+    <div class="command-bar">
+        <input class="btn-5 btn-ok" type="button" value="Yes, go ahead."
+               ng-click="delete()" jq-ui="button"/>
+        <input class="btn-5 btn-cancel" type="button" value="No, take me back."
+               ng-click="cancel()" jq-ui="button"/>
     </div>
 </div>

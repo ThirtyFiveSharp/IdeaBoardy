@@ -1,7 +1,7 @@
 angular.module('idea-boardy')
-  .directive('jqUi', ->
-    link: (scope, element, attrs) -> element[attrs.jqUi].apply(element)
-  )
+  .directive('jqUi', ['$parse', ($parse) ->
+    link: (scope, element, attrs) -> element[attrs.jqUi].apply(element, $parse(attrs.args)(scope))
+  ])
   .directive('jqUiDialog', ['dialog', (dialog) ->
     transclude: "element"
     priority: 1000

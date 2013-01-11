@@ -7,11 +7,10 @@
   <%- end %>
 </header>
 
-<div id="loading" ng-show="false">
-  We are working hard to load the page, please wait...
-</div>
-
 <div id="main" class="clear-fix">
+  <div id="loading" jq-ui="hide" args="['drop', {}, 500]">
+    We are working hard to load the page, please wait...
+  </div>
   <ng-view></ng-view>
 </div>
 

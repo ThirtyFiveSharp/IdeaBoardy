@@ -23,7 +23,7 @@ input { font-family: Verdana,serif; color: #333333; border: 1px #d3d3d3 solid; p
 
 header { margin-bottom: 0.5em; padding:0.3em 0; background-color: #ffdd57; color: #333333; border-bottom:1px darkgray solid; font-size: 1.4em; text-align: center;}
 #main { position: relative; max-width: 960px; margin: 0 auto; min-height: 300px; }
-#loading { position: absolute; top:50%; width: 100%; font-size: 1.2em; text-align: center; color: #666666; }
+#loading { position: absolute; top:50%; width: 100%; font-size: 1.2em; text-align: center; color: #666666; z-index: 1000; }
 footer { margin: 3em 0; font-size: 0.9em; text-align: center; }
 
 .guide { margin: 1em 0 0.5em; font-size: 1.2em; font-style: italic; }

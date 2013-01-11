@@ -1,0 +1,18 @@
+<div id="specify-tag-dialog" name="specifyTagDialog" title="Specify Tags"
+     ng-controller="SpecifyTagController" jq-ui-dialog='{"width": 380}' ng-cloak>
+    <form class="specify-tag-form" name="specifyTagForm">
+        <dl>
+            <dt>Specify the tags for this idea:</dt>
+            <dd>
+                <input type="text" ng-model="dialog.context.tagNames"
+                       ui-select2="{containerCssClass: 'tags-select-container', tags: dialog.context.allTagNames, tokenSeparators: [',', ' ']}" />
+            </dd>
+            {{tags}}
+        </dl>
+        <div class="command-bar">
+            <input class="btn-3 btn-ok" type="button" value="OK" ng-click="save()"
+                   ng-disabled="specifyTagForm.$invalid" jq-ui="button"/>
+            <input class="btn-3 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button"/>
+        </div>
+    </form>
+</div>

@@ -1,6 +1,6 @@
 <div id="edit-concept-dialog" name="editConceptDialog" title="Edit A Concept"
      ng-controller="EditConceptController" jq-ui-dialog='{"width": 400}' ng-cloak>
-    <form class="edit-concept-form" name="editConceptForm" ng-submit="save()">
+    <form class="edit-concept-form" name="editConceptForm">
         <dl>
             <dt>Concept Name:</dt>
             <dd><input type="text" ng-model="dialog.context.concept.name"
@@ -16,10 +16,10 @@
             </dd>
         </dl>
         <div class="command-bar">
-            <input class="btn-2 btn-delete" type="button" value="Delete" ng-click="delete()" jq-ui="button"/>
-            <input class="btn-3 btn-ok" type="submit" value="OK"
+            <input class="btn-3 btn-ok" type="button" value="OK" ng-click="save()"
                    ng-disabled="editConceptForm.$invalid" jq-ui="button"/>
-            <input class="btn-3 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button"/>
+            <input class="btn-2 btn-delete" type="button" value="Delete" ng-click="delete()" jq-ui="button"/>
+            <input class="btn-2 btn-cancel" type="button" value="Cancel" ng-click="cancel()" jq-ui="button"/>
         </div>
     </form>
 </div>

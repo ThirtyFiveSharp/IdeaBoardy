@@ -2,14 +2,14 @@ angular.module('idea-boardy')
     .controller('IdeaController', ['$scope', '$http', '$q', 'dialog', 'events',
     function ($scope, $http, $q, dialog, events) {
         var editIdeaDialog = dialog('editIdeaDialog'),
-            addTagDialog = dialog('addTagDialog');
+            specifyTagDialog = dialog('specifyTagDialog');
         $scope.idea = enhanceIdea($scope.idea);
         enhanceIdeaTags($scope.idea, $scope.idea.tags);
         $scope.showEditDialog = function($event) {
             editIdeaDialog.open({ideaToEdit: _.clone($scope.idea), $event: $event});
         };
-        $scope.showAddTagDialog = function($event) {
-            addTagDialog.open({idea: $scope.idea, tagNames: [], allTagNames:$scope.getAllTagNames(), $event: $event});
+        $scope.showSpecifyTagDialog = function($event) {
+            specifyTagDialog.open({idea: $scope.idea, tagNames: $scope.idea.tagNames || [], allTagNames:$scope.getAllTagNames(), $event: $event});
         };
 
         function enhanceIdea(rawIdea) {
@@ -62,27 +62,24 @@ angular.module('idea-boardy')
                     $http.put(idea.links.getLink('tags').href, buildRequestToUpdateTags(tags))
                         .success(function() {refreshTags(idea)});
                 },
-                addTagByNames: function(tagNames) {
+                saveTags: function(tagNames) {
                     var idea = this,
-                        tagNamesToAdd = _.filter(tagNames, function(tagName) {return idea.tagNames.indexOf(tagName) < 0});
-                    if(tagNamesToAdd.length == 0) return;
-
-                    var allTagsOfBoard = $scope.getTags(),
+                        allTagsOfBoard = $scope.getTags(),
                         allTagNamesOfBoard = _.map(allTagsOfBoard, function(tag) {return tag.name;}),
-                        existingTagsToAdd = _.filter(allTagsOfBoard, function(tag) {return tagNamesToAdd.indexOf(tag.name) >= 0}),
-                        newlyCreatedTagsToAdd = [],
-                        tagNamesToCreate = _.filter(tagNamesToAdd, function(tagName) {return allTagNamesOfBoard.indexOf(tagName) < 0;}),
+                        existingTags = _.filter(allTagsOfBoard, function(tag) {return _.contains(tagNames, tag.name);}),
+                        tagNamesToCreate = _.filter(tagNames, function(tagName) {return !_.contains(allTagNamesOfBoard, tagName);}),
                         createNewTagPromises = _.map(tagNamesToCreate, function(tagName) {
                             return $http.post($scope.board.tagsLink.href, {name: tagName});
-                        });
+                        }),
+                        newlyCreatedTags = [];
                     $q.all(createNewTagPromises).then(function(returns) {
                         _.each(returns, function(obj) {
-                            newlyCreatedTagsToAdd.push(obj.data);
+                            newlyCreatedTags.push(obj.data);
                         });
-                        var allTagsOfIdea = idea.getTags().concat(existingTagsToAdd).concat(newlyCreatedTagsToAdd);
+                        var allTagsOfIdea = existingTags.concat(newlyCreatedTags);
                         $http.put(idea.links.getLink('tags').href, buildRequestToUpdateTags(allTagsOfIdea))
                             .success(function() {
-                                if(newlyCreatedTagsToAdd.length > 0) {
+                                if(newlyCreatedTags.length > 0) {
                                     $scope.$emit(events.tagCreated);
                                 }
                                 refreshTags(idea);
@@ -91,16 +88,17 @@ angular.module('idea-boardy')
                 }
             });
         }
+
+        function buildRequestToUpdateTags(tags) {
+            return {tags: _.map(tags, function(tag) {return tag.id})};
+        }
+
         function refreshIdea() {
             $http.get($scope.idea.links.getLink('self').href).success(function (idea) {
                 $scope.idea = enhanceIdea(idea);
                 refreshTags(idea);
             });
         }
-        function buildRequestToUpdateTags(tags) {
-            return {tags: _.map(tags, function(tag) {return tag.id})};
-        }
-
         function enhanceIdeaTags(idea, tagsOfIdea) {
             idea.tagIds = _.map(tagsOfIdea, function (tagOfIdea) {
                 return tagOfIdea.id;

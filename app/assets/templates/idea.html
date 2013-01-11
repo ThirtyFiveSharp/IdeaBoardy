@@ -5,7 +5,7 @@
     <meta draggable-type="tagInConcept" action="idea.addTag($draggableModel)" />
     <!--<meta queryable="idea" lookup-keys="content,vote,tagsName"/>-->
     <ul class="idea-tag-list">
-        <li><a class="idea-tag blank" title="click to specify tags" ng-click="$event.stopPropagation(); showAddTagDialog($event)"></a></li>
+        <li><a class="idea-tag blank" title="click to specify tags" ng-click="$event.stopPropagation(); showSpecifyTagDialog($event)"></a></li>
         <li class="idea-tag" title="click to remove this tag" ng-repeat="tag in idea.getTags()">
             <a ng-click="$event.stopPropagation(); idea.removeTag(tag)">{{tag.name}}</a>
         </li>

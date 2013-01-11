@@ -21,7 +21,7 @@ module ShortenUrl
   end
 
   def get_api_code(api)
-    api_code_map = paths[api]
+    api_code_map = paths[api.to_sym]
     return api_code_map[:api_code] unless api_code_map.nil?
     nil
   end
@@ -30,7 +30,7 @@ module ShortenUrl
     raise "input number must be greater than zero" unless decimal_number > 0
     id = decimal_number
     url = []
-    while(id > 0)
+    while id > 0
       url << characters[id % 62]
       id = id / 62
     end
@@ -49,10 +49,10 @@ module ShortenUrl
 
   private
   def characters
-    ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    %w(0 1 2 3 4 5 6 7 8 9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r s t u v w x y z)
   end
 
-  def get_path_template api_code
+  def get_path_template(api_code)
     paths.keys.each do |key|
       return paths[key][:template] if paths[key][:api_code] == api_code.to_i
     end
@@ -61,7 +61,7 @@ module ShortenUrl
 
   def paths
     {
-        "api_board" => {:template => "/api/boards/{0}", :api_code => 1000}
+        :api_board => {:template => "/api/boards/{0}", :api_code => 1000}
     }
   end
 end

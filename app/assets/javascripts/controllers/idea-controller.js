@@ -107,9 +107,10 @@ angular.module('idea-boardy')
                 return tagOfIdea.name;
             });
             idea.getTags = function () {
-                return _.select($scope.getTags(), function (tag) {
-                    return _.contains(idea.tagIds, tag.id);
-                });
+                var tagsInConcept = $scope.getTagsInConcept(),
+                    tagsNotInConcept = $scope.getTagsNotInConcept(),
+                    allTagsOfIdea = tagsInConcept.concat(tagsNotInConcept);
+                return _.filter(allTagsOfIdea, function (tag) {return _.contains(idea.tagIds, tag.id);});
             };
         }
 

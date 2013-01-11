@@ -107,10 +107,11 @@ angular.module('idea-boardy')
                 return tagOfIdea.name;
             });
             idea.getTags = function () {
-                var tagsInConcept = $scope.getTagsInConcept(),
-                    tagsNotInConcept = $scope.getTagsNotInConcept(),
-                    allTagsOfIdea = tagsInConcept.concat(tagsNotInConcept);
-                return _.filter(allTagsOfIdea, function (tag) {return _.contains(idea.tagIds, tag.id);});
+                var tagsNotInConcept = $scope.getTagsNotInConcept(),
+                    tagsGroupedByConcept = $scope.getTagsInConcept(),
+                    tagsInConcept = [];
+                _.each(tagsGroupedByConcept, function(concept) {Array.prototype.push.apply(tagsInConcept, concept.tags)});
+                return _.filter(tagsInConcept.concat(tagsNotInConcept), function (tag) {return _.contains(idea.tagIds, tag.id);});
             };
         }
 

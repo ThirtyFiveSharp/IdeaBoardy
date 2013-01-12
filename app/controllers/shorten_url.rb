@@ -49,8 +49,7 @@ module ShortenUrl
 
   private
   def characters
-    # %w(0 1 2 3 4 5 6 7 8 9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r s t u v w x y z).shuffle
-    %w(g W R 3 5 z U o n Q I p k u t K 0 v 9 Z M A 7 j O w a q C s X L h Y y T N 8 r 1 S V P 4 d D l f b E 6 i G 2 H c F x e J B m)
+    %w(0 1 2 3 4 5 6 7 8 9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r s t u v w x y z)
   end
 
   def get_path_template(api_code)

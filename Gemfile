@@ -30,6 +30,7 @@ group :assets do
 end
 
 gem 'devise', '~> 2.1.2'
+gem 'simplecov', :require => false, :group => :test
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

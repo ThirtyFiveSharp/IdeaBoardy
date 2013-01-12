@@ -1,12 +1,17 @@
 describe('BoardReportController', function () {
     var scope, ctrl, $httpBackend,
+        shortenUrlCode = "shortenUrlCode",
         boardUri = 'http://localhost:3000/api/boards/1',
         sectionsLinkUri = boardUri + "/sections",
         tagsLinkUri = boardUri + "/tags",
         invitationUri = "http://localhost:3000/emails/invitation",
         section1Uri = "http://localhost:3000/api/sections/1",
         section2Uri = "http://localhost:3000/api/sections/2",
-        board = {"id":1, "name":"tiger retro", "description":"tiger retro for iteration 29",
+        board = {
+            "id":1,
+            "name":"tiger retro",
+            "description":"tiger retro for iteration 29",
+            "shortenUrlCode": "shortenUrlCode",
             "sections":[
                 {"id":1, "name":"Well", "color":"ddffdd", "links":[
                     {"rel":"self", "href":"http://localhost:3000/api/sections/1"},
@@ -48,15 +53,20 @@ describe('BoardReportController', function () {
 
     beforeEach(module('idea-boardy'));
 
-    beforeEach(inject(function (_$httpBackend_, $rootScope, $controller, params) {
-        params('uri', boardUri);
+    beforeEach(inject(function (_$httpBackend_, $rootScope, $controller, config, params) {
+        params('shortenUrlCode', shortenUrlCode);
         $httpBackend = _$httpBackend_;
-        $httpBackend.expectGET(boardUri + "?embed=sections").respond(board);
+        $httpBackend.expectGET(config.shortenUrlEntryPoint + '/' + shortenUrlCode + "?embed=sections").respond(board);
         $httpBackend.expectGET(section1Uri + "?embed=ideas").respond(sections[0]);
         $httpBackend.expectGET(section2Uri + "?embed=ideas").respond(sections[1]);
         scope = $rootScope.$new();
         ctrl = $controller('BoardReportController', {$scope:scope});
         $httpBackend.flush();
+    }));
+
+    afterEach((function () {
+        $httpBackend.verifyNoOutstandingExpectation();
+        $httpBackend.verifyNoOutstandingRequest();
     }));
 
     describe("initialize", function () {
@@ -74,10 +84,7 @@ describe('BoardReportController', function () {
         it("should go to board page", inject(function ($location) {
             $location.path('/reports');
             scope.goToBoard();
-            expect($location.path()).toEqual('/board');
-            expect($location.search()).toEqual({uri:boardUri});
+            expect($location.path()).toEqual('/board/' + scope.board.shortenUrlCode);
         }));
     });
-
-})
-;
+});

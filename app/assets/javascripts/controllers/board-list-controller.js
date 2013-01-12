@@ -33,8 +33,7 @@ angular.module('idea-boardy')
             });
         };
         $scope.goToBoard = function (board) {
-            var boardLink = board.links.getLink('board');
-            $location.path('/board').search({uri:boardLink.href});
+            $location.path('/board/' + board.shortenUrlCode);
         };
 
         $scope.filterBoard = function(board) {

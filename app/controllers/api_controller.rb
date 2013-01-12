@@ -27,10 +27,6 @@ class ApiController < ApplicationController
     representation
   end
 
-  def api_board_url(id)
-    get_shorten_url("api_board", id)
-  end
-
   private
   def get_representation_builder(obj)
     "#{obj.to_s.underscore.singularize}_representation"

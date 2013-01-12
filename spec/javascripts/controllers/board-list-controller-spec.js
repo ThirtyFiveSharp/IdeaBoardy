@@ -1,7 +1,10 @@
 describe('BoardListController', function() {
     var scope,
         boardsUri = "/api/boards",
-        boards = [{name: 'board 1'},{name: 'board 2', id: 2, links: [{rel: 'board', href: 'boardUri'}]}];
+        boards = [
+            {name: 'board 1', shortenUrlCode: 'shortenUrlCode'},
+            {name: 'board 2', id: 2, links: [{rel: 'board', href: 'boardUri'}]}
+        ];
 
     beforeEach(module('idea-boardy'));
     beforeEach(inject(function($rootScope, $controller, $httpBackend) {
@@ -33,8 +36,7 @@ describe('BoardListController', function() {
         it('should go to the given board page', inject(function($location) {
             var boardToGo = scope.boards[1];
             scope.goToBoard(boardToGo);
-            expect($location.path()).toEqual('/board');
-            expect($location.search()).toEqual({uri: boardToGo.links.getLink('board').href});
+            expect($location.path()).toEqual('/board/' + boardToGo.shortenUrlCode);
         }));
     });
 });

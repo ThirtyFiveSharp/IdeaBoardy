@@ -3,6 +3,8 @@ require 'test_helper'
 class Api::BoardsControllerTest < ActionController::TestCase
   NON_EXISTED_ID = 99999
 
+  include ShortenUrl
+
   setup do
     @board1 = boards(:board_one)
     @board2 = boards(:board_two)
@@ -17,6 +19,7 @@ class Api::BoardsControllerTest < ActionController::TestCase
     expected_boards.each_with_index do |expected_board, index|
       assert_equal expected_board.id, actual_boards[index]['id']
       assert_equal expected_board.name, actual_boards[index]['name']
+      assert_equal get_shorten_url("api_board", expected_board.id), actual_boards[index]['shortenUrlCode']
       links = actual_boards[index]['links']
       assert_equal 1, links.count
       board_link = links.select { |l| l['rel'] == 'board' }.first
@@ -53,6 +56,7 @@ class Api::BoardsControllerTest < ActionController::TestCase
     assert_equal @board1.id, actual_board['id']
     assert_equal @board1.name, actual_board['name']
     assert_equal @board1.description, actual_board['description']
+    assert_equal get_shorten_url("api_board", @board1.id), actual_board['shortenUrlCode']
     links = actual_board['links']
     assert_equal 6, links.count
     self_link = links.select { |l| l['rel']=='self' }.first

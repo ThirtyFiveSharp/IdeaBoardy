@@ -33,7 +33,7 @@ module BuildTools
     def precompile_file(file)
       raise "[#{file}] is not a file!" unless ::File.file?(file)
       puts "  #{file}"
-      key = '"assets/' + ::File.basename(file) + '"'
+      key = '"/assets/' + ::File.basename(file) + '"'
       javascript_str = html_to_javascript(::IO.read(file))
       {key: key, content: javascript_str}
     end

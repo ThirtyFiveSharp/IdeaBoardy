@@ -4,6 +4,7 @@ module RepresentationBuilder
         id: board.id,
         name: board.name,
         description: board.description,
+        shortenUrlCode: get_shorten_url("api_board", board.id),
         links: [
             {rel: :self, href: api_board_url(board.id)},
             {rel: :sections, href: api_board_sections_url(board.id)},

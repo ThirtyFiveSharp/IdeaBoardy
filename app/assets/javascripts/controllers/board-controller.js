@@ -1,7 +1,8 @@
 angular.module('idea-boardy')
-    .controller('BoardController', ['$scope', '$http', '$location', '$q', 'params', 'dialog', 'color', 'events', 'autoUpdater',
-    function ($scope, $http, $location, $q, params, dialog, color, events, autoUpdater) {
-        var tagsInBoard = [],
+    .controller('BoardController', ['$scope', '$http', '$location', '$q', 'config', 'params', 'dialog', 'color', 'events', 'autoUpdater',
+    function ($scope, $http, $location, $q, config, params, dialog, color, events, autoUpdater) {
+        var boardUri = config.shortenUrlEntryPoint + "/" + params('shortenUrlCode'),
+            tagsInBoard = [],
             concepts = [],
             deleteBoardDialog = dialog('deleteBoardDialog'),
             createSectionDialog = dialog('createSectionDialog'),
@@ -14,7 +15,7 @@ angular.module('idea-boardy')
             editConceptDialog = dialog('editConceptDialog'),
             invitationDialog = dialog('invitationDialog');
         autoUpdater.clear();
-        $http.get(params('uri'), {params:{embed:"tags,concepts"}})
+        $http.get(boardUri, {params:{embed:"tags,concepts"}})
             .success(function (board) {
                 enhanceBoard(board);
                 $scope.board = board;
@@ -74,7 +75,7 @@ angular.module('idea-boardy')
             });
         };
         $scope.goToReport = function (board) {
-            $location.path('report').search({uri:board.selfLink.href});
+            $location.path('/report/' + board.shortenUrlCode);
         };
         $scope.getTags = function () {
             return tagsInBoard;
@@ -155,7 +156,7 @@ angular.module('idea-boardy')
                 },
                 delete:function () {
                     $http.delete(this.links.getLink('self').href).success(function () {
-                        $location.path("").search({});
+                        $location.path("/");
                     });
                 },
                 createSection:function (sectionToCreate) {

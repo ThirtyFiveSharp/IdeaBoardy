@@ -17,7 +17,6 @@ describe('HeaderController', function() {
         it('should go to home page', inject(function($location) {
             scope.goToHomePage();
             expect($location.path()).toEqual('/');
-            expect($location.search()).toEqual({});
         }));
     });
 });

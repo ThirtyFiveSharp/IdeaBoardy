@@ -36,6 +36,10 @@ def config_api_routes
   end
 end
 
+def config_shorten_url_routes
+  get 'url/:shortenUrlCode' => 'shortenUrl#get'
+end
+
 def config_admin_site_routes
   devise_for :users, :controllers => {:sessions => "admin/sessions"}
   namespace :admin do
@@ -49,13 +53,13 @@ def config_admin_site_routes
 end
 
 def config_web_site_routes
-  get "home/index"
   root :to => 'home#index'
-  match ':everything_else' => 'home#index'
+  match '*everything_else' => 'home#index'
 end
 
 IdeaBoardy::Application.routes.draw do
   config_api_routes
+  config_shorten_url_routes
   config_admin_site_routes
   config_web_site_routes
 end

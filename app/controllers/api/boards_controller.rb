@@ -6,6 +6,7 @@ module Api
       render json: Board.order('name').collect { |board| {
           id: board.id,
           name: board.name,
+          shortenUrlCode: get_shorten_url("api_board", board.id),
           links: [
               {rel: 'board', href: api_board_url(board.id)}
           ]

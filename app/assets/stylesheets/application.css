@@ -27,7 +27,8 @@ header { margin-bottom: 0.5em; padding:0.3em 0; background-color: #ffdd57; color
 footer { margin: 3em 0; font-size: 0.9em; text-align: center; }
 
 .guide { margin: 1em 0 0.5em; font-size: 1.2em; font-style: italic; }
-.error-message { position: absolute; color: #dc143c !important; font-style: italic !important; font-size:1em !important; text-align: right; }
+.error-message { display: table; overflow: hidden; position: absolute; text-align: right; }
+.error-message-text { display: table-cell; vertical-align: middle; color: #dc143c !important; font-style: italic !important; font-size:1em !important; }
 .clear-fix:after { content: ""; display:table; clear: both; }
 .ui-draggable-dragging { z-index: 999;}
 .ui-autocomplete { max-height: 20em; overflow-y: auto; overflow-x: hidden; }

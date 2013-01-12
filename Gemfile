@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.10'
+gem 'rails', '~> 3.2.11'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -22,14 +22,14 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.2'
   gem 'jquery-rails', '~> 2.1.4'
-  gem 'jquery-ui-rails', '~> 3.0'
+  gem 'jquery-ui-rails', '~> 3.0.1'
   gem 'underscore-rails', '~> 1.4.3'
   gem 'angularjs-rails', '~> 1.0.3'
 
   gem 'uglifier', '~> 1.3.0'
 end
 
-gem 'devise', '~> 2.1.2'
+gem 'devise', '~> 2.2.1'
 gem 'simplecov', :require => false, :group => :test
 
 # To use ActiveModel has_secure_password

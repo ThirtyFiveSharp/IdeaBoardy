@@ -15,3 +15,7 @@ angular.module('idea-boardy', ['ui'])
   .config(['$locationProvider', ($locationProvider) ->
     $locationProvider.html5Mode true
   ])
+  .run(['$rootScope', 'autoUpdater', ($rootScope, autoUpdater) ->
+    $rootScope.$on('$routeChangeStart', () -> autoUpdater.clear())
+  ])
+;

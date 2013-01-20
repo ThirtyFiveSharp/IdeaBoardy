@@ -19,9 +19,9 @@ end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
+  gem 'sass-rails',   '~> 3.2.6'
   gem 'coffee-rails', '~> 3.2.2'
-  gem 'jquery-rails', '~> 2.1.4'
+  gem 'jquery-rails', '~> 2.2.0'
   gem 'jquery-ui-rails', '~> 3.0.1'
   gem 'underscore-rails', '~> 1.4.3'
   gem 'angularjs-rails', '~> 1.0.3'
@@ -29,7 +29,7 @@ group :assets do
   gem 'uglifier', '~> 1.3.0'
 end
 
-gem 'devise', '~> 2.2.1'
+gem 'devise', '~> 2.2.2'
 gem 'simplecov', :require => false, :group => :test
 
 # To use ActiveModel has_secure_password

@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class BoardMailerTest < ActionMailer::TestCase
+  include ShortenUrl
+
   test "should create invitation email" do
     hostname = "ideaboardy.herokuapp.com"
     to = "group@abc.com"
@@ -12,7 +14,7 @@ class BoardMailerTest < ActionMailer::TestCase
     assert_equal [to], email.to
     assert_equal "Board '#{board.name}' is created", email.subject
     assert_match /Board '#{board.name}'/, email.encoded
-    assert_match /#{hostname}\/board\?uri=http%3A%2F%2F#{hostname}%2Fapi%2Fboards%2F#{board.id}/, email.encoded
+    assert_match /#{hostname}\/board\/#{get_shorten_url("api_board", board.id)}/, email.encoded
   end
 
   test "should create share report email" do

@@ -5,7 +5,7 @@
 </head>
 <body>
 Hi all,
-<% url = "#{root_url(host: @hostname)}board?uri=#{url_encode(@uri)}" %>
+<% url = "#{root_url(host: @hostname)}board/#{@uri}" %>
 <p>Board '<%= @board.name %>' is created here: <a href="<%= url %>"><%= url %></a>.</p>
 
 <p>Please feel free to post your stickies.</p>

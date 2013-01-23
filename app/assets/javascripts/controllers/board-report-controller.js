@@ -14,7 +14,7 @@ angular.module('idea-boardy')
             $http.get(config.shortenUrlEntryPoint + "/" + params('shortenUrlCode'), {params:{embed:"sections"}})
                 .success(function (board) {
                     $scope.board = board;
-                    $scope.sections = board.sections;
+                    $scope.sections = [];
                     _.each($scope.board.sections, function (section, index) {
                         $http.get(section.links.getLink('self').href, {params:{embed:"ideas"}})
                             .success(function (section) {

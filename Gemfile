@@ -25,6 +25,7 @@ group :assets do
   gem 'jquery-ui-rails', '~> 3.0.1'
   gem 'underscore-rails', '~> 1.4.3'
   gem 'angularjs-rails', '~> 1.0.3'
+  gem 'jquery_mobile_rails'
 
   gem 'uglifier', '~> 1.3.0'
 end

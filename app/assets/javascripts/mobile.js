@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require ./libs/jquery-migrate-1.1.0
 //= require jquery_ujs
 //= require jquery.mobile
 //= require underscore

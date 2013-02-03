@@ -30,7 +30,7 @@ group :assets do
   gem 'uglifier', '~> 1.3.0'
 end
 
-gem 'devise', '~> 2.2.2'
+gem 'devise', '~> 2.2.3'
 gem 'simplecov', :require => false, :group => :test
 
 # To use ActiveModel has_secure_password

@@ -58,7 +58,7 @@ class Api::BoardsControllerTest < ActionController::TestCase
     assert_equal @board1.description, actual_board['description']
     assert_equal get_shorten_url("api_board", @board1.id), actual_board['shortenUrlCode']
     links = actual_board['links']
-    assert_equal 6, links.count
+    assert_equal 7, links.count
     self_link = links.select { |l| l['rel']=='self' }.first
     assert_equal api_board_url(@board1.id), self_link['href']
     sections_link = links.select { |l| l['rel']=='sections' }.first
@@ -71,6 +71,8 @@ class Api::BoardsControllerTest < ActionController::TestCase
     assert_equal api_emails_invitation_url, invitation_link['href']
     share_link = links.select { |l| l['rel']=='share' }.first
     assert_equal api_emails_share_url, share_link['href']
+    tag_cloud_link = links.select { |l| l['rel']=='tagcloud' }.first
+    assert_equal api_board_tagcloud_index_url(@board1.id), tag_cloud_link['href']
   end
 
   test "should return 404 Not Found when board is not existed (GET)" do

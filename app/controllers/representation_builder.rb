@@ -9,6 +9,7 @@ module RepresentationBuilder
             {rel: :self, href: api_board_url(board.id)},
             {rel: :sections, href: api_board_sections_url(board.id)},
             {rel: :concepts, href: api_board_concepts_url(board.id)},
+            {rel: :tagcloud, href: api_board_tagcloud_index_url(board.id)},
             {rel: :tags, href: api_board_tags_url(board.id)},
             {rel: :invitation, href: api_emails_invitation_url},
             {rel: :share, href: api_emails_share_url}

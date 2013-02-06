@@ -4,6 +4,7 @@ def config_api_routes
       resources :sections, only: [:index, :create], controller: :board_sections
       resources :concepts, only: [:index, :create], controller: :board_concepts
       resources :tags, only: [:index, :create], controller: :board_tags
+      resources :tagcloud, only: [:index], controller: :tag_cloud
     end
 
     resources :sections, except: [:index, :create] do

@@ -9,11 +9,31 @@ angular.module('idea-boardy')
         $scope.goToBoard = function () {
             $location.path('/board/' + $scope.board.shortenUrlCode);
         };
+        $scope.shouldShowTagCloud = false;
+        $scope.tagCloud = [];
+        $scope.showTagCloud = function () {
+            $scope.shouldShowTagCloud = !$scope.shouldShowTagCloud;
+            if($scope.shouldShowTagCloud) {
+                $http.get($scope.board.tagCloudLink.href)
+                    .success(function(tagCloud){
+                        $scope.tagCloud = tagCloud;
+                        TagCanvas.Start('myCanvas','tags',{
+                            textColour: '#ff0000',
+                            outlineColour: '#ff00ff',
+                            reverse: true,
+                            depth: 0.8,
+                            maxSpeed: 0.05
+                        });
+                    });
+            }
+        }
 
         function refreshBoards() {
             $http.get(config.shortenUrlEntryPoint + "/" + params('shortenUrlCode'), {params:{embed:"sections"}})
                 .success(function (board) {
+                    board.tagCloudLink = _.find(board.links, function(link){return link.rel == 'tagcloud'});
                     $scope.board = board;
+                    console.log(board.tagCloudLink);
                     $scope.sections = [];
                     _.each($scope.board.sections, function (section, index) {
                         $http.get(section.links.getLink('self').href, {params:{embed:"ideas"}})

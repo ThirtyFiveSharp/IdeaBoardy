@@ -87,4 +87,11 @@ describe('BoardReportController', function () {
             expect($location.path()).toEqual('/board/' + scope.board.shortenUrlCode);
         }));
     });
+
+    describe("tagCloud", function () {
+        it("should initialize an empty tag cloud model", inject(function ($location) {
+            expect(scope.shouldShowTagCloud).toEqual(false);
+            expect(scope.tagCloud).toEqual([]);
+        }));
+    });
 });

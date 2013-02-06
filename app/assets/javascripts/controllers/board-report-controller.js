@@ -22,7 +22,11 @@ angular.module('idea-boardy')
                             outlineColour: '#ff00ff',
                             reverse: true,
                             depth: 0.8,
-                            maxSpeed: 0.05
+                            maxSpeed: 0.05,
+                            weight: true,
+                            weightFrom: 'weight',
+                            textColour: '#00f',
+                            textFont: 'Impact,Arial Black,sans-serif'
                         });
                     });
             }
@@ -33,7 +37,6 @@ angular.module('idea-boardy')
                 .success(function (board) {
                     board.tagCloudLink = _.find(board.links, function(link){return link.rel == 'tagcloud'});
                     $scope.board = board;
-                    console.log(board.tagCloudLink);
                     $scope.sections = [];
                     _.each($scope.board.sections, function (section, index) {
                         $http.get(section.links.getLink('self').href, {params:{embed:"ideas"}})

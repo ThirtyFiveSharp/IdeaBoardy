@@ -1,6 +1,6 @@
 describe 'auto updater', ->
 
-  beforeEach(module('idea-boardy'))
+  beforeEach(module('idea-boardy-services'))
 
   it 'should register an updater', inject (autoUpdater) ->
     updaterName = "uri1"

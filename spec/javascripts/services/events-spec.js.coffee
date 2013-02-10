@@ -9,7 +9,7 @@ describe 'events', ->
     tagCreated: 'tagCreated'
     querableTargetChanged: 'querableTargetChanged'
 
-  beforeEach(module('idea-boardy'))
+  beforeEach(module('idea-boardy-services'))
 
   it 'should return given event', inject((events) ->
     expect(events.editSection).toBe(expectEvents.editSection)

@@ -1,7 +1,7 @@
 describe 'color', ->
   expectColors = ['ddffdd', 'fff0f5', 'e6e6fa', 'ffffe0', 'e0ffff', 'ffefd5']
 
-  beforeEach(module('idea-boardy'))
+  beforeEach(module('idea-boardy-services'))
 
   it 'should return color value of given index', inject (color) ->
     expect(color(i)).toBe(expectedColor) for expectedColor, i in expectColors

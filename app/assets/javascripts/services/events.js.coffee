@@ -1,4 +1,4 @@
-angular.module('idea-boardy')
+angular.module('idea-boardy-services')
   .value 'events',
     editSection: 'editSection'
     sectionEditingFinished: 'sectionEditingFinished'

@@ -1,4 +1,4 @@
-angular.module('idea-boardy')
+angular.module('idea-boardy-services')
   .factory('email', ['$http', ($http) ->
     invite: (recipients, board) ->
       $http.post(board.links.getLink('invitation').href, {to: recipients, board: board})

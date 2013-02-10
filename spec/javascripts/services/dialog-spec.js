@@ -1,6 +1,6 @@
 describe('dialog', function () {
 
-    beforeEach(module('idea-boardy'));
+    beforeEach(module('idea-boardy-services'));
 
     it('should re-use same dialog when creating dialog with same name', inject(function (dialog) {
         var dialog1 = dialog('dialog1');

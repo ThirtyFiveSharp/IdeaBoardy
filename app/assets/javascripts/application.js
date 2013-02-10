@@ -18,6 +18,7 @@
 //= require ./libs/angular-ui
 //= require util
 //= require module
+//= require services-module
 //= require_tree ./filters
 //= require_tree ./services
 //= require_tree ./directives

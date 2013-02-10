@@ -1,5 +1,5 @@
 describe('params', function () {
-    beforeEach(module('idea-boardy'));
+    beforeEach(module('idea-boardy-services'));
 
     it('should get parameter value', inject(function (params) {
         params('key', 'value');

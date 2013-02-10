@@ -1,4 +1,4 @@
-angular.module('idea-boardy')
+angular.module('idea-boardy-services')
   .factory('autoUpdater', ['$window','$http', ($window, $http) ->
     registedUpdater = {}
     running = true

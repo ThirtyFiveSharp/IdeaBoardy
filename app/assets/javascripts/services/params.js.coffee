@@ -1,4 +1,4 @@
-angular.module('idea-boardy')
+angular.module('idea-boardy-services')
   .factory('params', ['$routeParams', ($routeParams) ->
     params = {}
     fresh = true

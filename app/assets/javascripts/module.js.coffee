@@ -1,4 +1,4 @@
-angular.module('idea-boardy', ['ui'])
+angular.module('idea-boardy', ['ui', 'idea-boardy-services'])
   .value('config', {
     apiEntryPoint: "/api/boards"
     shortenUrlEntryPoint: "/url"

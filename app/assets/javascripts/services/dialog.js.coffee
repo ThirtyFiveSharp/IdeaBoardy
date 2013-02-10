@@ -1,4 +1,4 @@
-angular.module('idea-boardy')
+angular.module('idea-boardy-services')
   .factory('dialog', ['autoUpdater', (autoUpdater) ->
     dialogs = {}
     class Dialog

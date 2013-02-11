@@ -3,7 +3,7 @@ angular.module('m-idea-boardy', [])
     apiEntryPoint: "/api/boards"
   })
   .config(['$routeProvider', ($routeProvider) ->
-    $routeProvider.otherwise {templateUrl: '/assets/m-board-list.html', controller: 'MBoardListController'}
+    $routeProvider.otherwise {templateUrl: '#board_list'}
   ])
   .config(['$locationProvider', ($locationProvider) ->
     $locationProvider.html5Mode true

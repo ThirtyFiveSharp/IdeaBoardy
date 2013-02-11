@@ -17,5 +17,6 @@
 //= require underscore
 //= require angular
 //= require util
+//= require ./libs/jquery-mobile-angular-adapter-1.2.0
 //= require mobile/m-module
 //= require_tree ./mobile/controllers

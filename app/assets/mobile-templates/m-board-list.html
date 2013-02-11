@@ -4,8 +4,8 @@
         <a href="#" id="addBoard" data-role="button">+1 Board</a>
     </div>
     <div data-role="content">
-        <ul data-role="listview">
-            <li class="ui-btn-icon-right ui-li ui-btn-up-d" ng-repeat="board in boards | paged:'pager':10">
+        <ul data-role="listview" data-filter="true">
+            <li class="ui-btn-icon-right ui-li ui-btn-up-d" ng-repeat="board in boards | paged:'pager':5">
                 <div class="ui-btn-inner">
                     <a class="ui-link-inherit" href="#">{{board.name}}</a>
                     <span class="ui-icon ui-icon-arrow-r">&nbsp;</span>

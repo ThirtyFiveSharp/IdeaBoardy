@@ -1,4 +1,4 @@
-angular.module('m-idea-boardy', [])
+angular.module('m-idea-boardy', ['idea-boardy-services'])
   .value('config', {
     apiEntryPoint: "/api/boards"
   })

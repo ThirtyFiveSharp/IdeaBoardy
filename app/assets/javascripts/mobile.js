@@ -20,4 +20,5 @@
 //= require ./libs/jquery-mobile-angular-adapter-1.2.0
 //= require services-module
 //= require mobile/m-module
+//= require_tree ./services
 //= require_tree ./mobile/controllers

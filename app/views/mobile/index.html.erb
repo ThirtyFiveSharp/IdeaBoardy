@@ -1,1 +1,30 @@
-<ng-include src="'/assets/m-board-list.html'"></ng-include>
+<div id="board_list" data-role="page" ng-controller="MBoardListController">
+  <div data-role="header">
+    <h1>IdeaBoardy</h1>
+    <a href="#" id="addBoard" data-role="button">+1 Board</a>
+  </div>
+  <div data-role="content">
+    <ul data-role="listview" data-filter="true" data-inset="true">
+      <li ng-repeat="board in boards | paged:'pager':5">
+        <a ng-click="goToBoard(board)">{{board.name}}</a>
+      </li>
+    </ul>
+    <a ngm-if="pager.hasMore" href="#" data-role="button" data-theme="b" ngm-vclick="pager.loadMore()">Show more</a>
+  </div>
+  <div data-role="footer">
+    <h4>IdeaBoardy v0.0.2-alpha</h4>
+  </div>
+</div>
+
+<div id="board_details" data-role="page" ngm-pagebeforeshow="initialize()" ng-controller="MBoardDetailsController">
+  <div data-role="header">
+    <h1>{{board.name}}</h1>
+    <a href="" data-role="button" data-rel="back">Back</a>
+  </div>
+  <div data-role="content">
+    {{board}}
+  </div>
+  <div data-role="footer">
+    <h4>IdeaBoardy v0.0.2-alpha</h4>
+  </div>
+</div>

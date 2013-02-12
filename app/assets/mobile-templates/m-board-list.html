@@ -4,19 +4,12 @@
         <a href="#" id="addBoard" data-role="button">+1 Board</a>
     </div>
     <div data-role="content">
-        <ul data-role="listview" data-filter="true">
-            <li class="ui-btn-icon-right ui-li ui-btn-up-d" ng-repeat="board in boards | paged:'pager':5">
-                <div class="ui-btn-inner">
-                    <a class="ui-link-inherit" href="#">{{board.name}}</a>
-                    <span class="ui-icon ui-icon-arrow-r">&nbsp;</span>
-                </div>
-            </li>
-            <li ngm-if="pager.hasMore" class="ui-li">
-                <a href="#" data-role="button" class="ui-btn ui-btn-up-e" ngm-vclick="pager.loadMore()">
-                    <span class="ui-btn-inner">Show more</span>
-                </a>
+        <ul data-role="listview" data-filter="true" data-inset="true">
+            <li ng-repeat="board in boards | paged:'pager':5">
+                <a href="#">{{board.name}}</a>
             </li>
         </ul>
+        <a ngm-if="pager.hasMore" href="#" data-role="button" data-theme="b" ngm-vclick="pager.loadMore()">Show more</a>
     </div>
     <div data-role="footer">
         <h4>IdeaBoardy v0.0.2-alpha</h4>

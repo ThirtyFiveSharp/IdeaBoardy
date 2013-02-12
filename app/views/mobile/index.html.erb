@@ -19,11 +19,14 @@
   <div data-role="header">
     <h1>{{board.name}}</h1>
     <a href="/m" data-role="button" data-rel="back">Back</a>
+    <a href="/m" data-icon="home" data-iconpos="notext" title="Home"></a>
   </div>
   <div data-role="content">
     <ul data-role="listview" data-inset="true" data-theme="d" ng-repeat="section in sections">
       <li data-role="list-divider" role="heading" class="ui-bar-d">{{section.name}}</li>
-      <li ng-repeat="idea in section.ideas" style="background-color: #{{section.color}};">{{idea.content}}&nbsp;&nbsp;&nbsp;&nbsp;[{{idea.vote}} votes]</li>
+      <li ng-repeat="idea in section.ideas" style="background-color: #{{section.color}};">{{idea.content}}&nbsp;&nbsp;&nbsp;&nbsp;[{{idea.vote}}
+        votes]
+      </li>
     </ul>
   </div>
   <div data-role="footer">

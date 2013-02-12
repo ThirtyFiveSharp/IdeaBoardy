@@ -1,4 +1,4 @@
-<div id="board_list" data-role="page" ng-controller="MBoardListController">
+<div id="board_list" data-role="page" ngm-pagebeforeshow="initialize()" ng-controller="MBoardListController">
   <div data-role="header">
     <h1>IdeaBoardy</h1>
     <a href="#" id="addBoard" data-role="button">+1 Board</a>
@@ -22,7 +22,10 @@
     <a href="/m" data-role="button" data-rel="back">Back</a>
   </div>
   <div data-role="content">
-    {{board}}
+    <ul data-role="listview" data-inset="true" data-theme="d" ng-repeat="section in sections">
+      <li data-role="list-divider" role="heading" class="ui-bar-d">{{section.name}}</li>
+      <li ng-repeat="idea in section.ideas" style="background-color: #{{section.color}};">{{idea.content}}&nbsp;&nbsp;&nbsp;&nbsp;[{{idea.vote}} votes]</li>
+    </ul>
   </div>
   <div data-role="footer">
     <h4>IdeaBoardy v0.0.2-alpha</h4>

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="m-idea-boardy">
 <head>
   <title>IdeaBoardy</title>
+  <base href="/m/" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
   <%= stylesheet_link_tag "mobile", :media => "all" %>
 </head>
-<body class="ui-mobile-viewport ui-overlay-c" ng-app="m-idea-boardy">
+<body class="ui-mobile-viewport ui-overlay-c">
 <%= yield %>
 <%= javascript_include_tag "mobile" %>
 </body>

@@ -1,6 +1,6 @@
 angular.module('m-idea-boardy')
-    .controller('MBoardDetailsController', ['$scope', '$http', '$history', 'config', 'params',
-    function ($scope, $http, $history, config, params) {
+    .controller('MBoardDetailsController', ['$scope', '$http', '$history', '$location', 'config', 'params',
+    function ($scope, $http, $history, $location, config, params) {
         $scope.initialize = function () {
             var boardUri = config.shortenUrlEntryPoint + "/" + params('shortenUrlCode');
             $http.get(boardUri, {params:{embed:"sections"}})
@@ -15,16 +15,19 @@ angular.module('m-idea-boardy')
                     });
                 });
         };
-        $scope.vote = function(idea, owningSection) {
-            $http.post(idea.links.getLink('vote').href).success(function() {
+        $scope.vote = function (idea, owningSection) {
+            $http.post(idea.links.getLink('vote').href).success(function () {
                 $http.get(owningSection.links.getLink('self').href, {params:{embed:"ideas"}})
                     .success(function (section) {
                         angular.extend(owningSection, section);
                     });
             });
         };
-        $scope.hasHistory = function() {
+        $scope.hasHistory = function () {
             return $history.activeIndex > 0;
+        };
+        $scope.addIdea = function () {
+            $location.path('/board/' + $scope.board.shortenUrlCode + '/addIdea');
         };
     }
 ]);

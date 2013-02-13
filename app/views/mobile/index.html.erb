@@ -29,7 +29,8 @@
         <a ng-click="initialize()" data-icon="refresh" data-iconpos="right" data-role="button">Refresh</a>
       </div>
       <div class="ui-block-b">
-        <a href="#" data-icon="plus" data-iconpos="right" data-role="button">Add Idea</a>
+        <a ng-click="addIdea()" data-icon="plus" data-iconpos="right" data-role="button" ng-disabled="hasSection()">Add
+          Idea</a>
       </div>
     </fieldset>
     <div data-role="collapsible-set" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u">
@@ -45,6 +46,37 @@
         </ul>
       </div>
     </div>
+  </div>
+  <div data-role="footer" data-theme="e">
+    <h4>IdeaBoardy v<%= @setting.app_version %></h4>
+  </div>
+</div>
+
+<div id="add_idea" data-role="page" ngm-pagebeforeshow="initialize()" ng-controller="MIdeaCreateController">
+  <div data-role="header" data-theme="e">
+    <h1>Add Idea</h1>
+    <a ng-click="initialize()" data-icon="refresh" data-iconpos="notext" data-iconpos="right" data-role="button"></a>
+    <a href="/m" data-icon="home" data-iconpos="notext" title="Home"></a>
+  </div>
+  <div data-role="content">
+    <form name="addIdeaForm">
+      <div data-role="fieldcontain" class="ui-hide-label">
+        <label for="select_section">Owning section:</label>
+        <select id="select_section" ng-model="owningSection" ng-options="s.name for s in board.sections"></select>
+      </div>
+      <div data-role="fieldcontain" class="ui-hide-label">
+        <label for="content">Content:</label>
+        <textarea id="content" required ng-model="ideaToCreate.content" placeholder="idea content here"></textarea>
+      </div>
+      <fieldset class="ui-grid-a">
+        <div class="ui-block-a">
+          <a data-role="button" data-icon="delete" ng-click="cancel()">Cancel</a>
+        </div>
+        <div class="ui-block-b">
+          <button data-icon="check" type="submit" data-theme="b" ng-disabled="addIdeaForm.$invalid" ng-click="create(ideaToCreate)">Create</button>
+        </div>
+      </fieldset>
+    </form>
   </div>
   <div data-role="footer" data-theme="e">
     <h4>IdeaBoardy v<%= @setting.app_version %></h4>

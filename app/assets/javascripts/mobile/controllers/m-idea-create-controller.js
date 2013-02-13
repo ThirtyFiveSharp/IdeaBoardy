@@ -10,9 +10,6 @@ angular.module('m-idea-boardy')
                 });
             $scope.ideaToCreate = {};
         };
-        $scope.cancel = function () {
-            $location.path('/board/' + $scope.board.shortenUrlCode);
-        };
         $scope.create = function (ideaToCreate) {
             $http.post($scope.owningSection.links.getLink('ideas').href, ideaToCreate)
                 .success(function () {

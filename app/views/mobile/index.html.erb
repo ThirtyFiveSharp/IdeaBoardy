@@ -9,7 +9,8 @@
         <a ng-click="goToBoard(board)">{{board.name}}</a>
       </li>
     </ul>
-    <a ngm-if="pager.hasMore" href="#" data-icon="refresh" data-iconpos="right" data-role="button" data-theme="d" ngm-vclick="pager.loadMore()">Show more</a>
+    <a ngm-if="pager.hasMore" href="#" data-icon="refresh" data-iconpos="right" data-role="button" data-theme="d" ngm-vclick="pager.loadMore()">Show
+      more</a>
   </div>
   <div data-role="footer" data-theme="e">
     <h4>IdeaBoardy v<%= @setting.app_version %></h4>
@@ -23,7 +24,15 @@
     <a ngm-if="!hasHistory()" href="/m" data-icon="home" data-iconpos="notext" title="Home"></a>
   </div>
   <div data-role="content">
-    <div data-role="collapsible-set">
+    <fieldset class="ui-grid-a">
+      <div class="ui-block-a">
+        <a ng-click="initialize()" data-icon="refresh" data-iconpos="right" data-role="button">Refresh</a>
+      </div>
+      <div class="ui-block-b">
+        <a href="#" data-icon="plus" data-iconpos="right" data-role="button">Add Idea</a>
+      </div>
+    </fieldset>
+    <div data-role="collapsible-set" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u">
       <div data-role="collapsible" data-theme="c" data-content-theme="b" ng-repeat="section in sections">
         <h3>{{section.name}}</h3>
         <ul data-role="listview" data-inset="false">

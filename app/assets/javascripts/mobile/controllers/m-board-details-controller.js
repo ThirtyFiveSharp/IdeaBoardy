@@ -15,17 +15,16 @@ angular.module('m-idea-boardy')
                     });
                 });
         };
-        $scope.vote = function(idea, section) {
+        $scope.vote = function(idea, owningSection) {
             $http.post(idea.links.getLink('vote').href).success(function() {
-                $http.get(section.links.getLink('self').href, {params:{embed:"ideas"}})
-                    .success(function (refreshedSection) {
-//                        section.ideas = refreshedSection.ideas;
-                        angular.extend(section, refreshedSection);
+                $http.get(owningSection.links.getLink('self').href, {params:{embed:"ideas"}})
+                    .success(function (section) {
+                        angular.extend(owningSection, section);
                     });
             });
         };
         $scope.hasHistory = function() {
             return $history.activeIndex > 0;
-        }
+        };
     }
 ]);

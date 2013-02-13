@@ -1,6 +1,7 @@
 <div id="board_list" data-role="page" ngm-pagebeforeshow="initialize()" ng-controller="MBoardListController">
   <div data-role="header" data-theme="e">
     <h1>IdeaBoardy</h1>
+    <a href="/m" data-role="button" data-icon="refresh" data-iconpos="notext" title="Refresh"></a>
   </div>
   <div data-role="content">
     <ul data-role="listview" data-filter="true" data-inset="true">
@@ -8,21 +9,21 @@
         <a ng-click="goToBoard(board)">{{board.name}}</a>
       </li>
     </ul>
-    <a ngm-if="pager.hasMore" href="#" data-role="button" data-theme="d" ngm-vclick="pager.loadMore()">Show more</a>
+    <a ngm-if="pager.hasMore" href="#" data-icon="refresh" data-iconpos="right" data-role="button" data-theme="d" ngm-vclick="pager.loadMore()">Show more</a>
   </div>
   <div data-role="footer" data-theme="e">
-    <h4>IdeaBoardy v0.0.2-alpha</h4>
+    <h4>IdeaBoardy v<%= @setting.app_version %></h4>
   </div>
 </div>
 
 <div id="board_details" data-role="page" ngm-pagebeforeshow="initialize()" ng-controller="MBoardDetailsController">
   <div data-role="header" data-theme="e">
     <h1>{{board.name}}</h1>
-    <a href="/m" data-role="button" data-icon="back" data-iconpos="notext" data-rel="back"></a>
-    <a href="/m" data-icon="home" data-iconpos="notext" title="Home"></a>
+    <a ngm-if="hasHistory()" href="/m" data-role="button" data-icon="back" data-iconpos="notext" data-rel="back"></a>
+    <a ngm-if="!hasHistory()" href="/m" data-icon="home" data-iconpos="notext" title="Home"></a>
   </div>
   <div data-role="content">
-    <div data-role="collapsible-set" data-inset="false">
+    <div data-role="collapsible-set">
       <div data-role="collapsible" data-theme="c" data-content-theme="b" ng-repeat="section in sections">
         <h3>{{section.name}}</h3>
         <ul data-role="listview" data-inset="false">
@@ -37,6 +38,6 @@
     </div>
   </div>
   <div data-role="footer" data-theme="e">
-    <h4>IdeaBoardy v0.0.2-alpha</h4>
+    <h4>IdeaBoardy v<%= @setting.app_version %></h4>
   </div>
 </div>

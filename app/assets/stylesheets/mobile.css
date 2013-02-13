@@ -11,3 +11,5 @@
  *= require_self
  *= require jquery.mobile
  */
+.idea-content {margin-left: 0.5em;}
+.idea-vote {display: block; float: left;}

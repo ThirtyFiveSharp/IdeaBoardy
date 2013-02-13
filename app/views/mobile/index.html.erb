@@ -1,5 +1,5 @@
 <div id="board_list" data-role="page" ngm-pagebeforeshow="initialize()" ng-controller="MBoardListController">
-  <div data-role="header">
+  <div data-role="header" data-theme="e">
     <h1>IdeaBoardy</h1>
   </div>
   <div data-role="content">
@@ -8,28 +8,35 @@
         <a ng-click="goToBoard(board)">{{board.name}}</a>
       </li>
     </ul>
-    <a ngm-if="pager.hasMore" href="#" data-role="button" data-theme="b" ngm-vclick="pager.loadMore()">Show more</a>
+    <a ngm-if="pager.hasMore" href="#" data-role="button" data-theme="d" ngm-vclick="pager.loadMore()">Show more</a>
   </div>
-  <div data-role="footer">
+  <div data-role="footer" data-theme="e">
     <h4>IdeaBoardy v0.0.2-alpha</h4>
   </div>
 </div>
 
 <div id="board_details" data-role="page" ngm-pagebeforeshow="initialize()" ng-controller="MBoardDetailsController">
-  <div data-role="header">
+  <div data-role="header" data-theme="e">
     <h1>{{board.name}}</h1>
     <a href="/m" data-role="button" data-icon="back" data-iconpos="notext" data-rel="back"></a>
     <a href="/m" data-icon="home" data-iconpos="notext" title="Home"></a>
   </div>
   <div data-role="content">
-    <ul data-role="listview" data-inset="true" data-theme="d" ng-repeat="section in sections">
-      <li data-role="list-divider" role="heading" class="ui-bar-d">{{section.name}}</li>
-      <li ng-repeat="idea in section.ideas" style="background-color: #{{section.color}};">{{idea.content}}&nbsp;&nbsp;&nbsp;&nbsp;[{{idea.vote}}
-        votes]
-      </li>
-    </ul>
+    <div data-role="collapsible-set" data-inset="false">
+      <div data-role="collapsible" data-theme="c" data-content-theme="b" ng-repeat="section in sections">
+        <h3>{{section.name}}</h3>
+        <ul data-role="listview" data-inset="false">
+          <li ng-repeat="idea in section.ideas" style="background-color: #{{section.color}};">
+            <div class="idea-vote">
+              <a ng-click="vote(idea, section)">{{idea.vote}} votes</a>
+            </div>
+            <span class="idea-content">{{idea.content}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <div data-role="footer">
+  <div data-role="footer" data-theme="e">
     <h4>IdeaBoardy v0.0.2-alpha</h4>
   </div>
 </div>

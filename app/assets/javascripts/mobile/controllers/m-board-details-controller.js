@@ -15,5 +15,13 @@ angular.module('m-idea-boardy')
                     });
                 });
         };
+        $scope.vote = function(idea, section) {
+            $http.post(idea.links.getLink('vote').href).success(function() {
+                $http.get(section.links.getLink('self').href, {params:{embed:"ideas"}})
+                    .success(function (section1) {
+                        section.ideas = section1.ideas;
+                    });
+            });
+        };
     }
 ]);

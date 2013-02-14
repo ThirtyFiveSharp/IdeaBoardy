@@ -5,14 +5,10 @@
   </div>
   <div data-role="content">
     <ul data-role="listview" data-filter="true" data-inset="true">
-      <li ng-repeat="board in boards | paged:'pager':5">
+      <li ng-repeat="board in boards">
         <a ng-href="/m/board/{{board.shortenUrlCode}}" data-transition="slide">{{board.name}}</a>
       </li>
     </ul>
-    <a ngm-if="pager.hasMore" href="#" data-icon="plus" data-iconpos="right"
-       data-role="button" data-theme="d" ngm-vclick="pager.loadMore()">
-      Show more
-    </a>
   </div>
   <div data-role="footer" data-theme="e" data-position="fixed">
     <h4>IdeaBoardy v<%= @setting.app_version %></h4>

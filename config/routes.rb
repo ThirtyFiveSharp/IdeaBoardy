@@ -55,6 +55,7 @@ end
 
 def config_web_site_routes
   root :to => 'home#index'
+  match 'm' => 'mobile#index'
   match '/:mobile' => 'mobile#index', :constraints => {:mobile => /m.*/}
   match '*everything_else' => 'home#index'
 end

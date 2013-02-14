@@ -31,7 +31,7 @@
       </div>
       <div class="ui-block-b">
         <a ng-href="/m/board/{{board.shortenUrlCode}}/addIdea" data-icon="plus" data-iconpos="right"
-           data-role="button" data-transition="slidedown">
+           data-role="button" data-transition="slideup">
           Add Idea
         </a>
       </div>
@@ -58,7 +58,7 @@
 <div id="add_idea" data-role="page" ngm-pagebeforeshow="initialize()" ng-controller="MIdeaCreateController">
   <div data-role="header" data-theme="e">
     <h1>Add Idea</h1>
-    <a ng-href="/m/board/{{board.shortenUrlCode}}" data-role="button" data-icon="delete" data-transition="slideup">Cancel</a>
+    <a ng-href="/m/board/{{board.shortenUrlCode}}" data-role="button" data-icon="delete" data-transition="slideup" data-direction="reverse">Cancel</a>
     <button data-icon="check" type="submit" ng-disabled="addIdeaForm.$invalid" ngm-vclick="create(ideaToCreate)">Save</button>
   </div>
   <div data-role="content">

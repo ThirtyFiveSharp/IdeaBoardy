@@ -6,6 +6,7 @@ angular.module('m-idea-boardy', ['idea-boardy-services'])
   .config(['$routeProvider', ($routeProvider) ->
     $routeProvider.when '/board/:shortenUrlCode', {templateUrl: '#board_details'}
     $routeProvider.when '/board/:shortenUrlCode/addIdea', {templateUrl: '#add_idea'}
+    $routeProvider.when '/board/:shortenUrlCode/idea', {templateUrl: '#show_idea'}
     $routeProvider.otherwise {templateUrl: '#board_list'}
   ])
   .config(['$locationProvider', ($locationProvider) ->

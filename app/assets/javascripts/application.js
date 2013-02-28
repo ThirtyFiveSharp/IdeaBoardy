@@ -25,4 +25,3 @@
 //= require_tree ./controllers
 //= require_tree ./precompiled-templates
 //= require ./libs/tagcanvas
-//= require ./libs/jquery.tagcanvas

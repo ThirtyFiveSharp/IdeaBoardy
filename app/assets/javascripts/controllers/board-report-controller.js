@@ -10,24 +10,26 @@ angular.module('idea-boardy')
             $location.path('/board/' + $scope.board.shortenUrlCode);
         };
         $scope.shouldShowTagCloud = false;
-        $scope.tagCloud = [];
+        $scope.tagCloud = [{name:"Loading...", weight:"0"}];
         $scope.showTagCloud = function () {
             $scope.shouldShowTagCloud = !$scope.shouldShowTagCloud;
             if($scope.shouldShowTagCloud) {
+                TagCanvas.Start('myCanvas','tags',{
+                    textColour: '#ff0000',
+                    outlineColour: '#ff00ff',
+                    reverse: true,
+                    depth: 0.8,
+                    maxSpeed: 0.05,
+                    weight: true,
+                    weightFrom: 'weight',
+                    textColour: '#00f',
+                    textFont: 'Impact,Arial Black,sans-serif'
+                });
+                TagCanvas.prototype.$scope = $scope;
                 $http.get($scope.board.tagCloudLink.href)
                     .success(function(tagCloud){
                         $scope.tagCloud = tagCloud;
-                        TagCanvas.Start('myCanvas','tags',{
-                            textColour: '#ff0000',
-                            outlineColour: '#ff00ff',
-                            reverse: true,
-                            depth: 0.8,
-                            maxSpeed: 0.05,
-                            weight: true,
-                            weightFrom: 'weight',
-                            textColour: '#00f',
-                            textFont: 'Impact,Arial Black,sans-serif'
-                        });
+                        setTimeout(function(){TagCanvas.Update('myCanvas','tags');}, 200);
                     });
             }
         }

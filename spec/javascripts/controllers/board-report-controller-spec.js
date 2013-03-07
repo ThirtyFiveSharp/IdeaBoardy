@@ -91,7 +91,7 @@ describe('BoardReportController', function () {
     describe("tagCloud", function () {
         it("should initialize an empty tag cloud model", inject(function ($location) {
             expect(scope.shouldShowTagCloud).toEqual(false);
-            expect(scope.tagCloud).toEqual([]);
+            expect(scope.tagCloud).toEqual([{name:"Loading...", weight:"0"}]);
         }));
     });
 });

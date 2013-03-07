@@ -51,17 +51,26 @@ module TagCloud
     end
 
     def get_analysis_result
-      result = []
-      sorted_bigram = @bigram_frequency_hash.sort_by {|key, bigram| bigram.count * bigram.ideas.size}
-      sorted_bigram.reverse!
-      result << {"name" => sorted_bigram[0][0], "weight" => sorted_bigram[0][1].count, "df" => sorted_bigram[0][1].ideas.size}
+      result = get_bigram_as_phrase()
       sorted_pairs = @word_frequency_hash.sort_by { |key, value| value }
       sorted_pairs.reverse.each do |pair|
         word = pair[0]
-        result << {"name" => word, "weight" => pair[1], "df" => @word_idea_freq_hash[word]} unless (@highest_freq_words_info.is_high_freq_word word)
+        if(!(@highest_freq_words_info.is_high_freq_word word))
+          result << {"name" => word, "weight" => pair[1], "df" => @word_idea_freq_hash[word]}
+        end
       end
 
       result[0, 20]
+    end
+
+    def get_bigram_as_phrase
+      result = []
+      sorted_bigram = @bigram_frequency_hash.sort_by { |key, bigram| bigram.count * bigram.ideas.size }
+      sorted_bigram.reverse!
+      if(sorted_bigram[0][1].ideas.size > 1)
+        result << {"name" => sorted_bigram[0][0], "weight" => sorted_bigram[0][1].count, "df" => sorted_bigram[0][1].ideas.size}
+      end
+      result
     end
 
     private
@@ -81,7 +90,10 @@ module TagCloud
     def segment_word_freq(idea, segment_result)
       segment_result.each_with_index do |word_atom, index|
         word = word_atom['word']
-        @word_frequency_hash[word] = @word_frequency_hash[word].to_i + (idea['vote'] + 1)
+        pos = word_atom['pos']
+        if(pos != "W" && pos != "Q" && pos != "M")
+          @word_frequency_hash[word] = @word_frequency_hash[word].to_i + (idea['vote'] + 1)
+        end
       end
     end
 
@@ -100,7 +112,7 @@ module TagCloud
           bigram = Bigram.new(word, segment_result[index + 1]['word'])
           @bigram_frequency_hash[bigram.to_s] = bigram unless @bigram_frequency_hash.include? bigram.to_s
           @bigram_frequency_hash[bigram.to_s].count += 1
-          @bigram_frequency_hash[bigram.to_s].ideas << idea[:id]
+          @bigram_frequency_hash[bigram.to_s].ideas << idea['id']
           @bigram_frequency_hash[bigram.to_s].ideas.uniq!
         end
       end

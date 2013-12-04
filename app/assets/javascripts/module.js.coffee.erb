@@ -1,0 +1,21 @@
+angular.module('idea-boardy', ['ui', 'idea-boardy-services'])
+  .value('config', {
+    apiEntryPoint: "<%= ENV['RAILS_RELATIVE_URL_ROOT'] %>/api/boards"
+    shortenUrlEntryPoint: "<%= ENV['RAILS_RELATIVE_URL_ROOT'] %>/url"
+  })
+  .value('i18n', {
+    required: 'Please provide a value for this field.'
+    email: 'Please provide a valid email address.'
+  })
+  .config(['$routeProvider', ($routeProvider) ->
+    $routeProvider.when '/board/:shortenUrlCode', {templateUrl: '<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/board.html) %>'}
+    $routeProvider.when '/report/:shortenUrlCode', {templateUrl: '<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/board-report.html) %>'}
+    $routeProvider.otherwise {templateUrl: '<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/board-list.html) %>', controller: 'BoardListController'}
+  ])
+  .config(['$locationProvider', ($locationProvider) ->
+    $locationProvider.html5Mode false
+  ])
+  .run(['$rootScope', 'autoUpdater', ($rootScope, autoUpdater) ->
+    $rootScope.$on('$routeChangeStart', () -> autoUpdater.clear())
+  ])
+;

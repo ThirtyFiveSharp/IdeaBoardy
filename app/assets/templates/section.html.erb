@@ -19,7 +19,7 @@
     </div>
     <ul class="idea-list clear-fix" ng-show="section.expanded">
         <li ng-repeat="idea in ideas | filter:filterIdeas">
-            <ng-include src="'/assets/idea.html'"></ng-include>
+            <ng-include src="'<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/idea.html) %>'"></ng-include>
         </li>
         <li class="idea blank">
             <a ng-click="showCreateIdeaDialog($event)">+ 1 idea</a>

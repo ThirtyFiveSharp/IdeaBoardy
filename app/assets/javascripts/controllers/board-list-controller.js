@@ -47,7 +47,7 @@ angular.module('idea-boardy')
                 return board;
             }
             return undefined;
-        }
+        };
 
         function refreshBoardList() {
             $http.get(config.apiEntryPoint).success(function (boards) {

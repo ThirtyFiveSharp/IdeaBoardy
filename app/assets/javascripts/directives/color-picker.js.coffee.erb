@@ -1,7 +1,7 @@
 angular.module('idea-boardy')
   .directive 'colorPicker', [() ->
     restrict: 'E'
-    templateUrl: '/assets/color-picker.html'
+    templateUrl: '<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/color-picker.html) %>'
     replace: true
     controller: ['$scope', '$parse', 'color'
       ($scope, $parse, color) ->

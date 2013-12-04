@@ -32,8 +32,8 @@ module BuildTools
 
     def precompile_file(file)
       raise "[#{file}] is not a file!" unless ::File.file?(file)
-      puts "  #{file}"
-      key = '"/assets/' + ::File.basename(file) + '"'
+      key = '"' + (ENV['RAILS_RELATIVE_URL_ROOT'] || '') + '/assets/' + ::File.basename(file, '.erb') + '"'
+      puts "  #{file}  =>  #{key}"
       javascript_str = html_to_javascript(::IO.read(file))
       {key: key, content: javascript_str}
     end
@@ -59,7 +59,7 @@ heredoc
 
   TEMPLATE_DIR = ::File.expand_path('../../app/assets/templates', ::File.dirname(__FILE__))
   precompiled_templates_dir = ::File.expand_path('../../app/assets/javascripts/precompiled-templates', ::File.dirname(__FILE__))
-  PRECOMPILED_TEMPLATE_FILE = ::File.join(precompiled_templates_dir, "templates.js")
+  PRECOMPILED_TEMPLATE_FILE = ::File.join(precompiled_templates_dir, "templates.js.erb")
 
 end
 

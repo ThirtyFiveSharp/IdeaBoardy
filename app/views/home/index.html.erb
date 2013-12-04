@@ -18,19 +18,19 @@
   IdeaBoardy v<%= @setting.app_version %>
 </footer>
 
-<ng-include src="'/assets/board-create.html'"></ng-include>
-<ng-include src="'/assets/board-invite.html'"></ng-include>
-<ng-include src="'/assets/board-delete.html'"></ng-include>
-<ng-include src="'/assets/section-create.html'"></ng-include>
-<ng-include src="'/assets/section-delete.html'"></ng-include>
-<ng-include src="'/assets/idea-create.html'"></ng-include>
-<ng-include src="'/assets/idea-edit.html'"></ng-include>
-<ng-include src="'/assets/idea-delete.html'"></ng-include>
-<ng-include src="'/assets/idea-merge.html'"></ng-include>
-<ng-include src="'/assets/tag-create.html'"></ng-include>
-<ng-include src="'/assets/tag-edit.html'"></ng-include>
-<ng-include src="'/assets/tag-delete.html'"></ng-include>
-<ng-include src="'/assets/tag-specify.html'"></ng-include>
-<ng-include src="'/assets/concept-create.html'"></ng-include>
-<ng-include src="'/assets/concept-edit.html'"></ng-include>
-<ng-include src="'/assets/report-share.html'"></ng-include>
+<ng-include src="'<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/board-create.html) %>'"></ng-include>
+<ng-include src="'<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/board-invite.html) %>'"></ng-include>
+<ng-include src="'<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/board-delete.html) %>'"></ng-include>
+<ng-include src="'<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/section-create.html) %>'"></ng-include>
+<ng-include src="'<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/section-delete.html) %>'"></ng-include>
+<ng-include src="'<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/idea-create.html) %>'"></ng-include>
+<ng-include src="'<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/idea-edit.html) %>'"></ng-include>
+<ng-include src="'<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/idea-delete.html) %>'"></ng-include>
+<ng-include src="'<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/idea-merge.html) %>'"></ng-include>
+<ng-include src="'<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/tag-create.html) %>'"></ng-include>
+<ng-include src="'<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/tag-edit.html) %>'"></ng-include>
+<ng-include src="'<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/tag-delete.html) %>'"></ng-include>
+<ng-include src="'<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/tag-specify.html) %>'"></ng-include>
+<ng-include src="'<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/concept-create.html) %>'"></ng-include>
+<ng-include src="'<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/concept-edit.html) %>'"></ng-include>
+<ng-include src="'<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/report-share.html) %>'"></ng-include>

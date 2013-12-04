@@ -60,7 +60,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 
 .board-list { display:block; list-style-type: none; }
 .filter-boards {margin-left: 10px; margin-right: 1em; font-size: 1em; padding-left: 3px;}
-.filter-boards + .ui-reset { width: 20px; height: 20px; margin: 5px 15px; line-height: 14px; vertical-align: text-top; background-image: url("glyphicons-halflings.png"); background-repeat: no-repeat; background-position: -48px -96px; }
+.filter-boards + .ui-reset { width: 20px; height: 20px; margin: 5px 15px; line-height: 14px; vertical-align: text-top; background-image: url(<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/glyphicons-halflings.png) %>); background-repeat: no-repeat; background-position: -48px -96px; }
 .board-list .board { display: table; position: relative; overflow: hidden; margin: 4px; float: left; width: 230px; height: 150px; background-color: #ffffe0; border:1px #a9a9a9 solid; border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; text-align: center; }
 .board-list .board:hover { background-color: #ffdd57; border-color: black; }
 .board-list .board .board-name { display: table-cell; vertical-align: middle; line-height: 1.3em; }
@@ -83,16 +83,16 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .command { display: inline-block; }
 .command-icon { display: inline-block; vertical-align: text-bottom; width: 24px; height: 24px; }
 .command-icon:hover { cursor: pointer; }
-.edit-icon { background: url(/assets/background.png) 0 -48px no-repeat ; }
-.edit-icon:hover { background: url(/assets/background.png) -24px -48px no-repeat ; }
+.edit-icon { background: url(<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/background.png) %>) 0 -48px no-repeat ; }
+.edit-icon:hover { background: url(<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/background.png) %>) -24px -48px no-repeat ; }
 .filter-ideas {height: 1.5em; line-height: 1.5em; margin-right: 1em; margin-top: 4px; font-size: 1em; padding-left: 3px;}
-.filter-ideas + .ui-reset { width: 20px; height: 20px; margin: 10px 12px; line-height: 14px; vertical-align: text-top; background-image: url("glyphicons-halflings.png"); background-repeat: no-repeat; background-position: -48px -96px; }
+.filter-ideas + .ui-reset { width: 20px; height: 20px; margin: 10px 12px; line-height: 14px; vertical-align: text-top; background-image: url(<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/glyphicons-halflings.png) %>); background-repeat: no-repeat; background-position: -48px -96px; }
 
 .trash-bin { display: inline-block; width: 32px; padding: 8px; background-color: #ffffff; border: 1px #a9a9a9 solid; border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; }
 .trash-bin:hover { cursor: pointer; border-color: #ff6666; }
 .trash-bin:hover .trash-bin-icon { background-position: -32px 0; }
 .trash-bin.ui-scrollfix { position: fixed; top: 10px; left:50%; margin-left: 480px; z-index: 900; background-color: #ffffff; opacity: 0.9;}
-.trash-bin-icon { width: 32px; height: 32px; background: url(/assets/background.png) 0 0 no-repeat; }
+.trash-bin-icon { width: 32px; height: 32px; background: url(<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/background.png) %>) 0 0 no-repeat; }
 .trash-bin.droppable-active .trash-bin-icon { background-position: -32px 0; }
 
 .concept-list { display: block; padding: 0.2em 0; line-height: 2em; border-top: 1px #d3d3d3 dotted; border-bottom: 1px #d3d3d3 dotted; }
@@ -154,7 +154,7 @@ input.btn-trivial.ui-state-active { background: #ffffff;}
 .idea-tag-list:hover { overflow: visible; }
 .idea-tag { display:block; margin: 5px; text-decoration: underline; background-color: inherit; font-size: 80%; white-space:nowrap; }
 .idea-tag:hover, .idea-tag:hover a { color: #cc0000; text-decoration-color: #cc0000 }
-.idea-tag.blank { width: 32px; height: 16px; background: url(/assets/background.png) 0px -32px no-repeat; border: none; }
+.idea-tag.blank { width: 32px; height: 16px; background: url(<%= %Q(#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets/background.png) %>) 0px -32px no-repeat; border: none; }
 .idea-tag.blank:hover { background-position: -32px -32px; }
 .idea .idea-wrapper { display:block; float:left; width: 160px; height: 100%; padding: 0 5px; overflow: hidden; }
 .idea .idea-info { display: table; text-align: center; overflow: hidden; width: 160px; height: 120px; }

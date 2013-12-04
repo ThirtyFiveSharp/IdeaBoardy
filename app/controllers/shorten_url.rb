@@ -61,7 +61,7 @@ module ShortenUrl
 
   def paths
     {
-        :api_board => {:template => "/api/boards/{0}", :api_code => 1000}
+        :api_board => {:template => "#{ENV['RAILS_RELATIVE_URL_ROOT']}/api/boards/{0}", :api_code => 1000}
     }
   end
 end

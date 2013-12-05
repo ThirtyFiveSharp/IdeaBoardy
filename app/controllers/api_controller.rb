@@ -3,12 +3,15 @@ class ApiController < ApplicationController
   include ShortenUrl
 
   def default_url_options
+    api_protocol = ENV['RAILS_API_PROTOCOL']
     api_host = ENV['RAILS_API_HOST']
-    if api_host
-      {host: api_host}
-    else
-      {}
-    end
+    api_port = ENV['RAILS_API_PORT']
+
+    options = {}
+    options[:protocol] = api_protocol unless api_protocol.nil?
+    options[:host] = api_host unless api_host.nil?
+    options[:port] = api_port unless api_port.nil?
+    options
   end
 
   def get_embeddable(entity_class)

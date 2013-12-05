@@ -2,8 +2,17 @@ class ApiController < ApplicationController
   include RepresentationBuilder
   include ShortenUrl
 
+  def default_url_options
+    api_host = ENV['RAILS_API_HOST']
+    if api_host
+      {host: api_host}
+    else
+      {}
+    end
+  end
+
   def get_embeddable(entity_class)
-    (params[:embed] || "").split(',').collect { |s| s.strip.to_sym }.select { |s| embeddable?(entity_class.new, s) }
+    (params[:embed] || '').split(',').collect { |s| s.strip.to_sym }.select { |s| embeddable?(entity_class.new, s) }
   end
 
   def embeddable?(entity, name)

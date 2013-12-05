@@ -1,5 +1,5 @@
 module Api
-  class BoardSectionsController < ApplicationController
+  class BoardSectionsController < ApiController
     respond_to :json
 
     def index

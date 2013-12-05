@@ -1,5 +1,5 @@
 module Api
-  class EmailsController < ApplicationController
+  class EmailsController < ApiController
 
     def invitation
       board = Board.find(params[:board][:id])

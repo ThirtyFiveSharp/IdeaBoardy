@@ -1,5 +1,5 @@
 module Api
-  class SectionIdeasController < ApplicationController
+  class SectionIdeasController < ApiController
     respond_to :json
 
     def index

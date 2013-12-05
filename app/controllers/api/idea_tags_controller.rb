@@ -1,5 +1,5 @@
 module Api
-  class IdeaTagsController < ApplicationController
+  class IdeaTagsController < ApiController
     respond_to :json
 
     def index

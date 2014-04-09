@@ -16,6 +16,7 @@ group :development, :test do
   gem 'jasmine', '~> 1.3.1'
   gem 'capybara'
   gem 'capybara-webkit'
+  gem 'capybara-angular'
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
 end

@@ -40,6 +40,8 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-angular (0.0.4)
+      capybara
     capybara-webkit (1.1.0)
       capybara (~> 2.0, >= 2.0.2)
       json
@@ -189,6 +191,7 @@ PLATFORMS
 DEPENDENCIES
   angularjs-rails (~> 1.0.4)
   capybara
+  capybara-angular
   capybara-webkit
   coffee-rails (~> 3.2.2)
   cucumber-rails

@@ -6,6 +6,7 @@
 
 require 'cucumber/rails'
 require 'capybara/rails'
+require 'capybara/angular'
 
 # Capybara defaults to CSS3 selectors rather than XPath.
 # If you'd prefer to use XPath, just uncomment this line and adjust any
@@ -59,4 +60,5 @@ Cucumber::Rails::Database.javascript_strategy = :truncation
 
 Capybara.default_driver = :selenium
 Capybara.javascript_driver = :webkit
+Capybara.default_wait_time = 5
 

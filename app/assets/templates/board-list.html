@@ -5,10 +5,10 @@
     </div>
     <ul class="board-list">
         <li class="board" ng-repeat="board in boards | filter:filterBoard">
-            <a class="board-name" ng-click="goToBoard(board)">{{board.name}}</a>
+            <a href="#" class="board-name" ng-click="goToBoard(board)">{{board.name}}</a>
         </li>
         <li class="board blank">
-            <a class="board-name" ng-click="showCreateBoardDialog()">+ 1 board</a>
+            <a href="#" class="board-name" ng-click="showCreateBoardDialog()">+ 1 board</a>
         </li>
     </ul>
 </div>

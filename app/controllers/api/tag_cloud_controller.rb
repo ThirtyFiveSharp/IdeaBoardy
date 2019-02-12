@@ -1,5 +1,5 @@
 module Api
-  class TagCloudController < ApiController
+  class TagCloudController < ApplicationController
     include TagCloud
 
     respond_to :json
